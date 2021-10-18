@@ -28,8 +28,8 @@
     "grocery"
   ],
   "scripts": {
-    "start-server": "node index.js",
-    "test-server": "node test.js",
+    "start-server": "node server/index.js",
+    "test-server": "node server/test.js",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test-ui": "react-scripts test"

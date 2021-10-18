@@ -22,19 +22,19 @@ const pool = (() => {
   } })();
 
 express()
-  .use(express.static(path.join(__dirname, 'build')))
+  .use(express.static(path.join(__dirname, '..', 'build')))
   .use( express.json() ) // to support JSON-encoded bodies
 
-  .get('/', (req, res) => res.sendFile(path.join(__dirname, 'build', 'index.html')))
+  .get('/', (req, res) => res.sendFile(path.join(__dirname, '..', 'build', 'index.html')))
 
   .get('/list', async (req, res) => {
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM grocerylist_table');
       const results = result ? result.rows.map(({name}) => name) : [];
+      client.release();
       res.json(results);
       res.send();
-      client.release();
     } catch (err) {
       console.error(err);
       res.send("Error " + err);
