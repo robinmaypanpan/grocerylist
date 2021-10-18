@@ -1,3 +1,19 @@
+# Technologies
+
+- [Create React App](https://create-react-app.dev) - Automatically sets up an entire app for you
+    - [Github link](https://github.com/facebook/create-react-app)
+- [Github](https://github.com/robinmaypanpan/grocerylist) - Place for storing git repositories and collaborating
+- [git](https://git-scm.com/doc) - Technology for enabling version control
+- [Heroku](https://www.heroku.com/home) - Free web hosting service perfect for tiny apps like these
+    - [Getting started with node js](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+    - [Examples](https://github.com/heroku-examples)
+    - [Create-react-app buildpack](https://github.com/mars/create-react-app-buildpack#user-content-generate-a-react-app) - Uncertain how this actually works with Heroku and Create-react-app
+- [Postgres](https://www.postgresql.org) - Database system that Heroku runs.
+- [React](https://reactjs.org) - UI framework for building visual apps
+- [Redux](https://redux.js.org) - State management system for React
+- [Figma](https://www.figma.com/files/recent?fuid=1031803273450151713) - UI Design tool
+- [ExpressJS](https://expressjs.com) - Software for writing servers in NodeJS
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
