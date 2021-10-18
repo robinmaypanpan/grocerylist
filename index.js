@@ -2,21 +2,28 @@ const express = require('express');
 const path = require('path')
 const PORT = process.env.PORT || 5000
 
-// Specify our parser for incoming post commands.
-const bodyParser = require('body-parser');
-
 const { Pool } = require('pg');
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+console.log(process.env.DATABASE_URL);
+
+const pool = (() => {
+  if (process.env.NODE_ENV !== 'production') {
+      return new Pool({
+          connectionString: process.env.DATABASE_URL,
+          ssl: false
+      });
+  } else {
+      return new Pool({
+          connectionString: process.env.DATABASE_URL,
+          ssl: {
+              rejectUnauthorized: false
+            }
+      });
+  } })();
 
 express()
   .use(express.static(path.join(__dirname, 'build')))
-  .use( bodyParser.json() ) // to support JSON-encoded bodies
+  .use( express.json() ) // to support JSON-encoded bodies
 
   .get('/', (req, res) => res.sendFile(path.join(__dirname, 'build', 'index.html')))
 
