@@ -1,21 +1,37 @@
 {
   "name": "grocery-list",
   "version": "0.1.0",
-  "private": true,
+  "description": "Just a basic app for managing a household's shared grocery list",
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "express": "^4.17.1",
+    "pg": "^8.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robinmaypanpan/grocerylist"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express",
+    "grocery"
+  ],
   "scripts": {
-    "start": "react-scripts start",
+    "start-server": "node index.js",
+    "test-server": "node test.js",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test-ui": "react-scripts test"
   },
   "eslintConfig": {
     "extends": [
