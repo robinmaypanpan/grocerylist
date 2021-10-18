@@ -24,7 +24,7 @@ express()
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM grocerylist_table');
-      const results = { 'results': (result) ? result.rows : null};
+      const results = result ? result.rows.map(({name}) => name) : [];
       res.json(results);
       res.send();
       client.release();
