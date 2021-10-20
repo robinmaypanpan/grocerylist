@@ -33,9 +33,7 @@
     "start-server": "node server/index.js",
     "test-server": "node server/test.js",
     "build": "react-scripts build",
-
     "dev": "react-scripts start",
-
     "test-ui": "react-scripts test --testPathIgnorePatterns=server/"
   },
   "eslintConfig": {
