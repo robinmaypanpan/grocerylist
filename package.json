@@ -14,6 +14,8 @@
     "pg": "^8.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
@@ -30,8 +32,10 @@
   "scripts": {
     "start-server": "node server/index.js",
     "test-server": "node server/test.js",
-    "dev": "react-scripts start",
     "build": "react-scripts build",
+
+    "dev": "react-scripts start",
+
     "test-ui": "react-scripts test --testPathIgnorePatterns=server/"
   },
   "eslintConfig": {
