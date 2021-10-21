@@ -1,5 +1,38 @@
-import './Home.css';
 import React, {useEffect, useState} from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  display: block;
+  position: relative;
+  min-height: 100vh;
+  color: white;
+`;
+
+const Button = styled.button`
+  display: block;
+
+  background: #d45b12;
+  color: white;
+
+  font-size: 1.5em;
+  padding: 0.5em 1em;
+  border: 2px solid #d45b12;
+  border-radius: 10px;
+  width: 85%;
+  margin: 0.6em auto;
+`;
+
+const ItemList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Item = styled.div`
+  font-size: 1.5em;
+`;
 
 function renderContents(list, error) {
   if (error) {
@@ -8,9 +41,11 @@ function renderContents(list, error) {
 
   if (list && list?.length > 0) {
     return (
-      <ul>
-        {list.map((item) => (<li key={item}>{item}</li>))}
-      </ul>
+      <ItemList>
+        {list.map((item) => (
+          <Item key={item}>{item}</Item>
+        ))}
+      </ItemList>
     );
   }
 
@@ -38,9 +73,12 @@ function Home() {
   }, []);
 
   return (
-    <div className="Home">
+    <Wrapper>
+      <Link to='/addNewItem'>
+        <Button>Add New Entry</Button>
+      </Link>
       {renderContents(list, error)}
-    </div>
+    </Wrapper>
   );
 }
 
