@@ -26,12 +26,20 @@ const Button = styled.button`
 const ItemList = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 `;
 
 const Item = styled.div`
   font-size: 1.5em;
+  margin-left: 0.5em;
+  padding:0.15em;
+`;
+
+const Line = styled.hr`
+  width: 100%;
+  height: 1px;
+  color: gray;
+  background-color: gray;
+  border-style: none;
 `;
 
 function renderContents(list, error) {
@@ -42,8 +50,12 @@ function renderContents(list, error) {
   if (list && list?.length > 0) {
     return (
       <ItemList>
+        <Line/>
         {list.map((item) => (
-          <Item key={item}>{item}</Item>
+          <>
+            <Item key={item}>{item}</Item>
+            <Line/>
+          </>
         ))}
       </ItemList>
     );
@@ -61,7 +73,6 @@ function Home() {
       try {
         const response = await fetch('/api/list');
         const json = await response.json();
-        console.log('Received list: ' + json);
         setList(json);
       } catch(error) {
         console.error('Received error: ' + error);
