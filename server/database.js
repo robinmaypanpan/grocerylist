@@ -18,13 +18,14 @@ const pool = (() => {
 
 function connectAndQuery(query) {
     return new Promise(async (resolve, reject) => {
+        const client = await pool.connect();
         try {
-            const client = await pool.connect();
             const result = await client.query(query);
             client.release();
             resolve(result);
         } catch (err) {
             console.error(err);
+            if (client) client.release();
             reject("Error " + err);
         }
     });

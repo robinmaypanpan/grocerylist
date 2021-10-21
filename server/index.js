@@ -9,7 +9,7 @@ express()
 
   .use('/api', require('./api'))
 
-  // Any remainining requests are passed directly to the client soi that it can do client-side routing.
+  // Any remainining requests are passed directly to the client so that it can do client-side routing.
   .get('/*', (req, res) => res.sendFile(path.join(__dirname, '..', 'build', 'index.html')))
 
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
