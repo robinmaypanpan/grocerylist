@@ -20,9 +20,20 @@ const Text = styled.span`
 `;
 
 function Item({item}) {
+    async function handleClick() {
+        await fetch('/api/removeItem', {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item) 
+        });
+        window.location = '/';
+    }
+
     return (
         <Container>
-            <Text>{item.name}</Text>
+            <Text onClick={handleClick}>{item.name}</Text>
         </Container>
     );
 }

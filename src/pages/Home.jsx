@@ -45,8 +45,8 @@ const TopButton = styled(StyledButton)`
 
 const Contents = styled.div`
   position: absolute;  
-  top: 12vh;
-  height: 88vh;
+  top: 14vh;
+  height: 86vh;
   width: 100vw;
   left: 0;
 `;
