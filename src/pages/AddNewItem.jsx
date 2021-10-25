@@ -16,7 +16,9 @@ const ItemInput = styled.input`
 `;
 
 const BottomButton = styled(StyledButton)`
-    justify-content: bottom;
+    position:absolute;
+    bottom: 2vh;
+    left: 7.5vw;
 `;
 
 function AddNewItem() {
@@ -29,12 +31,18 @@ function AddNewItem() {
         await fetch('/api/addItem', {
             method: 'POST', 
             headers: {
-            'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data) // body data type must match "Content-Type" header
         });
 
         window.location = '/';
+    }
+
+    function handleKeyPress(event) {
+        if(event.key === 'Enter'){
+            handleAddButton();
+        }
     }
 
     function handleTextChange(event) {
@@ -49,7 +57,13 @@ function AddNewItem() {
     return (
         <PageWrapper>
             <StyledButton onClick={handleAddButton}>Add Item</StyledButton>
-            <ItemInput autoFocus type='text' value={itemName} onChange={handleTextChange}/>            
+            <ItemInput 
+                autoFocus
+                type='text' 
+                value={itemName} 
+                onChange={handleTextChange}
+                onKeyPress={handleKeyPress}
+            />            
             <BottomButton onClick={handleBackButton}>Cancel</BottomButton>
         </PageWrapper>
     );
