@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import StyledButton from '../components/StyledButton';
 
 const Wrapper = styled.div`
-  display: block;
-  position: relative;
-  min-height: 100vh;
-  color: white;
+    display: block;
+    position: relative;
+    min-height: 100vh;
+    color: white;
 `;
 
 const ItemInput = styled.input`
@@ -20,24 +21,14 @@ const ItemInput = styled.input`
     margin: 0.6em auto;
 `;
 
-const AddButton = styled.button`
-    display: block;
-
-    background: #d45b12;
-    color: white;
-
-    font-size: 1.5em;
-    padding: 0.5em 1em;
-    border: 2px solid #d45b12;
-    border-radius: 10px;
-    width: 85%;
-    margin: 0.6em auto;
+const BottomButton = styled(StyledButton)`
+    justify-content: bottom;
 `;
 
 function AddNewItem() {
     const [itemName, setItemName] = useState('');
 
-    async function handleButton() {
+    async function handleAddButton() {
         if (!itemName) return;
         const data = {name: itemName};
 
@@ -57,10 +48,15 @@ function AddNewItem() {
         setItemName(textBox.value);
     }
 
+    function handleBackButton() {
+        window.location = '/';
+    }
+
     return (
         <Wrapper>
-            <AddButton onClick={handleButton}>Add Item</AddButton>
-            <ItemInput autoFocus type='text' value={itemName} onChange={handleTextChange}/>
+            <StyledButton onClick={handleAddButton}>Add Item</StyledButton>
+            <ItemInput autoFocus type='text' value={itemName} onChange={handleTextChange}/>            
+            <BottomButton onClick={handleBackButton}>Cancel</BottomButton>
         </Wrapper>
     );
 }
