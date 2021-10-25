@@ -10,6 +10,6 @@ export default styled.button`
     padding: 0.5em 1em;
     border: 2px solid #d45b12;
     border-radius: 10px;
-    width: 85%;
+    width: 85vw;
     margin: 0.6em auto;
 `;

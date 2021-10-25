@@ -4,20 +4,26 @@ import StyledButton from '../components/StyledButton';
 import PageWrapper from '../components/PageWrapper';
 
 const ItemInput = styled.input`
-    display: block;
+    position: absolute;
+    top: 15vh;
+    left: 7vw;
+    width: 85vw;
 
     font-size: 1.2em;
 
-    padding: 0.2em 0.5em;
     border: 2px solid #d45b12;
     border-radius: 10px;
-    width: 85%;
-    margin: 0.6em auto;
 `;
 
 const BottomButton = styled(StyledButton)`
     position:absolute;
     bottom: 2vh;
+    left: 7.5vw;
+`;
+
+const TopButton = styled(StyledButton)`
+    position:absolute;
+    top: 2vh;
     left: 7.5vw;
 `;
 
@@ -56,7 +62,7 @@ function AddNewItem() {
 
     return (
         <PageWrapper>
-            <StyledButton onClick={handleAddButton}>Add Item</StyledButton>
+            <TopButton onClick={handleAddButton}>Add Item</TopButton>
             <ItemInput 
                 autoFocus
                 type='text' 

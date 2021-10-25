@@ -5,8 +5,7 @@ const Container = styled.div`
     flex: 1;
     flex-direction: column;
     overflow-y: scroll;
-    height: 700px;
-    width: 100%;
+    height: 100%;
 `;
 
 const Item = styled.div`
@@ -24,18 +23,16 @@ const Line = styled.hr`
     border-style: none;
 `;
 
-function ItemList({ list }){
-    const items = list.map((item) => (
-      <>
-        <Item key={item.id}>{item.name}</Item>
-        <Line key={`Line${item.id}`}/>
-      </>
-    ))
-    
+function ItemList({ top, height, list }){
     return (
-      <Container>
+      <Container top={top} height={height}>
         <Line/>
-        {items}
+        {list.map((item) => (
+          <>
+            <Item key={item.id}>{item.name}</Item>
+            <Line key={`Line${item.id}`}/>
+          </>
+        ))}
       </Container>
     );
 }

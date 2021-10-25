@@ -37,6 +37,20 @@ const LoadingContainer = styled.div`
   height: 700px;  
 `;
 
+const TopButton = styled(StyledButton)`
+    position:absolute;
+    top: 2vh;
+    left: 7.5vw;
+`;
+
+const Contents = styled.div`
+  position: absolute;  
+  top: 12vh;
+  height: 88vh;
+  width: 100vw;
+  left: 0;
+`;
+
 function renderContents(list, error) {
   if (error) {
     return (
@@ -76,9 +90,11 @@ function Home() {
   return (
     <PageWrapper>
       <Link to='/addNewItem'>
-        <StyledButton>Add New Entry</StyledButton>
+        <TopButton>Add New Entry</TopButton>
       </Link>
-      {renderContents(list, error)}
+      <Contents>
+        {renderContents(list, error)}
+      </Contents>
     </PageWrapper>
   );
 }
