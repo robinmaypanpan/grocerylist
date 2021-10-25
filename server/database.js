@@ -18,11 +18,11 @@ const pool = (() => {
   } 
 })();
 
-function connectAndQuery(query) {
+function connectAndQuery(query, values = []) {
     return new Promise(async (resolve, reject) => {
         const client = await pool.connect();
         try {
-            const result = await client.query(query);
+            const result = await client.query(query, values);
             client.release();
             resolve(result);
         } catch (err) {
@@ -67,8 +67,12 @@ async function getItems() {
 async function addItem(name, categoryId = 0) {
     await connectAndQuery(
         `INSERT INTO ${GROCERY_LIST_TABLE} (name, timestamp, category_id) \
-        VALUES ('${name}', current_timestamp, ${categoryId}) \
-        RETURNING *;`
+        VALUES ('$1', current_timestamp, $2) \
+        RETURNING *;`,
+        [
+            name,
+            categoryId
+        ]
     ); 
     return await getItems();
 }
@@ -77,14 +81,16 @@ async function removeItem(id, name) {
     if (id) {
         await connectAndQuery(
             `DELETE FROM ${GROCERY_LIST_TABLE} \
-            WHERE id = ${id} \
-            RETURNING *;`
+            WHERE id = $1 \
+            RETURNING *;`,
+            [id]
         );
     } else if (name) {
         await connectAndQuery(
             `DELETE FROM ${GROCERY_LIST_TABLE} \
-            WHERE name = ${name} \
-            RETURNING *;`
+            WHERE name = $1\
+            RETURNING *;`,
+            [name]
         );
     } else {
         throw new Error('No removal key provided');
