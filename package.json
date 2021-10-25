@@ -5,6 +5,7 @@
   "engines": {
     "node": "14.x"
   },
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -14,7 +15,10 @@
     "pg": "^8.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "styled-components": "^5.3.3",
     "web-vitals": "^1.0.1"
   },
   "repository": {
@@ -28,17 +32,20 @@
     "grocery"
   ],
   "scripts": {
-    "start-server": "node index.js",
-    "test-server": "node test.js",
-    "dev": "react-scripts start",
+    "start-server": "node server/index.js",
+    "test-server": "node server/test.js",
     "build": "react-scripts build",
-    "test-ui": "react-scripts test"
+    "dev": "react-scripts start",
+    "test-ui": "react-scripts test --testPathIgnorePatterns=server/"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "resolutions": {
+    "styled-components": "^5"
   },
   "browserslist": {
     "production": [

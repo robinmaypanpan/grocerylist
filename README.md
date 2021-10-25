@@ -1,8 +1,31 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Technologies
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- [Github](https://github.com/robinmaypanpan/grocerylist) - Place for storing git repositories and collaborating
+- [git](https://git-scm.com/doc) - Technology for enabling version control
+- [Heroku](https://www.heroku.com/home) - Free web hosting service perfect for tiny apps like these
+    - [Getting started with node js](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+    - [Examples](https://github.com/heroku-examples)
+    - [Create-react-app buildpack](https://github.com/mars/create-react-app-buildpack#user-content-generate-a-react-app) - Uncertain how this actually works with Heroku and Create-react-app
+- [Postgres](https://www.postgresql.org) - Database system that Heroku runs.
+- [React](https://reactjs.org) - UI framework for building visual apps
+- [Redux](https://redux.js.org) - State management system for React
+- [Figma](https://www.figma.com/files/recent?fuid=1031803273450151713) - UI Design tool
+- [ExpressJS](https://expressjs.com) - Software for writing servers in NodeJS
+
+# Folders
+- **src** - Location for the React web client
+  - *index.jsx* - Starting point for React web client
+  - *setupTests.js* - Runs prior to running tests.
+  - **.test.js* Files that test a component
+- **server** - ExpressJS based server hosting backend and database access
+  - *index.js* - Starting point for server
+  - *test.js* - Starting point for server side tests
+- **public** - HTML, images, etc that are uploaded directly
+- **build** - Output of the **yarn build** command.
+- **.env.example* - Example *.env* file. Copy this into your folder.
+# Available Scripts
 
 In the project directory, you can run:
 
