@@ -33,6 +33,19 @@ function connectAndQuery(query) {
     });
 }
 
+function buildItemArray(result) {
+    const results = result ? result.rows : [];
+    return results.map((item) => {
+        const newItem = {};
+        Object.keys(item).forEach((itemProp) => {
+            if (item[itemProp]) {
+                newItem[itemProp] = item[itemProp];
+            }
+        });
+        return newItem;
+    });;
+}
+
 async function initializeDatabase() {
     return await connectAndQuery(
         `CREATE TABLE IF NOT EXISTS ${GROCERY_LIST_TABLE} (` +
@@ -48,35 +61,27 @@ async function getItems() {
     const result = await connectAndQuery(
         `SELECT * FROM ${GROCERY_LIST_TABLE};`
     );
-    const results = result ? result.rows : [];
-    return results.map((item) => {
-        const newItem = {};
-        Object.keys(item).forEach((itemProp) => {
-            if (item[itemProp]) {
-                newItem[itemProp] = item[itemProp];
-            }
-        });
-        return newItem;
-    });;
+    return buildItemArray(result);
 }
 
 async function addItem(name, categoryId = 0) {
-    return await connectAndQuery(
+    await connectAndQuery(
         `INSERT INTO ${GROCERY_LIST_TABLE} (name, timestamp, category_id) \
         VALUES ('${name}', current_timestamp, ${categoryId}) \
         RETURNING *;`
     ); 
+    return await getItems();
 }
 
 async function removeItem(id, name) {
     if (id) {
-        return await connectAndQuery(
+        await connectAndQuery(
             `DELETE FROM ${GROCERY_LIST_TABLE} \
             WHERE id = ${id} \
             RETURNING *;`
         );
     } else if (name) {
-        return await connectAndQuery(
+        await connectAndQuery(
             `DELETE FROM ${GROCERY_LIST_TABLE} \
             WHERE name = ${name} \
             RETURNING *;`
@@ -84,6 +89,7 @@ async function removeItem(id, name) {
     } else {
         throw new Error('No removal key provided');
     }
+    return await getItems();
 }
 
 module.exports = {
