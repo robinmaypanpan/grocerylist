@@ -67,7 +67,7 @@ async function getItems() {
 async function addItem(name, categoryId = 0) {
     await connectAndQuery(
         `INSERT INTO ${GROCERY_LIST_TABLE} (name, timestamp, category_id) \
-        VALUES ('$1', current_timestamp, $2) \
+        VALUES ($1::text, current_timestamp, $2) \
         RETURNING *;`,
         [
             name,
