@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import ItemList from '../components/ItemList';
 
 const Wrapper = styled.div`
   display: block;
@@ -23,45 +24,52 @@ const Button = styled.button`
   margin: 0.6em auto;
 `;
 
-const ItemList = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Item = styled.div`
-  font-size: 1.5em;
-  margin-left: 0.5em;
-  padding:0.15em;
-`;
-
-const Line = styled.hr`
+const ErrorContainer = styled.div`
+  position: absolute;
+  top: 35%;
+  text-align: center;
   width: 100%;
-  height: 1px;
-  color: gray;
-  background-color: gray;
-  border-style: none;
+  color: #F3BC2E;
+  font-size: 8em;
+  height: 700px;
+`;
+
+const ErrorDescription = styled.div`
+  position: absolute;
+  top: 60%;
+  padding: 50px;
+  text-align: center;
+  width: 100% - 50px;
+  color: white;
+  font-size: 1em;
+  height: 700px;
+`;
+
+const LoadingContainer = styled.div`
+  position: absolute;
+  top: 40%;
+  text-align: center;
+  width: 100%;
+  color: #F3BC2E;
+  font-size: 4em;
+  height: 700px;  
 `;
 
 function renderContents(list, error) {
   if (error) {
-    return <span>Error!</span>
-  }
-
-  if (list && list?.length > 0) {
     return (
-      <ItemList>
-        <Line/>
-        {list.map((item) => (
-          <>
-            <Item key={item}>{item}</Item>
-            <Line/>
-          </>
-        ))}
-      </ItemList>
+      <>
+        <ErrorContainer>Error</ErrorContainer>
+        <ErrorDescription>{error}</ErrorDescription>
+      </>
     );
   }
 
-  return <span>Loading...</span>;
+  if (list && list?.length > 0) {
+    return <ItemList list={list}/>
+  }
+
+  return <LoadingContainer>Loading...</LoadingContainer>;
 }
 
 function Home() {
