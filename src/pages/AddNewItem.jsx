@@ -1,13 +1,7 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import StyledButton from '../components/StyledButton';
-
-const Wrapper = styled.div`
-    display: block;
-    position: relative;
-    min-height: 100vh;
-    color: white;
-`;
+import PageWrapper from '../components/PageWrapper';
 
 const ItemInput = styled.input`
     display: block;
@@ -53,11 +47,11 @@ function AddNewItem() {
     }
 
     return (
-        <Wrapper>
+        <PageWrapper>
             <StyledButton onClick={handleAddButton}>Add Item</StyledButton>
             <ItemInput autoFocus type='text' value={itemName} onChange={handleTextChange}/>            
             <BottomButton onClick={handleBackButton}>Cancel</BottomButton>
-        </Wrapper>
+        </PageWrapper>
     );
 }
 

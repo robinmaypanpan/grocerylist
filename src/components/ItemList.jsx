@@ -13,6 +13,7 @@ const Item = styled.div`
     font-size: 1.5em;
     margin-left: 0.5em;
     padding:0.15em;
+    color:white;
 `;
 
 const Line = styled.hr`

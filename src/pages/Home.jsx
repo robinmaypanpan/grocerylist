@@ -1,15 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 import ItemList from '../components/ItemList';
 import StyledButton from '../components/StyledButton';
-
-const Wrapper = styled.div`
-  display: block;
-  position: relative;
-  min-height: 100vh;
-  color: white;
-`;
+import PageWrapper from '../components/PageWrapper';
 
 const ErrorContainer = styled.div`
   position: absolute;
@@ -79,12 +74,12 @@ function Home() {
   }, []);
 
   return (
-    <Wrapper>
+    <PageWrapper>
       <Link to='/addNewItem'>
         <StyledButton>Add New Entry</StyledButton>
       </Link>
       {renderContents(list, error)}
-    </Wrapper>
+    </PageWrapper>
   );
 }
 
