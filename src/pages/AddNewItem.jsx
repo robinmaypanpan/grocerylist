@@ -7,9 +7,10 @@ const ItemInput = styled.input`
     position: absolute;
     top: 15vh;
     left: 7vw;
-    width: 85vw;
+    width: 80vw;
 
     font-size: 1.2em;
+    padding: 0.5em;
 
     border: 2px solid #d45b12;
     border-radius: 10px;

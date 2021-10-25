@@ -76,8 +76,13 @@ async function removeItem(id, name) {
             RETURNING *;`
         );
     } else if (name) {
+        return await connectAndQuery(
+            `DELETE FROM ${GROCERY_LIST_TABLE} \
+            WHERE name = ${name} \
+            RETURNING *;`
+        );
     } else {
-        throw 'No removal key provided';
+        throw new Error('No removal key provided');
     }
 }
 
