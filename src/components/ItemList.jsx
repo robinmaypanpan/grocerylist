@@ -26,8 +26,8 @@ const Line = styled.hr`
 function ItemList({ list }){
     const items = list.map((item) => (
       <>
-        <Item key={item}>{item}</Item>
-        <Line/>
+        <Item key={item.id}>{item.name}</Item>
+        <Line key={`Line${item.id}`}/>
       </>
     ))
     

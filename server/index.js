@@ -16,7 +16,7 @@ async function initalize() {
 
   console.log('Database initialized');
 
-  console.log('Starting Express server');
+  console.log('Starting ExpressJS server');
 
   express()
     .use(express.static(path.join(__dirname, '..', 'build')))
