@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
+import { updateList } from '../slices/listSlice';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -70,7 +71,7 @@ function renderContents(list, error) {
 }
 
 function Home() {
-  const list = useSelector((state) => state.list)
+  const list = useSelector((state) => state.list.value)
   const dispatch = useDispatch();
   const [error, setError] = useState();
 
@@ -79,7 +80,7 @@ function Home() {
       try {
         const response = await fetch('/api/list');
         const json = await response.json();
-        dispatch({type: 'UPDATE_LIST', payload: json});
+        dispatch(updateList(json));
       } catch(error) {
         console.error('Received error: ' + error);
         setError(error);

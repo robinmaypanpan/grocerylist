@@ -1,10 +1,9 @@
+import { configureStore } from '@reduxjs/toolkit'
 
-import { createStore } from 'redux';
+import listReducer from './slices/listSlice';
 
-import listReducer from './reducers/listReducer';
-
-const initialState = {list: []};
-
-export default createStore(listReducer, initialState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+export default configureStore({
+  reducer: {
+    list: listReducer
+  },
+})

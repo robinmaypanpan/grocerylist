@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { updateList } from '../slices/listSlice';
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components';
 import StyledButton from '../components/StyledButton';
@@ -45,7 +46,7 @@ function AddNewItem() {
             body: JSON.stringify(data)
         });
         const json = await response.json();
-        dispatch({type: 'UPDATE_LIST', payload: json});
+        dispatch(updateList(json));
 
         window.location = '/';
     }

@@ -25,7 +25,7 @@ router.post('/addItem', async (request, response) => {
     }
 
     try {
-        const result = addItem(name);
+        const result = await addItem(name);
         response.json(result);
     } catch (error) {
         console.error('Failed to add item to database');
@@ -37,7 +37,7 @@ router.post('/removeItem', async (request, response) => {
     console.log(`Got removal request for ${JSON.stringify(request.body)}`);
     const { id, name } = request.body;
     try {
-        const result = removeItem(id, name);
+        const result = await removeItem(id, name);
         response.json(result);
     } catch(error) {
         console.error('Failed to remove item from database');

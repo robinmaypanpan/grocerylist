@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux'
+import { updateList } from '../slices/listSlice';
 
 const Container = styled.div`
     display: flex;
@@ -31,7 +32,8 @@ function Item({item}) {
             body: JSON.stringify(item) 
         });
         const json = await response.json();
-        dispatch({type: 'UPDATE_LIST', payload: json});
+        console.log(`Got json back ${JSON.stringify(json)}`);
+        dispatch(updateList(json));
     }
 
     return (
