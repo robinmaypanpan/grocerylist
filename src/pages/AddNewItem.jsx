@@ -4,13 +4,12 @@ import StyledButton from '../components/StyledButton';
 import PageWrapper from '../components/PageWrapper';
 
 const ItemInput = styled.input`
-    position: absolute;
-    top: 15vh;
-    left: 7vw;
+    display: block;
     width: 80vw;
 
     font-size: 1.2em;
     padding: 0.5em;
+    margin: 2em auto;
 
     border: 2px solid #d45b12;
     border-radius: 10px;
@@ -20,12 +19,13 @@ const BottomButton = styled(StyledButton)`
     position:absolute;
     bottom: 2vh;
     left: 7.5vw;
+    width: 85vw;
 `;
 
-const TopButton = styled(StyledButton)`
+const Header = styled.div`
     position:absolute;
     top: 2vh;
-    left: 7.5vw;
+    width: 100vw;
 `;
 
 function AddNewItem() {
@@ -63,14 +63,16 @@ function AddNewItem() {
 
     return (
         <PageWrapper>
-            <TopButton onClick={handleAddButton}>Add Item</TopButton>
-            <ItemInput 
-                autoFocus
-                type='text' 
-                value={itemName} 
-                onChange={handleTextChange}
-                onKeyPress={handleKeyPress}
-            />            
+            <Header>
+                <StyledButton onClick={handleAddButton}>Add Item</StyledButton>
+                <ItemInput 
+                    autoFocus
+                    type='text' 
+                    value={itemName} 
+                    onChange={handleTextChange}
+                    onKeyPress={handleKeyPress}
+                />      
+            </Header>      
             <BottomButton onClick={handleBackButton}>Cancel</BottomButton>
         </PageWrapper>
     );
