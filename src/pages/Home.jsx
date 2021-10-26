@@ -85,7 +85,7 @@ function Home() {
     }
 
     fetchList();
-  }, []);
+  });
 
   return (
     <PageWrapper>
