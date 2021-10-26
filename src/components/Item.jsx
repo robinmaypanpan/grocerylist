@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux'
 
 const Container = styled.div`
     display: flex;
@@ -20,15 +21,17 @@ const Text = styled.span`
 `;
 
 function Item({item}) {
+    const dispatch = useDispatch();
     async function handleClick() {
-        await fetch('/api/removeItem', {
+        const response = await fetch('/api/removeItem', {
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(item) 
         });
-        window.location = '/';
+        const json = await response.json();
+        dispatch({type: 'UPDATE_LIST', payload: json});
     }
 
     return (

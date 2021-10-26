@@ -7,14 +7,19 @@ import { BrowserRouter, Switch, Route} from 'react-router-dom';
 import Home from './pages/Home';
 import AddNewItem from './pages/AddNewItem';
 
+import { Provider } from 'react-redux';
+import store from './store';
+
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Switch>
-        <Route path='/addNewItem' component={AddNewItem}/>
-        <Route exact path='/' component={Home}/>
-      </Switch>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          <Route path='/addNewItem' component={AddNewItem}/>
+          <Route exact path='/' component={Home}/>
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
