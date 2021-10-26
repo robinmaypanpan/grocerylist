@@ -1,4 +1,8 @@
 import React, {useState} from 'react';
+import { updateList } from '../slices/listSlice';
+import { useDispatch } from 'react-redux'
+import { useHistory } from "react-router-dom";
+
 import styled from 'styled-components';
 import StyledButton from '../components/StyledButton';
 import PageWrapper from '../components/PageWrapper';
@@ -30,20 +34,24 @@ const Header = styled.div`
 
 function AddNewItem() {
     const [itemName, setItemName] = useState('');
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     async function handleAddButton() {
         if (!itemName) return;
         const data = {name: itemName};
 
-        await fetch('/api/addItem', {
+        const response = await fetch('/api/addItem', {
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         });
+        const json = await response.json();
+        dispatch(updateList(json));
 
-        window.location = '/';
+        history.push("/");
     }
 
     function handleKeyPress(event) {
@@ -58,7 +66,7 @@ function AddNewItem() {
     }
 
     function handleBackButton() {
-        window.location = '/';
+        history.goBack();
     }
 
     return (
