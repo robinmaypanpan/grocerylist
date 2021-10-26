@@ -19,6 +19,7 @@ const pool = (() => {
 })();
 
 function connectAndQuery(query, values = []) {
+    console.log(`Running query ${query} with values ${values}`);
     return new Promise(async (resolve, reject) => {
         const client = await pool.connect();
         try {
@@ -67,8 +68,7 @@ async function getItems() {
 async function addItem(name, categoryId = 0) {
     await connectAndQuery(
         `INSERT INTO ${GROCERY_LIST_TABLE} (name, timestamp, category_id) \
-        VALUES ($1::text, current_timestamp, $2) \
-        RETURNING *;`,
+        VALUES ($1::text, current_timestamp, $2);`,
         [
             name,
             categoryId
@@ -81,15 +81,13 @@ async function removeItem(id, name) {
     if (id) {
         await connectAndQuery(
             `DELETE FROM ${GROCERY_LIST_TABLE} \
-            WHERE id = $1 \
-            RETURNING *;`,
+            WHERE id = $1;`,
             [id]
         );
     } else if (name) {
         await connectAndQuery(
             `DELETE FROM ${GROCERY_LIST_TABLE} \
-            WHERE name = $1\
-            RETURNING *;`,
+            WHERE name = $1;`,
             [name]
         );
     } else {

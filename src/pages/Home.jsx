@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { updateList } from '../slices/listSlice';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -12,7 +14,7 @@ const ErrorContainer = styled.div`
   text-align: center;
   width: 100%;
   color: #F3BC2E;
-  font-size: 8em;
+  font-size: 5em;
   height: 700px;
 `;
 
@@ -33,7 +35,7 @@ const LoadingContainer = styled.div`
   text-align: center;
   width: 100%;
   color: #F3BC2E;
-  font-size: 4em;
+  font-size: 2em;
   height: 700px;  
 `;
 
@@ -69,7 +71,8 @@ function renderContents(list, error) {
 }
 
 function Home() {
-  const [list, setList] = useState();
+  const list = useSelector((state) => state.list.value)
+  const dispatch = useDispatch();
   const [error, setError] = useState();
 
   useEffect(() => {
@@ -77,7 +80,7 @@ function Home() {
       try {
         const response = await fetch('/api/list');
         const json = await response.json();
-        setList(json);
+        dispatch(updateList(json));
       } catch(error) {
         console.error('Received error: ' + error);
         setError(error);
@@ -85,7 +88,7 @@ function Home() {
     }
 
     fetchList();
-  });
+  }, [dispatch]);
 
   return (
     <PageWrapper>
