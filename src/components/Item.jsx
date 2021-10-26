@@ -23,6 +23,7 @@ const Text = styled.span`
 
 function Item({item}) {
     const dispatch = useDispatch();
+
     async function handleClick() {
         const response = await fetch('/api/removeItem', {
             method: 'POST', 

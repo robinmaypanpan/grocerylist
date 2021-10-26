@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import { updateList } from '../slices/listSlice';
 import { useDispatch } from 'react-redux'
+import { useHistory } from "react-router-dom";
+
 import styled from 'styled-components';
 import StyledButton from '../components/StyledButton';
 import PageWrapper from '../components/PageWrapper';
@@ -33,6 +35,7 @@ const TopButton = styled(StyledButton)`
 function AddNewItem() {
     const [itemName, setItemName] = useState('');
     const dispatch = useDispatch();
+    const history = useHistory();
 
     async function handleAddButton() {
         if (!itemName) return;
@@ -48,7 +51,7 @@ function AddNewItem() {
         const json = await response.json();
         dispatch(updateList(json));
 
-        window.location = '/';
+        history.push("/");
     }
 
     function handleKeyPress(event) {
@@ -63,7 +66,7 @@ function AddNewItem() {
     }
 
     function handleBackButton() {
-        window.location = '/';
+        history.goBack();
     }
 
     return (
