@@ -33,7 +33,6 @@ function Item({item}) {
             body: JSON.stringify(item) 
         });
         const json = await response.json();
-        console.log(`Got json back ${JSON.stringify(json)}`);
         dispatch(updateList(json));
     }
 
