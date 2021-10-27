@@ -2,13 +2,13 @@
 In order to build this application, you're going to need a few things setup in your environment.
 ## Tools to download
 - [Node 14](https://nodejs.org/en/) - First you need to make sure you install a version of node version 14.  [I recommend using nvm](https://github.com/nvm-sh/nvm) so that you can change your environment version easily.
-- [Postgres](https://www.postgresql.org) - You will need to have access to a postgres server in order to run this.  You can setup any username or database you want, but make sure to put that information in the `.env` file.  You can check out `.env.example` for a sample `.env` file.
-- [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) - You need the Heroku CLI to run the local server, as well as work with any dev hosting you may want to host.
+- [Postgres](https://www.postgresql.org) - You will need to have access to a postgres server in order to run this.  You can setup any username or database you want, but make sure to put that information in the `.env` file.  You can check out `.env.example` for information on how to do this..
+- [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) - You need the Heroku CLI to run the local server, as well as work with any dev hosting you may want to host.  Among the other things this does, when you run `heroku local` it accesses the local `.env` file for information about your database configuration.
 
 ## Run the app
-1. `yarn` - Update your depenedencies
-2. `heroku local` - Run the server. This hosts the backend
-3. `yarn dev` - Host a hot reloading version of the React client app
+1. `yarn` - Update your depenedencies. You should do this every time you pull from github.
+2. `heroku local` - Run the server. This hosts the backend.
+3. `yarn dev` - Host a hot reloading version of the React client app.
 
 # Technologies
 - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
