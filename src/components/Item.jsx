@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux'
-import { updateList } from '../slices/listSlice';
 
 const Container = styled.div`
     display: flex;
@@ -18,27 +16,13 @@ const Text = styled.span`
     width: 93.5%;
     margin: 1em 0.5em;
     font-size: 1.5em;
-    color:white;
+    color:${props => props.theme.dataText};
 `;
 
-function Item({item}) {
-    const dispatch = useDispatch();
-
-    async function handleClick() {
-        const response = await fetch('/api/removeItem', {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item) 
-        });
-        const json = await response.json();
-        dispatch(updateList(json));
-    }
-
+function Item({item, onClick}) {
     return (
         <Container>
-            <Text onClick={handleClick}>{item.name}</Text>
+            <Text onClick={onClick}>{item.name}</Text>
         </Container>
     );
 }

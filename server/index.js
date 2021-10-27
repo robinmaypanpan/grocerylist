@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 5000
 
@@ -10,7 +11,7 @@ async function initalize() {
     console.log('Initializing Database');
     await initializeDatabase();
   } catch (error) {
-    console.error('Failed to start server due to database error');
+    console.error(`Failed to start server due to database error ${JSON.stringify(error, null, 2)}`);
     return;
   }
 
@@ -21,6 +22,7 @@ async function initalize() {
   express()
     .use(express.static(path.join(__dirname, '..', 'build')))
     .use( express.json() ) // to support JSON-encoded bodies
+    .use(bodyParser.urlencoded({ extended: false }))
   
     .use('/api', require('./api'))
   
