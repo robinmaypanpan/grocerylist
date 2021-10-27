@@ -13,8 +13,8 @@ import { getList, removeItem } from '../services/api';
 
 const Contents = styled.section`
   position: absolute;  
-  top: 18vh;
-  height: 82vh;
+  top: 17vh;
+  height: 83vh;
   width: 100vw;
   left: 0;
 `;
