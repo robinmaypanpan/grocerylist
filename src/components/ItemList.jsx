@@ -9,10 +9,10 @@ const Container = styled.div`
     height: 100%;
 `;
 
-function ItemList({ top, height, list }){
+function ItemList({ top, height, list, onRemoveItem}){
     return (
       <Container top={top} height={height}>
-        {list.map((item) => <Item key={item.id} item={item}/>)}
+        {list.map((item) => <Item key={item.id} item={item} onClick={() => onRemoveItem(item.id)}/>)}
       </Container>
     );
 }
