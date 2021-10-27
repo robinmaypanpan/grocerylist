@@ -1,11 +1,20 @@
 async function callFetch(method, type = 'GET', data = {}) {
-    const response = await fetch(`/api/${method}`, {
-        method: type, 
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
+    let options;
+    let url = `/api/${method}`;
+
+    if (type === 'GET') {
+        url += new URLSearchParams(data);
+    } else {
+        options = {
+            method: type, 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
+    }
+    const response = await fetch(url, options);
+
     return await response.json();
 }
 
@@ -25,7 +34,7 @@ export async function removeList(listId) {
     return await callFetch('removeList', 'DELETE', {listId});
 }
 
-export async function addItem(name, categoryName, listId) {
+export async function addItem(name, listId, categoryName) {
     return await callFetch('addItem', 'POST', {name, categoryName, listId});
 }
 
