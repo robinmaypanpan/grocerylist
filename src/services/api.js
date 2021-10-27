@@ -1,9 +1,11 @@
 async function callFetch(method, type = 'GET', data = {}) {
     let options;
     let url = `/api/${method}`;
+    let response;
 
     if (type === 'GET') {
-        url += new URLSearchParams(data);
+        url += '?' + new URLSearchParams(data);
+        response = await fetch(url);
     } else {
         options = {
             method: type, 
@@ -12,8 +14,8 @@ async function callFetch(method, type = 'GET', data = {}) {
             },
             body: JSON.stringify(data)
         };
+        response = await fetch(url, options);
     }
-    const response = await fetch(url, options);
 
     return await response.json();
 }

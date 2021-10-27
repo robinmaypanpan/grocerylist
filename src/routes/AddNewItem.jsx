@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import StyledButton from '../components/StyledButton';
 import PageWrapper from '../components/PageWrapper';
 
+import { addItem } from '../services/api';
+
 const ItemInput = styled.input`
     display: block;
     width: 80vw;
@@ -32,26 +34,19 @@ const Header = styled.div`
     width: 100vw;
 `;
 
-function AddNewItem() {
+function AddNewItem(props) {
     const [itemName, setItemName] = useState('');
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const listId = props.match.params.listId;
+
     async function handleAddButton() {
         if (!itemName) return;
-        const data = {name: itemName};
+        const newList = await addItem(itemName, listId);
+        dispatch(updateList(newList));
 
-        const response = await fetch('/api/addItem', {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        const json = await response.json();
-        dispatch(updateList(json));
-
-        history.push("/");
+        history.push(`/list/${listId}`);
     }
 
     function handleKeyPress(event) {

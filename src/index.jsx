@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Switch, Route} from 'react-router-dom';
 
-import Home from './pages/Home';
-import AddNewItem from './pages/AddNewItem';
+import './index.css';
+
+import reportWebVitals from './reportWebVitals';
+import Router from './Router';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -13,12 +12,7 @@ import store from './store';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <Switch>
-          <Route path='/addNewItem' component={AddNewItem}/>
-          <Route exact path='/' component={Home}/>
-        </Switch>
-      </BrowserRouter>
+      <Router/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
