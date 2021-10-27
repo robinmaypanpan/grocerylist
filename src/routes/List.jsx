@@ -95,10 +95,10 @@ function List(props) {
   return (
     <PageWrapper>
       <Header>
+        <Title>{list.name}</Title>
         <Link to={addNewItemDestination}>
           <StyledButton>Add New Item</StyledButton>
         </Link>
-        <Title>{list.name}</Title>
       </Header>
       <Contents>
         {list?.items?.length > 0 && (<ItemList list={list.items} onRemoveItem={handleRemoveItem}/>)}

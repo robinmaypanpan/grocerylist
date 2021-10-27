@@ -6,20 +6,9 @@ import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import StyledButton from '../components/StyledButton';
 import PageWrapper from '../components/PageWrapper';
+import ItemInput from '../components/ItemInput';
 
 import { addItem } from '../services/api';
-
-const ItemInput = styled.input`
-    display: block;
-    width: 80vw;
-
-    font-size: 1.2em;
-    padding: 0.5em;
-    margin: 2em auto;
-
-    border: 2px solid #d45b12;
-    border-radius: 10px;
-`;
 
 const BottomButton = styled(StyledButton)`
     position:absolute;
@@ -49,20 +38,9 @@ function AddNewItem(props) {
         history.push(`/list/${listId}`);
     }
 
-    function handleKeyPress(event) {
-        if(event.key === 'Enter'){
-            handleAddButton();
-        }
-    }
-
-    function handleTextChange(event) {
-        const textBox = event.target;
-        setItemName(textBox.value);
-    }
-
-    function handleBackButton() {
-        history.goBack();
-    }
+    const handleKeyPress = ({key}) => key === 'Enter' && handleAddButton();
+    const handleTextChange = ({target}) => setItemName(target.value);
+    const handleBackButton = () => history.goBack();
 
     return (
         <PageWrapper>

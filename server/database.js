@@ -107,7 +107,7 @@ async function createList(name) {
         values: [CATEGORY_NONE, listId]
     });
 
-    return await getList(listId);
+    return listId;
 }
 
 async function updateList(listId, name) {
