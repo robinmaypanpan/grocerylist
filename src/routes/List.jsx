@@ -84,12 +84,12 @@ function List(props) {
 
   return (
     <PageWrapper>
-      <section>
+      <header>
         <Label>{list.name}</Label>
         <Link to={addNewItemDestination}>
           <StyledButton>Add New Item</StyledButton>
         </Link>
-      </section>
+      </header>
       <Contents>
         {list?.items?.length > 0 && (<ItemList list={list.items} onRemoveItem={handleRemoveItem}/>)}
         {error && (

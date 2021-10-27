@@ -9,11 +9,14 @@ import Router from './Router';
 import { Provider } from 'react-redux';
 import store from './store';
 
+import Footer from './components/Footer';
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router/>
     </Provider>
+    <Footer/>
   </React.StrictMode>,
   document.getElementById('root')
 );
