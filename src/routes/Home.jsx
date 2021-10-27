@@ -19,7 +19,7 @@ const URLDisplay = styled.div`
   color: black;
   background-color: white;
 
-  border: 2px solid #d45b12;
+  border: 2px solid ${props => props.theme.button};
   border-radius: 10px;
 
   word-break: break-all;

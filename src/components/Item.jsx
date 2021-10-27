@@ -16,7 +16,7 @@ const Text = styled.span`
     width: 93.5%;
     margin: 1em 0.5em;
     font-size: 1.5em;
-    color:white;
+    color:${props => props.theme.dataText};
 `;
 
 function Item({item, onClick}) {

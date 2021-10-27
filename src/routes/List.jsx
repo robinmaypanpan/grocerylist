@@ -24,7 +24,7 @@ const ErrorContainer = styled.div`
   top: 35%;
   text-align: center;
   width: 100%;
-  color: #F3BC2E;
+  color: ${props => props.theme.label};
   font-size: 5em;
   height: 700px;
 `;
@@ -35,7 +35,7 @@ const ErrorDescription = styled.div`
   padding: 50px;
   text-align: center;
   width: 100% - 50px;
-  color: white;
+  color: ${props => props.theme.dataText};
   font-size: 1em;
   height: 700px;
 `;
@@ -45,7 +45,7 @@ const LoadingContainer = styled.div`
   top: 40%;
   text-align: center;
   width: 100%;
-  color: #F3BC2E;
+  color: ${props => props.theme.label};
   font-size: 2em;
   height: 700px;  
 `;

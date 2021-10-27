@@ -1,8 +1,11 @@
 const autumnColors = {
     background: '#603C14',
-    secondary: '#9C2706',
+    label: '#F3BC2E',
     button: '#D45B12',
-    highlight: '#F3BC2E',
+    buttonText: 'white',
+    dataText: 'white',
+
+    secondary: '#9C2706',
     tertiary: '#5F5426'
 };
 
