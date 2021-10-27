@@ -13,8 +13,8 @@ import { getList, removeItem } from '../services/api';
 
 const Contents = styled.section`
   position: absolute;  
-  top: 14vh;
-  height: 86vh;
+  top: 140px;
+  height: 84vh;
   width: 100vw;
   left: 0;
 `;
@@ -88,7 +88,7 @@ function List(props) {
         <Label>{list.name}</Label>
         <Link to={addNewItemDestination}>
           <StyledButton>
-              <ButtonIcon className="fas fa-list"/>
+              <ButtonIcon className="fas fa-plus-circle"/>
               <ButtonLabel>Add New Item</ButtonLabel>
           </StyledButton>  
         </Link>
