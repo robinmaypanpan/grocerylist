@@ -47,8 +47,8 @@ function AddNewItem(props) {
                 onChange={handleTextChange}
                 onKeyPress={handleKeyPress}
             />    
-            <StyledButton onClick={handleAddButton}>Add Item</StyledButton>  
-            <BottomButton onClick={handleBackButton}>Cancel</BottomButton>
+            <StyledButton onClick={handleAddButton}><img src='/add.png' width={30} align='left'/>Add Item</StyledButton>  
+            <BottomButton onClick={handleBackButton}><img src='/back.png' width={30} align='left'/>Cancel</BottomButton>
         </PageWrapper>
     );
 }

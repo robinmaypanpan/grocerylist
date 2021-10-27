@@ -53,9 +53,9 @@ function Home() {
           <Label>This is your personal and private URL. Keep it somewhere safe!</Label>
           <URLDisplay>{fullUrl}</URLDisplay>
           <Label>If you lose this URL, you lose access to your list!</Label>
-          <StyledButton onClick={handleCopy}>Copy to clipboard</StyledButton>
+          <StyledButton onClick={handleCopy}><img src='/copy.png' width={30} align='left'/>Copy to clipboard</StyledButton>
           <Link to={partialUrl}>
-            <StyledButton>Go to your new list</StyledButton>
+            <StyledButton><img src='/list.png' width={30} align='left'/>Go to your new list</StyledButton>
           </Link>
         </>
       ) : (
@@ -68,7 +68,7 @@ function Home() {
               onChange={handleTextChange}
               onKeyPress={handleKeyPress}
           />
-          <StyledButton onClick={handleNewListButton}>Create New List</StyledButton>
+          <StyledButton onClick={handleNewListButton}><img src='/new.png' width={30} align='left'/>Create New List</StyledButton>
         </>
       )}
     </PageWrapper>

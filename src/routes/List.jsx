@@ -87,7 +87,7 @@ function List(props) {
       <header>
         <Label>{list.name}</Label>
         <Link to={addNewItemDestination}>
-          <StyledButton>Add New Item</StyledButton>
+          <StyledButton><img src='/addIcon.png' width={30} align='left'/>Add New Item</StyledButton>
         </Link>
       </header>
       <Contents>
