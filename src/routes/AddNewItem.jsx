@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import StyledButton from '../components/StyledButton';
 import PageWrapper from '../components/PageWrapper';
 import ItemInput from '../components/ItemInput';
+import Label from '../components/Label';
 
 import { addItem } from '../services/api';
 
@@ -15,12 +16,6 @@ const BottomButton = styled(StyledButton)`
     bottom: 2vh;
     left: 7.5vw;
     width: 85vw;
-`;
-
-const Header = styled.div`
-    position:absolute;
-    top: 2vh;
-    width: 100vw;
 `;
 
 function AddNewItem(props) {
@@ -44,16 +39,15 @@ function AddNewItem(props) {
 
     return (
         <PageWrapper>
-            <Header>
-                <StyledButton onClick={handleAddButton}>Add Item</StyledButton>
-                <ItemInput 
-                    autoFocus
-                    type='text' 
-                    value={itemName} 
-                    onChange={handleTextChange}
-                    onKeyPress={handleKeyPress}
-                />      
-            </Header>      
+            <Label>Enter the item description</Label>
+            <ItemInput 
+                autoFocus
+                type='text' 
+                value={itemName} 
+                onChange={handleTextChange}
+                onKeyPress={handleKeyPress}
+            />    
+            <StyledButton onClick={handleAddButton}>Add Item</StyledButton>  
             <BottomButton onClick={handleBackButton}>Cancel</BottomButton>
         </PageWrapper>
     );

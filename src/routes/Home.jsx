@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import PageWrapper from '../components/PageWrapper';
 import StyledButton from '../components/StyledButton';
 import ItemInput from '../components/ItemInput';
+import Label from '../components/Label';
 
 import { createList } from '../services/api';
 
@@ -25,18 +26,9 @@ const URLDisplay = styled.div`
   word-wrap: break-word;
 `;
 
-const Label = styled.div`
-  color: #F3BC2E;
-  text-align: center;
-  font-size: 1.8em;
-  padding-top:1em;
-  padding-bottom: 0.5em;
-`;
-
 function Home() {
   const [listId, setListId] = useState();
   const [listName, setListName] = useState('Grocery List');
-  const history = useHistory();
 
   async function handleNewListButton() { 
     if (!listName) return;
@@ -52,8 +44,6 @@ function Home() {
   const partialUrl = `list/${listId}`;
   const fullUrl = window.location.href + partialUrl;
 
-  const handleGoToList = () => history.push(partialUrl);
-  
   const handleCopy = () => navigator.clipboard.writeText(fullUrl);
 
   return (
@@ -64,7 +54,9 @@ function Home() {
           <URLDisplay>{fullUrl}</URLDisplay>
           <Label>If you lose this URL, you lose access to your list!</Label>
           <StyledButton onClick={handleCopy}>Copy to clipboard</StyledButton>
-          <StyledButton onClick={handleGoToList}>Go to your new list</StyledButton>
+          <Link to={partialUrl}>
+            <StyledButton>Go to your new list</StyledButton>
+          </Link>
         </>
       ) : (
         <>

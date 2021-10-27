@@ -7,18 +7,16 @@ import styled from 'styled-components';
 import ItemList from '../components/ItemList';
 import StyledButton from '../components/StyledButton';
 import PageWrapper from '../components/PageWrapper';
+import Label from '../components/Label';
 
 import { getList, removeItem } from '../services/api';
 
-const Header = styled.section`
-  position:absolute;
-  top: 2vh;
-  left: 7.5vw;
-`;
-
-const Title = styled.h1`
-  color: white;
-  text-align: center;
+const Contents = styled.section`
+  position: absolute;  
+  top: 18vh;
+  height: 82vh;
+  width: 100vw;
+  left: 0;
 `;
 
 const ErrorContainer = styled.div`
@@ -50,14 +48,6 @@ const LoadingContainer = styled.div`
   color: #F3BC2E;
   font-size: 2em;
   height: 700px;  
-`;
-
-const Contents = styled.section`
-  position: absolute;  
-  top: 20vh;
-  height: 80vh;
-  width: 100vw;
-  left: 0;
 `;
 
 function List(props) {
@@ -94,12 +84,12 @@ function List(props) {
 
   return (
     <PageWrapper>
-      <Header>
-        <Title>{list.name}</Title>
+      <section>
+        <Label>{list.name}</Label>
         <Link to={addNewItemDestination}>
           <StyledButton>Add New Item</StyledButton>
         </Link>
-      </Header>
+      </section>
       <Contents>
         {list?.items?.length > 0 && (<ItemList list={list.items} onRemoveItem={handleRemoveItem}/>)}
         {error && (
