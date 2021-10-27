@@ -21,7 +21,7 @@ const {
 } = require('./database');
 
 router.get('/getList', async (request, response) => {
-    const { listId } = request.query;
+    const { listId } = request.body;
     try {
         const result = await getList(listId);
         response.json(result);
@@ -37,9 +37,9 @@ router.get('/getList', async (request, response) => {
         response.json({success: false, error});
     }
 }).put('/updateList', async (request, response) => {
-    const { name } = request.body;
+    const { listId, name } = request.body;
     try {
-        const result = await updateList(name);
+        const result = await updateList(listId, name);
         response.json(result);
     } catch (error) {
         response.json({success: false, error});
@@ -89,7 +89,7 @@ router.post('/addItem', async (request, response) => {
 });
 
 router.get('/getCategories', async (request, response) => {
-    const { listId } = request.query;
+    const { listId } = request.body;
     try {
         const result = await getCategories(listId);
         response.json(result);
