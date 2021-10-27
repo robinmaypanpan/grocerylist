@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import ItemList from '../components/ItemList';
-import StyledButton from '../components/StyledButton';
+import StyledButton, {Icon as ButtonIcon, Label as ButtonLabel} from '../components/StyledButton';
 import PageWrapper from '../components/PageWrapper';
 import Label from '../components/Label';
 
@@ -13,8 +13,8 @@ import { getList, removeItem } from '../services/api';
 
 const Contents = styled.section`
   position: absolute;  
-  top: 17vh;
-  height: 83vh;
+  top: 14vh;
+  height: 86vh;
   width: 100vw;
   left: 0;
 `;
@@ -87,7 +87,10 @@ function List(props) {
       <header>
         <Label>{list.name}</Label>
         <Link to={addNewItemDestination}>
-          <StyledButton><img src='/addIcon.png' width={30} align='left'/>Add New Item</StyledButton>
+          <StyledButton>
+              <ButtonIcon className="fas fa-list"/>
+              <ButtonLabel>Add New Item</ButtonLabel>
+          </StyledButton>  
         </Link>
       </header>
       <Contents>
