@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default styled.button`
+const Button = styled.button`
     display: block;
 
     background: ${props => props.theme.button};;
@@ -11,5 +11,7 @@ export default styled.button`
     border: 2px solid ${props => props.theme.button};;
     border-radius: 10px;
     width: 85vw;
-    margin: 0.6em auto;
+    margin: 0.6em auto 0 auto;
 `;
+
+export default Button;
