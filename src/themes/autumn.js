@@ -4,6 +4,7 @@ const autumnColors = {
     button: '#D45B12',
     buttonText: 'white',
     dataText: 'white',
+    iconColor: 'black',
 
     // Not currently used
     secondary: '#9C2706',

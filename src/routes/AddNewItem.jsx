@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from "react-router-dom";
 
 import styled from 'styled-components';
-import StyledButton from '../components/StyledButton';
+import StyledButton, {Icon as ButtonIcon, Label as ButtonLabel} from '../components/StyledButton';
 import PageWrapper from '../components/PageWrapper';
 import ItemInput from '../components/ItemInput';
 import Label from '../components/Label';
@@ -13,7 +13,7 @@ import { addItem } from '../services/api';
 
 const BottomButton = styled(StyledButton)`
     position:absolute;
-    bottom: 2vh;
+    bottom: 3vh;
     left: 7.5vw;
     width: 85vw;
 `;
@@ -47,8 +47,14 @@ function AddNewItem(props) {
                 onChange={handleTextChange}
                 onKeyPress={handleKeyPress}
             />    
-            <StyledButton onClick={handleAddButton}><img src='/add.png' width={30} align='left'/>Add Item</StyledButton>  
-            <BottomButton onClick={handleBackButton}><img src='/back.png' width={30} align='left'/>Cancel</BottomButton>
+            <StyledButton onClick={handleAddButton}>
+                <ButtonIcon className="fas fa-plus-circle"/>
+                <ButtonLabel>Add Item</ButtonLabel>
+            </StyledButton>  
+            <BottomButton onClick={handleBackButton}>
+                <ButtonIcon className="fas fa-times-circle"/>
+                <ButtonLabel>Cancel</ButtonLabel>
+            </BottomButton>
         </PageWrapper>
     );
 }

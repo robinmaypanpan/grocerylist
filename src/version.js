@@ -1,5 +1,5 @@
 export default {
     "major": 0,
-    "minor": 3,
+    "minor": 4,
     "revision": 0
 };

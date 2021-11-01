@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
 import PageWrapper from '../components/PageWrapper';
-import StyledButton from '../components/StyledButton';
+import StyledButton, {Icon as ButtonIcon, Label as ButtonLabel} from '../components/StyledButton';
 import ItemInput from '../components/ItemInput';
 import Label from '../components/Label';
 
@@ -53,9 +53,17 @@ function Home() {
           <Label>This is your personal and private URL. Keep it somewhere safe!</Label>
           <URLDisplay>{fullUrl}</URLDisplay>
           <Label>If you lose this URL, you lose access to your list!</Label>
-          <StyledButton onClick={handleCopy}><img src='/copy.png' width={30} align='left'/>Copy to clipboard</StyledButton>
+
+          <StyledButton onClick={handleCopy}>
+              <ButtonIcon className="fas fa-paste"/>
+              <ButtonLabel>Copy to clipboard</ButtonLabel>
+          </StyledButton>  
           <Link to={partialUrl}>
-            <StyledButton><img src='/list.png' width={30} align='left'/>Go to your new list</StyledButton>
+
+            <StyledButton>
+                <ButtonIcon className="far fa-paper-plane"/>
+                <ButtonLabel>Go to your new list</ButtonLabel>
+            </StyledButton>  
           </Link>
         </>
       ) : (
@@ -68,7 +76,10 @@ function Home() {
               onChange={handleTextChange}
               onKeyPress={handleKeyPress}
           />
-          <StyledButton onClick={handleNewListButton}><img src='/new.png' width={30} align='left'/>Create New List</StyledButton>
+          <StyledButton onClick={handleNewListButton}>
+              <ButtonIcon className="fas fa-hammer"/>
+              <ButtonLabel>Create New List</ButtonLabel>
+          </StyledButton>  
         </>
       )}
     </PageWrapper>

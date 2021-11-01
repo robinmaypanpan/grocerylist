@@ -6,7 +6,7 @@ const Container = styled.div`
     flex: 1;
     flex-direction: column;
     overflow-y: scroll;
-    height: 100%;
+    background-color: ${props => props.theme.background}
 `;
 
 function ItemList({ top, height, list, onRemoveItem}){
