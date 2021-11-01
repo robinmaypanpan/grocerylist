@@ -6,48 +6,42 @@ import styled from 'styled-components';
 
 import ItemList from '../components/ItemList';
 import StyledButton, {Icon as ButtonIcon, Label as ButtonLabel} from '../components/StyledButton';
-import PageWrapper from '../components/PageWrapper';
 import Label from '../components/Label';
+import Footer from '../components/Footer';
 
 import { getList, removeItem } from '../services/api';
 
+const Header = styled.header`
+  position: sticky;
+  top: 0;
+  padding-bottom: 15px;
+  background-color: ${props => props.theme.background}
+`
+
 const Contents = styled.section`
-  position: absolute;  
-  top: 140px;
-  height: 84vh;
   width: 100vw;
-  left: 0;
 `;
 
 const ErrorContainer = styled.div`
-  position: absolute;
-  top: 35%;
   text-align: center;
   width: 100%;
   color: ${props => props.theme.label};
   font-size: 5em;
-  height: 700px;
 `;
 
 const ErrorDescription = styled.div`
-  position: absolute;
-  top: 60%;
   padding: 50px;
   text-align: center;
   width: 100% - 50px;
   color: ${props => props.theme.dataText};
   font-size: 1em;
-  height: 700px;
 `;
 
 const LoadingContainer = styled.div`
-  position: absolute;
-  top: 40%;
   text-align: center;
   width: 100%;
   color: ${props => props.theme.label};
   font-size: 2em;
-  height: 700px;  
 `;
 
 function List(props) {
@@ -83,8 +77,8 @@ function List(props) {
   const addNewItemDestination = `/addNewItem/${listId}`;
 
   return (
-    <PageWrapper>
-      <header>
+    <>
+      <Header>
         <Label>{list.name}</Label>
         <Link to={addNewItemDestination}>
           <StyledButton>
@@ -92,7 +86,7 @@ function List(props) {
               <ButtonLabel>Add New Item</ButtonLabel>
           </StyledButton>  
         </Link>
-      </header>
+      </Header>
       <Contents>
         {list?.items?.length > 0 && (<ItemList list={list.items} onRemoveItem={handleRemoveItem}/>)}
         {error && (
@@ -103,7 +97,8 @@ function List(props) {
         )}
         {loading && (<LoadingContainer>Loading...</LoadingContainer>)}
       </Contents>
-    </PageWrapper>
+      <Footer/>
+    </>
   );
 }
 

@@ -9,7 +9,6 @@ import Router from './Router';
 import { Provider } from 'react-redux';
 import store from './store';
 
-import Footer from './components/Footer';
 import styled, {ThemeProvider} from 'styled-components';
 import autumnTheme from './themes/autumn';
 
@@ -23,7 +22,6 @@ ReactDOM.render(
       <ThemeProvider theme={autumnTheme}>
         <Background>
           <Router/>
-          <Footer/>
         </Background>
       </ThemeProvider>
     </Provider>

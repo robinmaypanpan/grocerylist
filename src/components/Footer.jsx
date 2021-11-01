@@ -2,8 +2,6 @@ import styled from 'styled-components';
 import version from '../version';
 
 const Container = styled.footer`
-    position: absolute;
-    bottom: 0px;
     font-size: 0.3em;
 `;
 

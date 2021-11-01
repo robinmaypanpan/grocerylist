@@ -24,7 +24,7 @@ const Button = styled.button`
     border: 2px solid ${props => props.theme.button};
     border-radius: 10px;
     width: 85vw;
-    margin: 0.6em auto 0 auto;
+    margin: 0.6em auto;
 `;
 
 export default Button;
