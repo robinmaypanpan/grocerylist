@@ -44,7 +44,7 @@ const LoadingContainer = styled.div`
   font-size: 2em;
 `;
 
-function List(props) {
+function ViewList(props) {
   const list = useSelector((state) => state.list.value)
   const dispatch = useDispatch();
   const [error, setError] = useState();
@@ -102,4 +102,4 @@ function List(props) {
   );
 }
 
-export default List;
+export default ViewList;

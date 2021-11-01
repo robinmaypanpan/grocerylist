@@ -26,7 +26,7 @@ const URLDisplay = styled.div`
   word-wrap: break-word;
 `;
 
-function Home() {
+function NewList() {
   const [listId, setListId] = useState();
   const [listName, setListName] = useState('Grocery List');
 
@@ -86,4 +86,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default NewList;
