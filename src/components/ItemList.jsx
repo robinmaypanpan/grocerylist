@@ -1,3 +1,4 @@
+import ItemDisplay from './ItemDisplay';
 function ItemList({list})
 {
 
@@ -13,9 +14,9 @@ function ItemList({list})
   return (
     <div>
       {/* {listOfNames.join()} */}
-      <ul>
-          {list.map((item) => <li>{item.name}</li>)}
-      </ul>
+      
+          {list.map((item) => (<ItemDisplay item={item}/>))}
+      
       
     </div>
   ); 
