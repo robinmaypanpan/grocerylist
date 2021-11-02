@@ -16,7 +16,7 @@ const Header = styled.header`
   position: sticky;
   top: 0;
   width:100vw;
-
+  z-index: 10;
   background-color: ${props => props.theme.background};
   padding-bottom: 20px;
   padding-top: 5px;
