@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
-import PageWrapper from '../components/PageWrapper';
 import StyledButton, {Icon as ButtonIcon, Label as ButtonLabel} from '../components/StyledButton';
 import ItemInput from '../components/ItemInput';
 import Label from '../components/Label';
@@ -47,7 +46,7 @@ function NewList() {
   const handleCopy = () => navigator.clipboard.writeText(fullUrl);
 
   return (
-    <PageWrapper>
+    <>
       {listId ?(
         <>
           <Label>This is your personal and private URL. Keep it somewhere safe!</Label>
@@ -57,7 +56,7 @@ function NewList() {
           <StyledButton onClick={handleCopy}>
               <ButtonIcon className="fas fa-paste"/>
               <ButtonLabel>Copy to clipboard</ButtonLabel>
-          </StyledButton>  
+          </StyledButton>
           <Link to={partialUrl}>
 
             <StyledButton>
@@ -82,7 +81,7 @@ function NewList() {
           </StyledButton>  
         </>
       )}
-    </PageWrapper>
+    </>
   );
 }
 

@@ -23,6 +23,7 @@ In order to build this application, you're going to need a few things setup in y
 - [Redux](https://redux.js.org) - State management system for React
 - [Figma](https://www.figma.com/files/recent?fuid=1031803273450151713) - UI Design tool
 - [ExpressJS](https://expressjs.com) - Software for writing servers in NodeJS
+- [Font Awesome](https://fontawesome.com/v5.15/icons?d=gallery&p=1&m=free) - Free icons
 
 # Folders
 - **src** - Location for the React web client

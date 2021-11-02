@@ -9,10 +9,10 @@ const Container = styled.div`
     background-color: ${props => props.theme.background}
 `;
 
-function ItemList({ top, height, list, onRemoveItem}){
+function ItemList({ top, height, list, onRemoveItem, editMode}){
     return (
       <Container top={top} height={height}>
-        {list.map((item) => <Item key={item.id} item={item} onClick={() => onRemoveItem(item.id)}/>)}
+        {list.map((item) => <Item key={item.id} item={item} editMode={editMode} onRemoveItem={onRemoveItem}/>)}
       </Container>
     );
 }
