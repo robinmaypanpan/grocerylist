@@ -1,5 +1,5 @@
 import ItemDisplay from './ItemDisplay';
-function ItemList({list})
+function ItemList({list, editMode, onRemoveItem})
 {
 
 
@@ -15,7 +15,7 @@ function ItemList({list})
     <div>
       {/* {listOfNames.join()} */}
       
-          {list.map((item) => (<ItemDisplay item={item}/>))}
+          {list.map((item) => (<ItemDisplay item={item} editMode={editMode} onRemoveItem={onRemoveItem} key={item.id}/>))}
       
       
     </div>
