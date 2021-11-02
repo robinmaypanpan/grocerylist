@@ -33,7 +33,7 @@ async function removeCategory(categoryId, listId) {
     const client = await getClient();
     try {
         // Find the uncategorized category
-        const uncategorizedCategory = await executeQueries(client,
+        const [uncategorizedCategory] = await executeQueries(client,
             `SELECT id FROM ${CATEGORY_TABLE} WHERE name='${CATEGORY_NONE}';`
         );
         const uncategorizedId = uncategorizedCategory.rows[0].id;
@@ -43,7 +43,7 @@ async function removeCategory(categoryId, listId) {
         }
 
         // Now find all the items with that category.
-        const itemsWithCategory = await executeQueries(client,
+        const [itemsWithCategory] = await executeQueries(client,
             `SELECT id FROM ${ITEM_TABLE} WHERE category_id=$2;`,
             [listId, categoryId]
         );
@@ -69,8 +69,11 @@ async function removeCategory(categoryId, listId) {
  * Returns either an existing category or a new category id for a given category names
  */
 async function getCategoryId(client, listId, categoryName = CATEGORY_NONE) {
-    const categoryIdRequest = await executeQueries(client,
-        `SELECT id FROM ${CATEGORY_TABLE} WHERE name=$1 AND list_id=$2;`, [categoryName, listId]
+    const [categoryIdRequest] = await executeQueries(client,
+        {
+            query: `SELECT id FROM ${CATEGORY_TABLE} WHERE name=$1 AND list_id=$2;`, 
+            values: [categoryName, listId]
+        }
     );
     if (categoryIdRequest.rowCount > 0) {
         console.log(`Category ${categoryName} exists!  yay!`);
@@ -78,8 +81,11 @@ async function getCategoryId(client, listId, categoryName = CATEGORY_NONE) {
         return categoryIdRequest.rows[0].id;
     } else {
         console.log(`Creating category for ${categoryName}`);
-        const createCategoryRequest = await executeQueries(client,
-            `INSERT INTO ${CATEGORY_TABLE} (name, list_id) VALUES ($1::text, $2) RETURNING id;`, [categoryName, listId]
+        const [createCategoryRequest] = await executeQueries(client,
+            {
+                query: `INSERT INTO ${CATEGORY_TABLE} (name, list_id) VALUES ($1::text, $2) RETURNING id;`, 
+                values: [categoryName, listId]
+            }
         );
         return createCategoryRequest.rows[0].id;
     }

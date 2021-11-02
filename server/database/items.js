@@ -8,17 +8,20 @@ const { executeQueries, connectAndQuery } = require('./query');
  * Adds the provided item, with list id and category name, to the database
  */
 async function addItem(name, listId, categoryName) {
+    console.log(`List is ${listId}`);
     const client = await getClient();
     try {
         const categoryId = await getCategoryId(client, listId, categoryName);
         await executeQueries(client,
-            `INSERT INTO ${ITEM_TABLE} (name, timestamp, list_id, category_id) \
-                    VALUES ($1::text, current_timestamp, $2, $3);`,
-            [
-                name,
-                listId,
-                categoryId
-            ]
+            {
+                query: `INSERT INTO ${ITEM_TABLE} (name, timestamp, list_id, category_id) ` +
+                `VALUES ($1::text, current_timestamp, $2, $3);`,
+                values: [
+                    name,
+                    listId,
+                    categoryId
+                ]
+            }
         ); 
     } finally {
         client.release();
