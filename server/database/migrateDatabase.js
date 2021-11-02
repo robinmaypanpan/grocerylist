@@ -11,7 +11,7 @@ async function migrateDatabase(client, version) {
                 value text
             );`,
             `ALTER TABLE ${ITEM_TABLE} \
-            ADD COLUMN checked boolean DEFAULT false, \
+            ADD COLUMN checked boolean DEFAULT false \
             ;`,
         ];
         await executeQueries(client, queries);

@@ -26,6 +26,8 @@ async function getVersion(client) {
             console.log('No list table exists. Database not initialized.');
         }
     }
+
+    return version;
 }
 
 module.exports = getVersion;
