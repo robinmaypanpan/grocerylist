@@ -3,8 +3,11 @@ const { Pool } = require('pg');
 const ITEM_TABLE = 'item_table';
 const LIST_TABLE = 'list_table';
 const CATEGORY_TABLE = 'category_table';
+const META_TABLE = 'meta_table';
 
 const CATEGORY_NONE = 'Uncategorized';
+
+const CURRENT_VERSION = 2;
 
 const pool = (() => {
   if (process.env.NODE_ENV !== 'production') {
@@ -46,6 +49,14 @@ function normalizeQueries(input) {
     return [input];
 }
 
+async function executeMultipleQueries(client, queries) {
+    const allQueryPromises = Promise.all(queries.map((query) => {
+        console.log(`Executing Query ${query}`);
+        return client.query(query) 
+    }));
+    return await allQueryPromises;
+}
+
 function connectAndQuery(input) {
     const normalizedQueries = normalizeQueries(input);
     return new Promise(async (resolve, reject) => {
@@ -67,30 +78,96 @@ function connectAndQuery(input) {
 }
 
 async function initializeDatabase() {
-    const result = await connectAndQuery([
-        `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`,
-        `CREATE TABLE IF NOT EXISTS ${LIST_TABLE} (` +
-            `id uuid unique PRIMARY KEY,` +
-            `name text,` +
-            `timestamp date` +
-        `);`,
-        `CREATE TABLE IF NOT EXISTS ${CATEGORY_TABLE} (` +
-            `id serial unique PRIMARY KEY, ` +
-            `name text, ` +
-            `list_id uuid, ` +
-            `CONSTRAINT fk_list FOREIGN KEY(list_id) REFERENCES ${LIST_TABLE}(id) ON DELETE CASCADE` +
-        `);`,
-        `CREATE TABLE IF NOT EXISTS ${ITEM_TABLE} (` +
-            `id serial unique PRIMARY KEY,` +
-            `name text,` +
-            `timestamp date,` +
-            `category_id integer, ` + 
-            `list_id uuid, ` +
-            `CONSTRAINT fk_category FOREIGN KEY(category_id) REFERENCES ${CATEGORY_TABLE}(id), ` +
-            `CONSTRAINT fk_list FOREIGN KEY(list_id) REFERENCES ${LIST_TABLE}(id) ON DELETE CASCADE` +
-        `);`
-    ]);
-    return result;
+    const client = await pool.connect();
+
+    console.log('Retrieving Database version');
+    
+    let version = 0;
+    try {
+        const results = await client.query(`SELECT value FROM ${META_TABLE} WHERE key='version';`);
+        const versionRcvd = results.rows[0].value
+        if (versionRcvd) {
+            version = Number(versionRcvd);
+        }
+    } catch(error) {
+        console.log('Metadata table does not exist. Checking for early version.');
+    }
+
+    if (version === 0) {
+        try {
+            await client.query(`SELECT * from ${LIST_TABLE};`);
+            version = 1;
+        } catch (error) {
+            console.log('No list table exists. Database not initialized.');
+        }
+    }
+
+    console.log(`Database version is ${version}`);
+
+    migrateFromVersion(client, version);
+    
+    client.release();
+
+    return {success: true};
+}
+
+async function migrateFromVersion(client, version) {
+    if (version === 0) {
+        console.log('Fully initializing fresh database');
+        
+        const queries = [
+            `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`,
+            `CREATE TABLE IF NOT EXISTS ${META_TABLE} ( \
+                key text unique, \
+                value text \
+            );`,
+            `CREATE TABLE IF NOT EXISTS ${LIST_TABLE} (` +
+                `id uuid unique PRIMARY KEY,` +
+                `name text,` +
+                `timestamp date` +
+            `);`,
+            `CREATE TABLE IF NOT EXISTS ${CATEGORY_TABLE} (` +
+                `id serial unique PRIMARY KEY, ` +
+                `name text, ` +
+                `list_id uuid, ` +
+                `CONSTRAINT fk_list FOREIGN KEY(list_id) REFERENCES ${LIST_TABLE}(id) ON DELETE CASCADE` +
+            `);`,
+            `CREATE TABLE IF NOT EXISTS ${ITEM_TABLE} (` +
+                `id serial unique PRIMARY KEY,` +
+                `name text,` +
+                `timestamp date,` +
+                `category_id integer, ` + 
+                `list_id uuid, ` +
+                `CONSTRAINT fk_category FOREIGN KEY(category_id) REFERENCES ${CATEGORY_TABLE}(id), ` +
+                `CONSTRAINT fk_list FOREIGN KEY(list_id) REFERENCES ${LIST_TABLE}(id) ON DELETE CASCADE` +
+            `);`,
+            `INSERT INTO ${META_TABLE} (key, value) \
+                VALUES ('version', ${CURRENT_VERSION}) \
+            ;`
+        ];
+        await executeMultipleQueries(client, queries);
+        version = CURRENT_VERSION;
+    } else {
+        // Apply migrations
+        if (version === 1) {
+            console.log('Migrating database to version 2');
+            const queries = [
+                `CREATE TABLE IF NOT EXISTS ${META_TABLE} ( \
+                    key text unique, \
+                    value text
+                );`,
+            ];
+            await executeMultipleQueries(client, queries);
+            version++;
+        }
+
+        console.log('Database is up to date.');
+        await client.query(`INSERT INTO ${META_TABLE} (key, value)\
+            VALUES ('version', ${CURRENT_VERSION}) \
+            ON CONFLICT (key) \
+            DO UPDATE SET value=${CURRENT_VERSION} \
+        ;`);
+    }
 }
 
 async function createList(name) {
