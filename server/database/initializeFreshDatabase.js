@@ -22,14 +22,15 @@ async function initializeFreshDatabase(client) {
             `CONSTRAINT fk_list FOREIGN KEY(list_id) REFERENCES ${LIST_TABLE}(id) ON DELETE CASCADE` +
         `);`,
         `CREATE TABLE IF NOT EXISTS ${ITEM_TABLE} (` +
-            `id serial unique PRIMARY KEY,` +
-            `name text,` +
-            `timestamp date,` +
-            `category_id integer, ` + 
-            `list_id uuid, ` +
-            `CONSTRAINT fk_category FOREIGN KEY(category_id) REFERENCES ${CATEGORY_TABLE}(id), ` +
-            `CONSTRAINT fk_list FOREIGN KEY(list_id) REFERENCES ${LIST_TABLE}(id) ON DELETE CASCADE` +
-        `);`,
+            `id serial unique PRIMARY KEY \
+            name text, \
+            timestamp date, \
+            category_id integer, \
+            list_id uuid, \
+            checked boolean DEFAULT false, \
+            CONSTRAINT fk_category FOREIGN KEY(category_id) REFERENCES ${CATEGORY_TABLE}(id), \
+            CONSTRAINT fk_list FOREIGN KEY(list_id) REFERENCES ${LIST_TABLE}(id) ON DELETE CASCADE \
+        );`,
         `INSERT INTO ${META_TABLE} (key, value) \
             VALUES ('version', ${CURRENT_VERSION}) \
         ;`

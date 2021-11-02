@@ -1,4 +1,4 @@
-const { META_TABLE, CURRENT_VERSION } = require('./constants');
+const { ITEM_TABLE, META_TABLE, CURRENT_VERSION } = require('./constants');
 const { executeQueries } = require('./query');
 
 async function migrateDatabase(client, version) {
@@ -10,6 +10,9 @@ async function migrateDatabase(client, version) {
                 key text unique, \
                 value text
             );`,
+            `ALTER TABLE ${ITEM_TABLE} \
+            ADD COLUMN checked boolean DEFAULT false, \
+            ;`,
         ];
         await executeQueries(client, queries);
         version++;
