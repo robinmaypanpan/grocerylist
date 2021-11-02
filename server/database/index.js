@@ -49,24 +49,20 @@ function normalizeQueries(input) {
     return [input];
 }
 
-async function executeMultipleQueries(client, queries) {
-    const allQueryPromises = Promise.all(queries.map((query) => {
+async function executeQueries(client, input) {
+    const normalizedQueries = normalizeQueries(input);
+    const allQueryPromises = Promise.all(normalizedQueries.map(({query, values}) => {
         console.log(`Executing Query ${query}`);
-        return client.query(query) 
+        return client.query(query, values) 
     }));
     return await allQueryPromises;
 }
 
 function connectAndQuery(input) {
-    const normalizedQueries = normalizeQueries(input);
     return new Promise(async (resolve, reject) => {
         const client = await pool.connect();
         try {
-            const allQueryPromises = Promise.all(normalizedQueries.map(({query, values}) => {
-                console.log(`Executing Query ${query}`);
-                return client.query(query, values) 
-            }));
-            const results = await allQueryPromises;
+            const results = await executeQueries(client, input);
             client.release();
             resolve(results);
         } catch (err) {
@@ -77,7 +73,7 @@ function connectAndQuery(input) {
     });
 }
 
-async function initializeDatabase() {
+async function initializeAndMigrateDatabase() {
     const client = await pool.connect();
 
     console.log('Retrieving Database version');
@@ -346,7 +342,7 @@ async function removeItem(itemId, listId) {
 }
 
 module.exports = {
-    initializeDatabase,
+    initializeAndMigrateDatabase,
     
     createList,
     updateList,
