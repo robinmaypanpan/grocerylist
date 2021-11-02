@@ -62,3 +62,14 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+# Version History
+
+*0.5.0*
+- Added edit mode for deletions in list view.
+- 
+
+*0.4.0*
+- Fixed scrolling list formatting
+- Changed centering of text on most buttons
+- Modified iconography to use Font Awesome
