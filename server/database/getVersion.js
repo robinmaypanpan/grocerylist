@@ -9,11 +9,9 @@ async function getVersion(client) {
     
     let version = 0;
     try {
-        const results = await executeQueries(client, `SELECT value FROM ${META_TABLE} WHERE key='version';`);
+        const [results] = await executeQueries(client, `SELECT value FROM ${META_TABLE} WHERE key='version';`);
         const versionRcvd = results.rows[0].value
-        if (versionRcvd) {
-            version = Number(versionRcvd);
-        }
+        version = parseInt(versionRcvd, 10);
     } catch(error) {
         console.log('Metadata table does not exist. Checking for early version.');
     }
