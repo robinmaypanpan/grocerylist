@@ -6,6 +6,7 @@ const autumnColors = {
     dataText: 'white',
     iconColor: 'black',
     highlight: '#F3BC2E',
+    
 
     // Not currently used
     tetiary: '#5F5426',
