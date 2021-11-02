@@ -37,13 +37,15 @@ async function updateItem(itemId, name, listId, categoryName) {
     try {
         const categoryId = await getCategoryId(client, listId, categoryName);
         await executeQueries(client,
-            `UPDATE ${ITEM_TABLE} SET name=$1, category_id=$2 WHERE id=$3;`,
-            [
-                name,
-                categoryId,
-                itemId,
-                listId
-            ]
+            {
+                query: `UPDATE ${ITEM_TABLE} SET name=$1, category_id=$2 WHERE id=$3;`,
+                values: [
+                    name,
+                    categoryId,
+                    itemId,
+                    listId
+                ]
+            }
         ); 
     } finally {
         client.release();

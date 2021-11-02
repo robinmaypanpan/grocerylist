@@ -44,8 +44,10 @@ async function removeCategory(categoryId, listId) {
 
         // Now find all the items with that category.
         const [itemsWithCategory] = await executeQueries(client,
-            `SELECT id FROM ${ITEM_TABLE} WHERE category_id=$2;`,
-            [listId, categoryId]
+            {
+                query: `SELECT id FROM ${ITEM_TABLE} WHERE category_id=$2;`,
+                values: [listId, categoryId]
+            }
         );
         const ids = itemsWithCategory.rows.map(({id}) => id);
 
@@ -56,8 +58,10 @@ async function removeCategory(categoryId, listId) {
         
         // Delete the category entirely
         await executeQueries(client,
-            `DELETE FROM ${CATEGORY_TABLE} WHERE category_id=$1;`,
-            [categoryId]
+            {
+                query: `DELETE FROM ${CATEGORY_TABLE} WHERE category_id=$1;`,
+                values: [categoryId]
+            }
         );
     } finally {
         client.release();
