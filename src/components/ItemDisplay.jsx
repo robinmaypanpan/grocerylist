@@ -4,8 +4,9 @@ const ItemDiv = styled.div`
     display: flex;
     align-items: center;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-basis: auto;
+    flex-wrap: no-wrap;
     width: 100%;
     color: ${props => props.theme.dataText};
     border-style: solid;
@@ -25,28 +26,41 @@ const CheckBox = styled.input`
     transform: scale(2);
 `
 const Icon = styled.i`
+    margin-left: 0.7em;
+    font-size: 1.5em;
     color: red;
     margin-right: 0.5em;
+`;
+const DateSpan = styled.p`
+    font-size: 0.6em;
+    margin: auto;
+`;
+const EmptyElement = styled.span`
+    flex-grow: 3;
 `;
 //className='fas fa-times-circle'
 function ItemDisplay({ item, editMode, onRemoveItem }) {
     const [isChecked, setChecked] = useState(false);
 
     function handleOnChange() {
-        if(!editMode) setChecked(!isChecked);
+        if (!editMode) setChecked(!isChecked);
     }
     function handleOnClick() {
         onRemoveItem(item.id);
     }
     return (
-            <ItemDiv onClick={handleOnChange}>
-                <ItemSpan strikeText={isChecked}>
-                    {editMode ? <Icon onClick={handleOnClick} className='fas fa-times-circle' /> : null}
-                    {item.name}
-                </ItemSpan>
-                <CheckBox type='checkbox' checked={isChecked} onChange={handleOnChange} />
-            </ItemDiv>
-
+        <ItemDiv onClick={handleOnChange}>
+            {editMode ? <Icon onClick={handleOnClick} className='fas fa-times-circle' /> : null}
+            <ItemSpan strikeText={isChecked}>
+                {item.name}
+                <br />
+                <DateSpan>
+                    Added on xx/xx
+                </DateSpan>
+            </ItemSpan>
+            <EmptyElement/>
+            <CheckBox type='checkbox' checked={isChecked} onChange={handleOnChange} />
+        </ItemDiv>
     )
 }
 export default ItemDisplay
