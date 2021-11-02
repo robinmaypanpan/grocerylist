@@ -1,20 +1,23 @@
-import styled from 'styled-components';
-import Item from './Item';
+function ItemList({list})
+{
 
-const Container = styled.div`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    overflow-y: scroll;
-    background-color: ${props => props.theme.background}
-`;
 
-function ItemList({ top, height, list, onRemoveItem, editMode}){
-    return (
-      <Container top={top} height={height}>
-        {list.map((item) => <Item key={item.id} item={item} editMode={editMode} onRemoveItem={onRemoveItem}/>)}
-      </Container>
-    );
+  //var listOfNames = [];
+  // for(var i = 0; i < list.length; i++)
+  // {
+  //   listOfNames[i] = list[i].name;
+  // }
+
+  //var listOfNames = list.map((item) => item.name);
+
+  return (
+    <div>
+      {/* {listOfNames.join()} */}
+      <ul>
+          {list.map((item) => <li>{item.name}</li>)}
+      </ul>
+      
+    </div>
+  ); 
 }
-
-export default ItemList;
+export default ItemList
