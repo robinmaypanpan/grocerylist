@@ -32,24 +32,27 @@ async function addItem(name, listId, categoryName) {
 /**
  * Changes the name and category for a given item.
  */
-async function updateItem(itemId, name, listId, categoryName) {
+async function updateItem(itemId, name, listId, categoryName, checked) {
     const client = await getClient();
     try {
         const categoryId = await getCategoryId(client, listId, categoryName);
         await executeQueries(client,
             {
-                query: `UPDATE ${ITEM_TABLE} SET name=$1, category_id=$2 WHERE id=$3;`,
+                query: `UPDATE ${ITEM_TABLE} SET name=$1, category_id=$2, checked=$3 WHERE id=$4 AND list_id=$5;`,
                 values: [
                     name,
                     categoryId,
+                    checked,
                     itemId,
                     listId
                 ]
             }
         ); 
     } finally {
+        console.log(`Releasing client`);
         client.release();
     }
+    console.log(`Getting list`);
     return await getList(listId);
 }
 

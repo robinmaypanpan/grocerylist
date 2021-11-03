@@ -40,8 +40,12 @@ export async function addItem(name, listId, categoryName) {
     return await callFetch('addItem', 'POST', {name, categoryName, listId});
 }
 
-export async function updateItem(itemId, name, categoryName, listId) {
-    return await callFetch('updateItem', 'PUT', {itemId, name, categoryName, listId});
+export async function updateItem(original, updates) {
+    const newItem = {
+        ...original,
+        ...updates
+    };
+    return await callFetch('updateItem', 'PUT', newItem);
 }
 
 export async function removeItem(itemId, listId) {

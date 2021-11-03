@@ -1,23 +1,17 @@
 import ItemDisplay from './ItemDisplay';
-function ItemList({list, editMode, onRemoveItem})
+function ItemList({list, editMode, onRemoveItem, onSetItemChecked})
 {
-
-
-  //var listOfNames = [];
-  // for(var i = 0; i < list.length; i++)
-  // {
-  //   listOfNames[i] = list[i].name;
-  // }
-
-  //var listOfNames = list.map((item) => item.name);
-
   return (
     <div>
-      {/* {listOfNames.join()} */}
-      
-          {list.map((item) => (<ItemDisplay item={item} editMode={editMode} onRemoveItem={onRemoveItem} key={item.id}/>))}
-      
-      
+      {list.map((item) => (
+        <ItemDisplay 
+          key={item.id}
+          item={item}
+          editMode={editMode}
+          onRemoveItem={onRemoveItem}
+          onSetItemChecked={onSetItemChecked}
+        />)
+      )}
     </div>
   ); 
 }

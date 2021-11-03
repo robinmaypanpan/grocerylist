@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components"
+
 const ItemDiv = styled.div`
     display: flex;
     align-items: center;
@@ -13,6 +14,7 @@ const ItemDiv = styled.div`
     border-width: 1px 0px 0px 0px;
     text-align: middle;
 `;
+
 const ItemSpan = styled.span`
     font-size: 1.5em;
     display: inline-block;
@@ -21,10 +23,12 @@ const ItemSpan = styled.span`
     margin: 0.7em 0.5em;
     text-decoration: ${props => props.strikeText ? 'line-through' : ''};
 `;
+
 const CheckBox = styled.input`
     margin-right: 1.5em;
     transform: scale(2);
-`
+`;
+
 const Icon = styled.i`
     margin-left: 0.7em;
     font-size: 1.5em;
@@ -38,20 +42,19 @@ const DateSpan = styled.p`
 const EmptyElement = styled.span`
     flex-grow: 3;
 `;
-//className='fas fa-times-circle'
-function ItemDisplay({ item, editMode, onRemoveItem }) {
-    const [isChecked, setChecked] = useState(false);
 
-    function handleOnChange() {
-        if (!editMode) setChecked(!isChecked);
+function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
+    function handleToggleChecked() {
+        if(!editMode) onSetItemChecked(item, !item.checked);
     }
+
     function handleOnClick() {
         onRemoveItem(item.id);
     }
     return (
-        <ItemDiv onClick={handleOnChange}>
+        <ItemDiv onClick={handleToggleChecked}>
             {editMode ? <Icon onClick={handleOnClick} className='fas fa-times-circle' /> : null}
-            <ItemSpan strikeText={isChecked}>
+            <ItemSpan strikeText={item.checked}>
                 {item.name}
                 <br />
                 <DateSpan>
@@ -59,7 +62,7 @@ function ItemDisplay({ item, editMode, onRemoveItem }) {
                 </DateSpan>
             </ItemSpan>
             <EmptyElement/>
-            <CheckBox type='checkbox' checked={isChecked} onChange={handleOnChange} />
+            <CheckBox type='checkbox' checked={item.checked} onChange={handleToggleChecked} />
         </ItemDiv>
     )
 }

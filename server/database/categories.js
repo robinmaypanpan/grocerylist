@@ -73,6 +73,7 @@ async function removeCategory(categoryId, listId) {
  * Returns either an existing category or a new category id for a given category names
  */
 async function getCategoryId(client, listId, categoryName = CATEGORY_NONE) {
+    if (!listId) throw new Error('Called getCategoryId with no list id');
     const [categoryIdRequest] = await executeQueries(client,
         {
             query: `SELECT id FROM ${CATEGORY_TABLE} WHERE name=$1 AND list_id=$2;`, 
