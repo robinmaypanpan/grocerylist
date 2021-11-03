@@ -13,7 +13,7 @@ async function initializeFreshDatabase(client) {
         `CREATE TABLE IF NOT EXISTS ${LIST_TABLE} (` +
             `id uuid unique PRIMARY KEY,` +
             `name text,` +
-            `timestamp date` +
+            `timestamp timestamp DEFAULT CURRENT_TIMESTAMP` +
         `);`,
         `CREATE TABLE IF NOT EXISTS ${CATEGORY_TABLE} (` +
             `id serial unique PRIMARY KEY, ` +
@@ -24,7 +24,7 @@ async function initializeFreshDatabase(client) {
         `CREATE TABLE IF NOT EXISTS ${ITEM_TABLE} (` +
             `id serial unique PRIMARY KEY \
             name text, \
-            timestamp date, \
+            timestamp timestamp DEFAULT CURRENT_TIMESTAMP, \
             category_id integer, \
             list_id uuid, \
             checked boolean DEFAULT false, \
