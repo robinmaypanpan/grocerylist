@@ -1,21 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { updateList } from '../slices/listSlice';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import ItemList from '../components/ItemList';
-import StyledButton, {Icon as ButtonIcon, Label as ButtonLabel} from '../components/StyledButton';
 import Label from '../components/Label';
+import ItemList from '../components/ItemList';
 import Footer from '../components/Footer';
+import IconButton from '../components/IconButton';
+import MenuBar from '../components/MenuBar';
 
-import { getList, removeItem } from '../services/api';
+import { getList, removeItem, updateItem } from '../services/api';
 
 const Header = styled.header`
   position: sticky;
   top: 0;
-  padding-bottom: 15px;
-  background-color: ${props => props.theme.background}
+  width:100vw;
+  z-index: 10;
+  background-color: ${props => props.theme.background};
+  padding-bottom: 20px;
+  padding-top: 5px;
 `
 
 const Contents = styled.section`
@@ -44,11 +48,12 @@ const LoadingContainer = styled.div`
   font-size: 2em;
 `;
 
-function List(props) {
+function ViewList(props) {
   const list = useSelector((state) => state.list.value)
   const dispatch = useDispatch();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
   const listId = props.match.params.listId;
 
@@ -74,21 +79,35 @@ function List(props) {
     dispatch(updateList(newList));
   }
 
+  async function handleSetItemChecked (item, checked) {
+    const newList = await updateItem(item, {checked, listId});
+    dispatch(updateList(newList));
+  }
+
+  const toggleEditMode = () => setEditMode(!editMode);
+
   const addNewItemDestination = `/addNewItem/${listId}`;
 
   return (
     <>
       <Header>
         <Label>{list.name}</Label>
-        <Link to={addNewItemDestination}>
-          <StyledButton>
-              <ButtonIcon className="fas fa-plus-circle"/>
-              <ButtonLabel>Add New Item</ButtonLabel>
-          </StyledButton>  
-        </Link>
+        <MenuBar>
+          <Link to={addNewItemDestination}>
+            <IconButton icon='fas fa-plus-circle' text='Add'/>
+          </Link>
+          <IconButton icon='fas fa-edit' text='Edit' onClick={toggleEditMode} highlight={editMode}/>
+        </MenuBar>
       </Header>
       <Contents>
-        {list?.items?.length > 0 && (<ItemList list={list.items} onRemoveItem={handleRemoveItem}/>)}
+        {list?.items?.length > 0 && (
+          <ItemList 
+            list={list.items}
+            editMode={editMode}
+            onRemoveItem={handleRemoveItem}
+            onSetItemChecked={handleSetItemChecked}
+          />
+        )}
         {error && (
           <>
             <ErrorContainer>Error</ErrorContainer>
@@ -102,4 +121,4 @@ function List(props) {
   );
 }
 
-export default List;
+export default ViewList;

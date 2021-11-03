@@ -4,12 +4,12 @@ const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 5000
 
-const { initializeDatabase } = require('./database');
+const { initializeAndMigrateDatabase } = require('./database');
 
 async function initalize() {
   try {
     console.log('Initializing Database');
-    await initializeDatabase();
+    await initializeAndMigrateDatabase();
   } catch (error) {
     console.error(`Failed to start server due to database error ${JSON.stringify(error, null, 2)}`);
     return;

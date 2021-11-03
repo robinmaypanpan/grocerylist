@@ -5,9 +5,10 @@ import { useHistory } from "react-router-dom";
 
 import styled from 'styled-components';
 import StyledButton, {Icon as ButtonIcon, Label as ButtonLabel} from '../components/StyledButton';
-import PageWrapper from '../components/PageWrapper';
 import ItemInput from '../components/ItemInput';
 import Label from '../components/Label';
+import IconButton from '../components/IconButton';
+import MenuBar from '../components/MenuBar';
 
 import { addItem } from '../services/api';
 
@@ -38,7 +39,7 @@ function AddNewItem(props) {
     const handleBackButton = () => history.goBack();
 
     return (
-        <PageWrapper>
+        <>
             <Label>Enter the item description</Label>
             <ItemInput 
                 autoFocus
@@ -55,7 +56,7 @@ function AddNewItem(props) {
                 <ButtonIcon className="fas fa-times-circle"/>
                 <ButtonLabel>Cancel</ButtonLabel>
             </BottomButton>
-        </PageWrapper>
+        </>
     );
 }
 

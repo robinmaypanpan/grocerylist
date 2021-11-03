@@ -1,20 +1,18 @@
-import styled from 'styled-components';
-import Item from './Item';
-
-const Container = styled.div`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    overflow-y: scroll;
-    background-color: ${props => props.theme.background}
-`;
-
-function ItemList({ top, height, list, onRemoveItem}){
-    return (
-      <Container top={top} height={height}>
-        {list.map((item) => <Item key={item.id} item={item} onClick={() => onRemoveItem(item.id)}/>)}
-      </Container>
-    );
+import ItemDisplay from './ItemDisplay';
+function ItemList({list, editMode, onRemoveItem, onSetItemChecked})
+{
+  return (
+    <div>
+      {list.map((item) => (
+        <ItemDisplay 
+          key={item.id}
+          item={item}
+          editMode={editMode}
+          onRemoveItem={onRemoveItem}
+          onSetItemChecked={onSetItemChecked}
+        />)
+      )}
+    </div>
+  ); 
 }
-
-export default ItemList;
+export default ItemList
