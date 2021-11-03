@@ -8,11 +8,15 @@ const ItemDiv = styled.div`
     justify-content: flex-start;
     flex-basis: auto;
     flex-wrap: no-wrap;
-    width: 100%;
+    width: 100%-32px;
     color: ${props => props.theme.dataText};
-    border-style: solid;
-    border-width: 1px 0px 0px 0px;
+    border: ${props => props.theme.dataBorder};
+    border-radius: ${props => props.theme.dataBorderRadius};
+    margin: 16px;
+    margin-top: 0px;
     text-align: middle;
+    background-color: ${props => props.theme.dataBackground};
+    background-image: linear-gradient(rgba(255,0,0,0), ${props => props.theme.dataGradient});
 `;
 
 const ItemSpan = styled.span`

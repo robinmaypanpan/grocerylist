@@ -3,10 +3,15 @@ const autumnColors = {
     label: '#F3BC2E',
     button: '#D45B12',
     buttonText: 'black',
-    dataText: 'white',
     iconColor: 'black',
     highlight: '#F3BC2E',
-    
+
+    // Styles for list items
+    dataText: '#151500',
+    dataBackground: '#c88C44',
+    dataGradient: '#a86C44',
+    dataBorder: '2px solid #502C04',
+    dataBorderRadius: '12px',
 
     // Not currently used
     tetiary: '#5F5426',
