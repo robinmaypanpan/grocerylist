@@ -8,11 +8,11 @@ const ItemDiv = styled.div`
     justify-content: flex-start;
     flex-basis: auto;
     flex-wrap: no-wrap;
-    width: 100%-32px;
+    width: 100%-16px;
     color: ${props => props.theme.dataText};
     border: ${props => props.theme.dataBorder};
     border-radius: ${props => props.theme.dataBorderRadius};
-    margin: 16px;
+    margin: 8px;
     margin-top: 0px;
     text-align: middle;
     background-color: ${props => props.theme.dataBackground};
@@ -29,8 +29,32 @@ const ItemSpan = styled.span`
 `;
 
 const CheckBox = styled.input`
-    margin-right: 1.5em;
-    transform: scale(2);
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    margin-right: 2em;
+    transform: scale(3);
+    border: ${props => props.theme.dataCheckboxBorder};
+    background-color: ${props => props.theme.dataCheckboxBackground};
+    
+    &:checked {
+        background: ${props => props.theme.dataCheckboxCheckedBackground};
+    
+        &:after {
+            content: '\\2714';
+            font-size: 14px;
+            position: absolute;
+            top: 0px;
+            left: 1px;
+            color: ${props => props.theme.dataCheckboxCheckColor};
+        }
+    }
+
+    &:active {
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+    }
+
 `;
 
 const Icon = styled.i`

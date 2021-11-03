@@ -12,6 +12,10 @@ const autumnColors = {
     dataGradient: '#a86C44',
     dataBorder: '2px solid #502C04',
     dataBorderRadius: '12px',
+    dataCheckboxBorder: '1px solid #502C04',
+    dataCheckboxBackground: '#c88C44',
+    dataCheckboxCheckedBackground: '#985C34',
+    dataCheckboxCheckColor: '#401C00',
 
     // Not currently used
     tetiary: '#5F5426',
