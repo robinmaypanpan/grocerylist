@@ -8,7 +8,7 @@ const Container = styled.button`
 
     border: 2px solid ${props => props.theme.button};
     border-radius: 10px;
-    width: 65px;
+    width: 100px;
     padding: 5px;
 `;
 
