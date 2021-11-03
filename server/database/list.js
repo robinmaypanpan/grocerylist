@@ -57,7 +57,7 @@ async function removeList(listId) {
 async function getList(listId) {
     const [items, name] = await connectAndQuery([
         {
-            query: `SELECT id, name, timestamp, category_id FROM ${ITEM_TABLE} WHERE list_id=$1 ORDER BY timestamp;`,
+            query: `SELECT id, name, timestamp, category_id, checked FROM ${ITEM_TABLE} WHERE list_id=$1 ORDER BY timestamp DESC, category_id, id;`,
             values: [listId]
         },
         {

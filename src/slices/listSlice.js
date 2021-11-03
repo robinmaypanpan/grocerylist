@@ -7,8 +7,11 @@ export const listSlice = createSlice({
   },
   reducers: {
     updateList: (state, action) => {
-        state.value = action.payload;
-    }
+        const newList = action.payload;
+        if (!newList.error) {
+          state.value = action.payload;
+        }
+    },
   },
 })
 

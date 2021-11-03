@@ -70,17 +70,17 @@ router.post('/addItem', async (request, response) => {
         response.json({success: false, error});
     }
 }).put('/updateItem', async (request, response) => {
-    const { itemId, name, listId, categoryName } = request.body;
+    const { id, itemId, name, listId, categoryName, checked} = request.body;
     try {
-        const result = await updateItem(itemId, name, listId, categoryName);
+        const result = await updateItem(id || itemId, name, listId, categoryName, checked);
         response.json(result);
     } catch (error) {
-        response.json({error});
+        response.json({success: false, error});
     }
 }).delete('/removeItem', async (request, response) => {
-    const { itemId, listId } = request.body;
+    const { id, itemId, listId } = request.body;
     try {
-        const result = await removeItem(itemId, listId);
+        const result = await removeItem(id || itemId, listId);
         response.json(result);
     } catch(error) {
         console.error('Failed to remove item from database');

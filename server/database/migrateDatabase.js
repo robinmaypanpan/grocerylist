@@ -1,4 +1,4 @@
-const { ITEM_TABLE, META_TABLE, CURRENT_VERSION } = require('./constants');
+const { LIST_TABLE, ITEM_TABLE, META_TABLE, CURRENT_VERSION } = require('./constants');
 const { executeQueries } = require('./query');
 
 async function migrateDatabase(client, version) {
@@ -18,6 +18,16 @@ async function migrateDatabase(client, version) {
         version++;
     }
 
+    if (version === 2) {
+        console.log('Migrating database to version 3');
+        await executeQueries(client, [
+            `ALTER TABLE ${ITEM_TABLE} ALTER COLUMN timestamp TYPE timestamp;`,
+            `ALTER TABLE ${LIST_TABLE} ALTER COLUMN timestamp TYPE timestamp;`
+        ]);
+        version++;
+    }
+
+    // Finish up by setting the new version
     await client.query(`INSERT INTO ${META_TABLE} (key, value)\
         VALUES ('version', ${CURRENT_VERSION}) \
         ON CONFLICT (key) \

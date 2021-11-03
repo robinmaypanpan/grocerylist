@@ -10,7 +10,7 @@ import Footer from '../components/Footer';
 import IconButton from '../components/IconButton';
 import MenuBar from '../components/MenuBar';
 
-import { getList, removeItem } from '../services/api';
+import { getList, removeItem, updateItem } from '../services/api';
 
 const Header = styled.header`
   position: sticky;
@@ -54,7 +54,6 @@ function ViewList(props) {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const history = useHistory();
 
   const listId = props.match.params.listId;
 
@@ -80,6 +79,11 @@ function ViewList(props) {
     dispatch(updateList(newList));
   }
 
+  async function handleSetItemChecked (item, checked) {
+    const newList = await updateItem(item, {checked, listId});
+    dispatch(updateList(newList));
+  }
+
   const toggleEditMode = () => setEditMode(!editMode);
 
   const addNewItemDestination = `/addNewItem/${listId}`;
@@ -96,7 +100,14 @@ function ViewList(props) {
         </MenuBar>
       </Header>
       <Contents>
-        {list?.items?.length > 0 && (<ItemList list={list.items} editMode={editMode} onRemoveItem={handleRemoveItem}/>)}
+        {list?.items?.length > 0 && (
+          <ItemList 
+            list={list.items}
+            editMode={editMode}
+            onRemoveItem={handleRemoveItem}
+            onSetItemChecked={handleSetItemChecked}
+          />
+        )}
         {error && (
           <>
             <ErrorContainer>Error</ErrorContainer>

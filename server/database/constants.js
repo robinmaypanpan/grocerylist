@@ -5,5 +5,5 @@ module.exports = {
     META_TABLE: 'meta_table',
     CATEGORY_NONE: 'Uncategorized',
 
-    CURRENT_VERSION: 2,
+    CURRENT_VERSION: 3,
 };
