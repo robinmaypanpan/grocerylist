@@ -4,9 +4,9 @@ jest.mock('./query', () => {
         connectAndQuery: jest.fn() 
     };
 });
-const getVersion = require('./getVersion');
-
 const mockQuery = require('./query');
+
+const getVersion = require('./getVersion');
 
 describe('getVersion', () => {
     test('it returns a version if in the db', async () => {
