@@ -11,6 +11,7 @@ import store from './store';
 
 import styled, {ThemeProvider} from 'styled-components';
 import autumnTheme from './themes/autumn';
+import cleanTheme from './themes/clean';
 
 const Background = styled.div`
   background-color: ${props => props.theme.background}

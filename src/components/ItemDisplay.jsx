@@ -39,6 +39,7 @@ const CheckBox = styled.input`
     transform: scale(3);
     border: ${props => props.theme.dataCheckboxBorder};
     background-color: ${props => props.theme.dataCheckboxBackground};
+    cursor: pointer;
     
     &:checked {
         background: ${props => props.theme.dataCheckboxCheckedBackground};
@@ -60,10 +61,9 @@ const CheckBox = styled.input`
 `;
 
 const Icon = styled.i`
-    margin-left: 0.7em;
-    font-size: 1.5em;
-    color: red;
-    margin-right: 0.5em;
+    margin-left: 0.5em;
+    font-size: 1.8em;
+    color: ${props => props.theme.deleteButtonColor};
 `;
 const DateSpan = styled.p`
     font-size: 0.6em;
@@ -92,9 +92,11 @@ function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
                 </DateSpan>
             </ItemSpan>
             <EmptyElement/>
-            <div>
-                <CheckBox type='checkbox' checked={item.checked} onChange={handleToggleChecked} />
-            </div>
+            {!editMode ? 
+                <div>
+                    <CheckBox type='checkbox' checked={item.checked} onChange={handleToggleChecked} />
+                </div>
+            : null}
         </ItemDiv>
     )
 }

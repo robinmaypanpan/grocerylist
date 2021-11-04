@@ -10,6 +10,7 @@ const Container = styled.button`
     border-radius: 10px;
     width: 100px;
     padding: 5px;
+    cursor: pointer;
 `;
 
 export const Label = styled.span`

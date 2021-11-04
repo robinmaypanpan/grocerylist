@@ -4,6 +4,7 @@ import styled from "styled-components"
 const ListContainer = styled.div`
   max-width: 800px;
   margin: auto;
+  padding-top: 8px;
 `;
 
 function ItemList({list, editMode, onRemoveItem, onSetItemChecked})
