@@ -5,9 +5,6 @@ const ItemDiv = styled.div`
     display: flex;
     align-items: center;
     flex-direction: row;
-    justify-content: flex-start;
-    flex-basis: auto;
-    flex-wrap: no-wrap;
     width: 100%-16px;
     color: ${props => props.theme.dataText};
     border: ${props => props.theme.dataBorder};
@@ -90,7 +87,9 @@ function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
                 </DateSpan>
             </ItemSpan>
             <EmptyElement/>
-            <CheckBox type='checkbox' checked={item.checked} onChange={handleToggleChecked} />
+            <div>
+                <CheckBox type='checkbox' checked={item.checked} onChange={handleToggleChecked} />
+            </div>
         </ItemDiv>
     )
 }
