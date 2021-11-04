@@ -12,13 +12,6 @@ import MenuBar from '../components/MenuBar';
 
 import { addItem } from '../services/api';
 
-const BottomButton = styled(StyledButton)`
-    position:absolute;
-    bottom: 3vh;
-    left: 7.5vw;
-    width: 85vw;
-`;
-
 function AddNewItem(props) {
     const [itemName, setItemName] = useState('');
     const dispatch = useDispatch();
@@ -52,10 +45,10 @@ function AddNewItem(props) {
                 <ButtonIcon className="fas fa-plus-circle"/>
                 <ButtonLabel>Add Item</ButtonLabel>
             </StyledButton>  
-            <BottomButton onClick={handleBackButton}>
+            <StyledButton onClick={handleBackButton}>
                 <ButtonIcon className="fas fa-times-circle"/>
                 <ButtonLabel>Cancel</ButtonLabel>
-            </BottomButton>
+            </StyledButton>
         </>
     );
 }

@@ -3,6 +3,7 @@ import version from '../version';
 
 const Container = styled.footer`
     font-size: 0.3em;
+    text-align: center;
 `;
 
 const VersionText = styled.span`

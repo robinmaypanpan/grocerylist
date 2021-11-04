@@ -22,7 +22,7 @@ async function initializeFreshDatabase(client) {
             `CONSTRAINT fk_list FOREIGN KEY(list_id) REFERENCES ${LIST_TABLE}(id) ON DELETE CASCADE` +
         `);`,
         `CREATE TABLE IF NOT EXISTS ${ITEM_TABLE} (` +
-            `id serial unique PRIMARY KEY \
+            `id serial unique PRIMARY KEY, \
             name text, \
             timestamp timestamp DEFAULT CURRENT_TIMESTAMP, \
             category_id integer, \

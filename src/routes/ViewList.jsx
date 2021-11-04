@@ -93,6 +93,9 @@ function ViewList(props) {
       <Header>
         <Label>{list.name}</Label>
         <MenuBar>
+          <Link to='/' target="_blank">
+            <IconButton icon='fas fa-external-link-square-alt' text='New List'/>
+          </Link>
           <Link to={addNewItemDestination}>
             <IconButton icon='fas fa-plus-circle' text='Add'/>
           </Link>

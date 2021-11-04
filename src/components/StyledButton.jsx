@@ -17,11 +17,12 @@ const Button = styled.button`
     position: relative;
     display: block;
 
-    background: ${props => props.theme.button};
+    background: ${props => props.highlight ? props.theme.highlight : props.theme.button};
+    background-image: linear-gradient(rgba(255,0,0,0), ${props => props.theme.buttonGradient});
 
     font-size: 1.5em;
     padding: 0.5em 1em;
-    border: 2px solid ${props => props.theme.button};
+    border: ${props => props.theme.buttonBorder};
     border-radius: 10px;
     width: 85vw;
     margin: 0.6em auto;
