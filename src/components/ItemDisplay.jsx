@@ -15,10 +15,7 @@ const ItemDiv = styled.div`
     text-align: middle;
     background-color: ${props => props.theme.dataBackground};
     background-image: linear-gradient(rgba(255,0,0,0), ${props => props.theme.dataGradient});
-
-    &.checked {
-        background: ${props => props.theme.dataCheckedBackground};
-    }
+    background: ${props => props.checked ? props.theme.dataCheckedBackground : null};
 `;
 
 const ItemSpan = styled.span`
@@ -82,7 +79,7 @@ function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
         onRemoveItem(item.id);
     }
     return (
-        <ItemDiv className={item.checked ? "checked" : null}>
+        <ItemDiv onClick={handleToggleChecked} checked={item.checked}>
             {editMode ? <Icon onClick={handleOnClick} className='fas fa-times-circle' /> : null}
             <ItemSpan strikeText={item.checked}>
                 {item.name}
