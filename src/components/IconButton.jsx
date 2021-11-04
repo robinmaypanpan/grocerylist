@@ -5,8 +5,8 @@ const Container = styled.button`
     flex-direction: column;
 
     background: ${props => props.highlight ? props.theme.highlight : props.theme.button};
-
-    border: 2px solid ${props => props.theme.button};
+    background-image: linear-gradient(rgba(255,0,0,0), ${props => props.theme.buttonGradient});
+    border: ${props => props.theme.buttonBorder};
     border-radius: 10px;
     width: 100px;
     padding: 5px;

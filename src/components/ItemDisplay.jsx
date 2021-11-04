@@ -53,7 +53,7 @@ const CheckBox = styled.input`
     }
 
     &:active {
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1), inset 0px 1px 3px rgba(0,0,0,0.2);
     }
 
 `;
@@ -81,7 +81,7 @@ function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
         onRemoveItem(item.id);
     }
     return (
-        <ItemDiv onClick={handleToggleChecked} className={item.checked ? "checked" : null}>
+        <ItemDiv className={item.checked ? "checked" : null}>
             {editMode ? <Icon onClick={handleOnClick} className='fas fa-times-circle' /> : null}
             <ItemSpan strikeText={item.checked}>
                 {item.name}
