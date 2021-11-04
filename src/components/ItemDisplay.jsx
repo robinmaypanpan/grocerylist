@@ -11,6 +11,7 @@ const ItemDiv = styled.div`
     border-radius: ${props => props.theme.dataBorderRadius};
     margin: 8px;
     margin-top: 0px;
+    max-width: 800px;
     text-align: middle;
     background-color: ${props => props.theme.dataBackground};
     background-image: linear-gradient(rgba(255,0,0,0), ${props => props.theme.dataGradient});
