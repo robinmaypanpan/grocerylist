@@ -12,14 +12,23 @@ import MenuBar from '../components/MenuBar';
 
 import { getList, removeItem, updateItem } from '../services/api';
 
+const Container = styled.div`
+  background-image: url(/leaves2.png);
+  background-color: rgba(150,100,0,1); /* Tint color */
+  background-blend-mode: multiply;
+  background-attachment: fixed;
+  min-height: 100vh;
+`;
+
 const Header = styled.header`
   position: sticky;
   top: 0;
   width:100vw;
   z-index: 10;
   background-color: ${props => props.theme.background};
-  padding-bottom: 20px;
-  padding-top: 5px;
+  border-bottom: ${props => props.theme.headerBorder};
+  padding-bottom: 8px;
+  padding-top: 8px;
 `
 
 const Contents = styled.section`
@@ -89,7 +98,7 @@ function ViewList(props) {
   const addNewItemDestination = `/addNewItem/${listId}`;
 
   return (
-    <>
+    <Container>
       <Header>
         <Label>{list.name}</Label>
         <MenuBar>
@@ -120,7 +129,7 @@ function ViewList(props) {
         {loading && (<LoadingContainer>Loading...</LoadingContainer>)}
       </Contents>
       <Footer/>
-    </>
+    </Container>
   );
 }
 

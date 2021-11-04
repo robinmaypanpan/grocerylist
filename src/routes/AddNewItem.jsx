@@ -12,6 +12,12 @@ import MenuBar from '../components/MenuBar';
 
 import { addItem } from '../services/api';
 
+const Container = styled.div`
+    max-width: 800px;
+    margin: auto;
+    padding-top: 8px;
+`;
+
 function AddNewItem(props) {
     const [itemName, setItemName] = useState('');
     const dispatch = useDispatch();
@@ -32,14 +38,15 @@ function AddNewItem(props) {
     const handleBackButton = () => history.goBack();
 
     return (
-        <>
-            <Label>Enter the item description</Label>
+        <Container>
+            <Label htmlFor='itemInput'>Enter the item description</Label>
             <ItemInput 
                 autoFocus
                 type='text' 
                 value={itemName} 
                 onChange={handleTextChange}
                 onKeyPress={handleKeyPress}
+                id='itemInput'
             />    
             <StyledButton onClick={handleAddButton}>
                 <ButtonIcon className="fas fa-plus-circle"/>
@@ -49,7 +56,7 @@ function AddNewItem(props) {
                 <ButtonIcon className="fas fa-times-circle"/>
                 <ButtonLabel>Cancel</ButtonLabel>
             </StyledButton>
-        </>
+        </Container>
     );
 }
 
