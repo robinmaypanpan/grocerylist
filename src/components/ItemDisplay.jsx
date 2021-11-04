@@ -34,6 +34,8 @@ const Icon = styled.i`
 const DateSpan = styled.p`
     font-size: 0.6em;
     margin: auto;
+    color: grey;
+    text-decoration:;
 `;
 const EmptyElement = styled.span`
     flex-grow: 3;
