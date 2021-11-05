@@ -8,8 +8,8 @@
   "proxy": "http://localhost:5000",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^12.1.10",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
@@ -36,10 +36,14 @@
   ],
   "scripts": {
     "start-server": "node server/index.js",
-    "test-server": "node server/test.js",
+    "test-server": "jest ./server/**/*.test.js",
+
     "build": "react-scripts build",
     "dev": "react-scripts start",
-    "test-ui": "react-scripts test --testPathIgnorePatterns=server/"
+    "test": "react-scripts test"
+  },
+  "jest": {
+    "resetMocks": false
   },
   "eslintConfig": {
     "extends": [
@@ -61,5 +65,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }
