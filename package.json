@@ -12,6 +12,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^12.1.10",
     "body-parser": "^1.19.0",
+    "dateformat": "^5.0.2",
     "express": "^4.17.1",
     "pg": "^8.7.1",
     "react": "^17.0.2",
@@ -37,7 +38,6 @@
   "scripts": {
     "start-server": "node server/index.js",
     "test-server": "jest ./server/**/*.test.js",
-
     "build": "react-scripts build",
     "dev": "react-scripts start",
     "test": "react-scripts test"
