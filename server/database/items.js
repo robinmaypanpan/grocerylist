@@ -59,9 +59,22 @@ async function removeItem(itemId, listId) {
         return {success: false, error};
     }
 }
+async function removeChecked(listId){
+    try{
+        return await knex.transaction(async (trx) => {
+            await trx(ITEM_TABLE)
+                .where({list_id: listId, checked: true})
+                .delete();
+            return await getList(listId, trx);
+        })
+    } catch (error) {
+        return {success: false, error};
+    }
+}
 
 module.exports = {
     addItem,
     updateItem,
-    removeItem
+    removeItem,
+    removeChecked
 };

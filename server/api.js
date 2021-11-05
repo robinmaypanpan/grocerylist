@@ -17,7 +17,8 @@ const {
 
     addItem,
     updateItem,
-    removeItem 
+    removeItem,
+    removeChecked 
 } = require('./database');
 
 router.get('/getList', async (request, response) => {
@@ -56,7 +57,13 @@ router.post('/addItem', async (request, response) => {
     const { id, itemId, listId } = request.body;
     const result = await removeItem(id || itemId, listId);
     response.json(result);
-});
+}).delete('/removeChecked', async (request, response) => {
+    const { listId } = request.body;
+    const result = await removeChecked(listId);
+    response.json(result);
+})
+
+;
 
 router.get('/getCategories', async (request, response) => {
     const { listId } = request.query;

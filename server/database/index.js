@@ -19,7 +19,8 @@ const {
 const {
     addItem,
     updateItem,
-    removeItem
+    removeItem,
+    removeChecked
 } = require('./items');
 
 async function initializeAndMigrateDatabase() {
@@ -60,5 +61,6 @@ module.exports = {
 
     addItem,
     updateItem,
-    removeItem
+    removeItem,
+    removeChecked
 };

@@ -10,7 +10,7 @@ import Footer from '../components/Footer';
 import IconButton from '../components/IconButton';
 import MenuBar from '../components/MenuBar';
 
-import { getList, removeItem, updateItem } from '../services/api';
+import { getList, removeItem, updateItem, removeChecked } from '../services/api';
 
 const Container = styled.div`
   background-image: url(/leaves_small.png);
@@ -85,6 +85,11 @@ function ViewList(props) {
     dispatch(updateList(newList));
   }
 
+  async function handleRemoveChecked () {
+    const newList = await removeChecked(listId);
+    dispatch(updateList(newList));
+  }
+
   async function handleSetItemChecked (item, checked) {
     const newList = await updateItem(item, {checked, listId});
     dispatch(updateList(newList));
@@ -100,12 +105,13 @@ function ViewList(props) {
         <Label>{list.name}</Label>
         <MenuBar>
           <Link to='/' target="_blank">
-            <IconButton icon='fas fa-external-link-square-alt' text='New List'/>
+            <IconButton icon='fas fa-external-link-square-alt' text='New'/>
           </Link>
           <Link to={addNewItemDestination}>
             <IconButton icon='fas fa-plus-circle' text='Add'/>
           </Link>
           <IconButton icon='fas fa-edit' text='Edit' onClick={toggleEditMode} highlight={editMode}/>
+          <IconButton icon='fas fa-trash' text='Clear' onClick={handleRemoveChecked}/>
         </MenuBar>
       </Header>
       <Contents>
