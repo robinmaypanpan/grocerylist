@@ -1,4 +1,4 @@
-const getClient = require('./getClient');
+const getKnex = require('./getKnex');
 const getVersion = require('./getVersion');
 const initializeFreshDatabase = require('./initializeFreshDatabase');
 const migrateDatabase = require('./migrateDatabase');
@@ -23,27 +23,26 @@ const {
 } = require('./items');
 
 async function initializeAndMigrateDatabase() {
-    let success = false;
-    const client = await getClient();
+    const knex = getKnex();
     try {
-        const version = await getVersion(client);
+        return await knex.transaction(async function (trx) {
+            console.log('Calling transaction');
+            const version = await getVersion(trx);
 
-        console.log(`Database version is ${version}`);
+            console.log(`Database version is ${version}`);
 
-        if (version === 0) {
-            await initializeFreshDatabase(client);
-        } else {
-            await migrateDatabase(client, version);
-        }
-        
-        success = true;
-    } catch (error) {
-        console.log('Something went wrong attempting to initialize database');
-    } finally {
-        client.release();
-    };
+            if (version === 0) {
+                await initializeFreshDatabase(trx);
+            } else {
+                await migrateDatabase(trx, version);
+            }
 
-    return {success};
+            console.log('Database connection established');
+            return {success: true};
+        });
+    } catch(error) {
+        return {success: false, error};
+    }
 }
 
 
