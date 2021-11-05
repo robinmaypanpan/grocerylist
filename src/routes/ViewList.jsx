@@ -100,12 +100,13 @@ function ViewList(props) {
         <Label>{list.name}</Label>
         <MenuBar>
           <Link to='/' target="_blank">
-            <IconButton icon='fas fa-external-link-square-alt' text='New List'/>
+            <IconButton icon='fas fa-external-link-square-alt' text='New'/>
           </Link>
           <Link to={addNewItemDestination}>
             <IconButton icon='fas fa-plus-circle' text='Add'/>
           </Link>
           <IconButton icon='fas fa-edit' text='Edit' onClick={toggleEditMode} highlight={editMode}/>
+          <IconButton icon='fas fa-trash' text='Clear'/>
         </MenuBar>
       </Header>
       <Contents>
