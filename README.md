@@ -64,6 +64,9 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 # Version History
+*0.6.1*
+- Fixed bug with dates not correctly being added to new items
+
 *0.6.0*
 - Major UI refresh
 - Fixed bug in establishing a fresh database
