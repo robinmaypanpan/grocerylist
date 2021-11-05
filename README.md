@@ -65,7 +65,10 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 # Version History
 *0.7.0*
-- 
+-
+
+*0.6.1*
+- Fixed bug with dates not correctly being added to new items
 
 *0.6.1*
 - Fixed bug with dates not correctly being added to new items
