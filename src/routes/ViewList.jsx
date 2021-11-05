@@ -13,10 +13,7 @@ import MenuBar from '../components/MenuBar';
 import { getList, removeItem, updateItem } from '../services/api';
 
 const Container = styled.div`
-  background-image: url(/leaves2.png);
-  background-color: rgba(150,100,0,1); /* Tint color */
-  background-blend-mode: multiply;
-  background-attachment: fixed;
+  background-image: url(/leaves_small.png);
   min-height: 100vh;
 `;
 
