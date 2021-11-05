@@ -4,13 +4,14 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from "react-router-dom";
 
 import styled from 'styled-components';
-import StyledButton, {Icon as ButtonIcon, Label as ButtonLabel} from '../components/StyledButton';
 import ItemInput from '../components/ItemInput';
 import Label from '../components/Label';
 import IconButton from '../components/IconButton';
 import MenuBar from '../components/MenuBar';
 
 import { addItem } from '../services/api';
+
+const CATEGORY_NONE = 'Uncategorized';
 
 const Container = styled.div`
     background-image: url(/leaves_small.png);
@@ -34,7 +35,7 @@ const Contents = styled.section`
 
 function AddNewItem(props) {
     const [itemName, setItemName] = useState('');
-    const [categoryName, setCategoryName] = useState('Uncategorized');
+    const [categoryName, setCategoryName] = useState(CATEGORY_NONE);
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -52,6 +53,11 @@ function AddNewItem(props) {
     const handleNameChange = ({target}) => setItemName(target.value);
     const handleCategoryChange = ({target}) => setCategoryName(target.value);
     const handleBackButton = () => history.goBack();
+    const handleCategoryClick = () => {
+        if(categoryName === CATEGORY_NONE) {
+            setCategoryName('');
+        }
+    }
 
     return (
         <Container>
@@ -78,6 +84,7 @@ function AddNewItem(props) {
                     value={categoryName} 
                     onChange={handleCategoryChange}
                     onKeyPress={handleKeyPress}
+                    onClick={handleCategoryClick}
                     id='itemInput'
                 />
             </Contents>
