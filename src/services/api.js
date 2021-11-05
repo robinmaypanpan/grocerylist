@@ -76,6 +76,11 @@ export async function removeItem(itemId, listId) {
     return await callFetch('removeItem', 'DELETE', {itemId, listId});
 }
 
+export async function removeChecked(listId){
+    validate(listId);
+    return await callFetch('removeChecked', 'DELETE', {listId});
+}
+
 export async function getCategories(listId) {
     validate(listId);
     return await callFetch('getCategories', 'GET', {listId});
