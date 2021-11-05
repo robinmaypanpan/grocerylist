@@ -3,8 +3,10 @@ const { META_TABLE, LIST_TABLE, CATEGORY_TABLE, ITEM_TABLE, CURRENT_VERSION } = 
 async function initializeFreshDatabase(knex) {
     console.log('Fully initializing fresh database');
 
-    await Promise.all([
-        knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";'),
+    // Get our extension setup first.
+    await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
+
+    await Promise.all([   
         knex.schema.createTable(META_TABLE, (table) => {
             table.text('key').unique();
             table.text('value');
@@ -37,9 +39,10 @@ async function initializeFreshDatabase(knex) {
                 .onDelete('cascade');
             table.foreign('category_id').references(`${CATEGORY_TABLE}.id`)
                 .onDelete('cascade');
-        }),
-        knex(META_TABLE).insert({key: 'version', value: CURRENT_VERSION})
+        })
     ]);
+
+    await knex(META_TABLE).insert({key: 'version', value: CURRENT_VERSION});
 }
 
 module.exports = initializeFreshDatabase;
