@@ -17,41 +17,26 @@ const {
 
     addItem,
     updateItem,
-    removeItem 
+    removeItem,
+    removeChecked 
 } = require('./database');
 
 router.get('/getList', async (request, response) => {
     const { listId } = request.query;
-    try {
-        const result = await getList(listId);
-        response.json(result);
-    } catch (error) {
-        response.json({success: false, error});
-    }
+    const result = await getList(listId);
+    response.json(result);
 }).post('/createList', async (request, response) => {
     const { name } = request.body;
-    try {
-        const listId = await createList(name);
-        response.json({listId});
-    } catch (error) {
-        response.json({success: false, error});
-    }
+    const listId = await createList(name);
+    response.json({listId});
 }).put('/updateList', async (request, response) => {
     const { listId, name } = request.body;
-    try {
-        const result = await updateList(listId, name);
-        response.json(result);
-    } catch (error) {
-        response.json({success: false, error});
-    }
+    const result = await updateList(listId, name);
+    response.json(result);
 }).delete('removeList', async (request, response) => {
     const { listId } = request.body;
-    try {
-        await removeList(listId);
-        response.json({success: true});
-    } catch (error) {
-        response.json({success: false, error});
-    }
+    await removeList(listId);
+    response.json({success: true});
 })
 
 router.post('/addItem', async (request, response) => {
@@ -62,56 +47,36 @@ router.post('/addItem', async (request, response) => {
         return;
     }
 
-    try {
-        const result = await addItem(name, listId, categoryName);
-        response.json(result);
-    } catch (error) {
-        console.error('Failed to add item to database');
-        response.json({success: false, error});
-    }
+    const result = await addItem(name, listId, categoryName);
+    response.json(result);
 }).put('/updateItem', async (request, response) => {
     const { id, itemId, name, listId, categoryName, checked} = request.body;
-    try {
-        const result = await updateItem(id || itemId, name, listId, categoryName, checked);
-        response.json(result);
-    } catch (error) {
-        response.json({success: false, error});
-    }
+    const result = await updateItem(id || itemId, name, listId, categoryName, checked);
+    response.json(result);
 }).delete('/removeItem', async (request, response) => {
     const { id, itemId, listId } = request.body;
-    try {
-        const result = await removeItem(id || itemId, listId);
-        response.json(result);
-    } catch(error) {
-        console.error('Failed to remove item from database');
-        response.json({success: false, error});
-    }
-});
+    const result = await removeItem(id || itemId, listId);
+    response.json(result);
+}).delete('/removeChecked', async (request, response) => {
+    const { listId } = request.body;
+    const result = await removeChecked(listId);
+    response.json(result);
+})
+
+;
 
 router.get('/getCategories', async (request, response) => {
     const { listId } = request.query;
-    try {
-        const result = await getCategories(listId);
-        response.json(result);
-    } catch (error) {
-        response.json({success: false, error});
-    }
+    const result = await getCategories(listId);
+    response.json(result);
 }).put('/updateCategory', async (request, response) => {
     const { name, categoryId, listId } = request.body;
-    try {
-        const result = await updateCategory(name, categoryId, listId);
-        response.json(result);
-    } catch (error) {
-        response.json({success: false, error});
-    }
+    const result = await updateCategory(name, categoryId, listId);
+    response.json(result);
 }).delete('removeCategory', async (request, response) => {
     const { categoryId, listId } = request.body;
-    try {
-        const result = await removeCategory(categoryId, listId);
-        response.json(result);
-    } catch (error) {
-        response.json({success: false, error});
-    }
+    const result = await removeCategory(categoryId, listId);
+    response.json(result);
 })
 
 module.exports = router;

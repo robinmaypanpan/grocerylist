@@ -8,14 +8,15 @@ const { initializeAndMigrateDatabase } = require('./database');
 
 async function initalize() {
   try {
-    console.log('Initializing Database');
-    await initializeAndMigrateDatabase();
+    console.log('Starting up Database Connection');
+    const {success: initialized, error} = await initializeAndMigrateDatabase();
+    if(!initialized) {
+      throw error || new Error('Database connection failed for unknown reason');
+    }
   } catch (error) {
-    console.error(`Failed to start server due to database error ${JSON.stringify(error, null, 2)}`);
+    console.error(`Failed to start server due to database error ${error}`);
     return;
   }
-
-  console.log('Database initialized');
 
   console.log('Starting ExpressJS server');
 

@@ -1,4 +1,4 @@
-const getClient = require('./getClient');
+const getKnex = require('./getKnex');
 const getVersion = require('./getVersion');
 const initializeFreshDatabase = require('./initializeFreshDatabase');
 const migrateDatabase = require('./migrateDatabase');
@@ -19,24 +19,31 @@ const {
 const {
     addItem,
     updateItem,
-    removeItem
+    removeItem,
+    removeChecked
 } = require('./items');
 
 async function initializeAndMigrateDatabase() {
-    const client = await getClient();
-    const version = await getVersion(client);
+    const knex = getKnex();
+    try {
+        return await knex.transaction(async function (trx) {
+            console.log('Calling transaction');
+            const version = await getVersion(trx);
 
-    console.log(`Database version is ${version}`);
+            console.log(`Database version is ${version}`);
 
-    if (version === 0) {
-        await initializeFreshDatabase(client);
-    } else {
-        await migrateDatabase(client, version);
+            if (version === 0) {
+                await initializeFreshDatabase(trx);
+            } else {
+                await migrateDatabase(trx, version);
+            }
+
+            console.log('Database connection established');
+            return {success: true};
+        });
+    } catch(error) {
+        return {success: false, error};
     }
-    
-    client.release();
-
-    return {success: true};
 }
 
 
@@ -54,5 +61,6 @@ module.exports = {
 
     addItem,
     updateItem,
-    removeItem
+    removeItem,
+    removeChecked
 };

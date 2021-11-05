@@ -10,7 +10,12 @@ import Footer from '../components/Footer';
 import IconButton from '../components/IconButton';
 import MenuBar from '../components/MenuBar';
 
-import { getList, removeItem, updateItem } from '../services/api';
+import { getList, removeItem, updateItem, removeChecked } from '../services/api';
+
+const Container = styled.div`
+  background-image: url(/leaves_small.png);
+  min-height: 100vh;
+`;
 
 const Header = styled.header`
   position: sticky;
@@ -18,8 +23,9 @@ const Header = styled.header`
   width:100vw;
   z-index: 10;
   background-color: ${props => props.theme.background};
-  padding-bottom: 20px;
-  padding-top: 5px;
+  border-bottom: ${props => props.theme.headerBorder};
+  padding-bottom: 8px;
+  padding-top: 8px;
 `
 
 const Contents = styled.section`
@@ -79,6 +85,11 @@ function ViewList(props) {
     dispatch(updateList(newList));
   }
 
+  async function handleRemoveChecked () {
+    const newList = await removeChecked(listId);
+    dispatch(updateList(newList));
+  }
+
   async function handleSetItemChecked (item, checked) {
     const newList = await updateItem(item, {checked, listId});
     dispatch(updateList(newList));
@@ -89,14 +100,18 @@ function ViewList(props) {
   const addNewItemDestination = `/addNewItem/${listId}`;
 
   return (
-    <>
+    <Container>
       <Header>
         <Label>{list.name}</Label>
         <MenuBar>
+          <Link to='/' target="_blank">
+            <IconButton icon='fas fa-external-link-square-alt' text='New'/>
+          </Link>
           <Link to={addNewItemDestination}>
             <IconButton icon='fas fa-plus-circle' text='Add'/>
           </Link>
           <IconButton icon='fas fa-edit' text='Edit' onClick={toggleEditMode} highlight={editMode}/>
+          <IconButton icon='fas fa-trash' text='Clear' onClick={handleRemoveChecked}/>
         </MenuBar>
       </Header>
       <Contents>
@@ -117,7 +132,7 @@ function ViewList(props) {
         {loading && (<LoadingContainer>Loading...</LoadingContainer>)}
       </Contents>
       <Footer/>
-    </>
+    </Container>
   );
 }
 

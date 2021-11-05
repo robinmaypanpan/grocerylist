@@ -64,10 +64,22 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 # Version History
+*0.6.0*
+- Major UI refresh
+- Fixed bug in establishing a fresh database
+- Added button to easily create new lists
+- Added button to clear checked off items
+- Switched backend access over to knex
+- Added dates to items in the lists
+- Fixed bug with adding the app to a home screen
 
 *0.5.0*
-- Added edit mode for deletions in list view.
-- 
+- UX Cleanup on ViewList page. Smaller buttons
+- Edit mode to protect against accidental deletions
+- The ability to check things off without deleting them!
+- Date added information!
+- @orikalin rewrote the main part of the app!
+- Added lots of database doodads, including database versioning and the ability to migrate to new versions of the db.
 
 *0.4.0*
 - Fixed scrolling list formatting

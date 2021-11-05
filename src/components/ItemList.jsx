@@ -1,8 +1,16 @@
 import ItemDisplay from './ItemDisplay';
+import styled from "styled-components"
+
+const ListContainer = styled.div`
+  max-width: 800px;
+  margin: auto;
+  padding-top: 8px;
+`;
+
 function ItemList({list, editMode, onRemoveItem, onSetItemChecked})
 {
   return (
-    <div>
+    <ListContainer>
       {list.map((item) => (
         <ItemDisplay 
           key={item.id}
@@ -12,7 +20,7 @@ function ItemList({list, editMode, onRemoveItem, onSetItemChecked})
           onSetItemChecked={onSetItemChecked}
         />)
       )}
-    </div>
+    </ListContainer>
   ); 
 }
 export default ItemList

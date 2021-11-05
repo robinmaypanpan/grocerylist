@@ -1,77 +1,80 @@
 const { ITEM_TABLE } = require('./constants');
-const { getCategoryId } = require('./categories');
+const { getOrCreateCategoryId } = require('./categories');
 const { getList } = require('./list');
-const getClient = require('./getClient');
-const { executeQueries, connectAndQuery } = require('./query');
+const knex = require('./getKnex')();
 
 /**
  * Adds the provided item, with list id and category name, to the database
  */
 async function addItem(name, listId, categoryName) {
-    console.log(`List is ${listId}`);
-    const client = await getClient();
     try {
-        const categoryId = await getCategoryId(client, listId, categoryName);
-        await executeQueries(client,
-            {
-                query: `INSERT INTO ${ITEM_TABLE} (name, timestamp, list_id, category_id) ` +
-                `VALUES ($1::text, current_timestamp, $2, $3);`,
-                values: [
+        return await knex.transaction(async (trx) => {
+            const categoryId = await getOrCreateCategoryId(trx, listId, categoryName);
+            await trx(ITEM_TABLE)
+                .insert({
                     name,
-                    listId,
-                    categoryId
-                ]
-            }
-        ); 
-    } finally {
-        client.release();
+                    list_id: listId,
+                    category_id: categoryId
+                });
+            return await getList(listId, trx);
+        });
+    } catch (error) {
+        return {success: false, error};
     }
-    return await getList(listId);
 }
 
 /**
  * Changes the name and category for a given item.
  */
 async function updateItem(itemId, name, listId, categoryName, checked) {
-    const client = await getClient();
     try {
-        const categoryId = await getCategoryId(client, listId, categoryName);
-        await executeQueries(client,
-            {
-                query: `UPDATE ${ITEM_TABLE} SET name=$1, category_id=$2, checked=$3 WHERE id=$4 AND list_id=$5;`,
-                values: [
+        return await knex.transaction(async (trx) => {
+            const categoryId = await getOrCreateCategoryId(trx, listId, categoryName);
+            await trx(ITEM_TABLE)
+                .where({id: itemId, list_id: listId})
+                .update({
                     name,
-                    categoryId,
                     checked,
-                    itemId,
-                    listId
-                ]
-            }
-        ); 
-    } finally {
-        console.log(`Releasing client`);
-        client.release();
+                    category_id: categoryId
+                });
+            return await getList(listId, trx);
+        });
+    } catch (error) {
+        return {success: false, error};
     }
-    console.log(`Getting list`);
-    return await getList(listId);
 }
 
 /**
  * removes a given item from the database
  */
 async function removeItem(itemId, listId) {
-    await connectAndQuery(
-        { 
-            query: `DELETE FROM ${ITEM_TABLE} WHERE id = $1 AND list_id = $2;`,
-            values: [itemId, listId]
-        }
-    );
-
-    return await getList(listId);
+    try {
+        return await knex.transaction(async (trx) => {
+            await trx(ITEM_TABLE)
+                .where({id: itemId, list_id: listId})
+                .delete();
+            return await getList(listId, trx);
+        });
+    } catch (error) {
+        return {success: false, error};
+    }
+}
+async function removeChecked(listId){
+    try{
+        return await knex.transaction(async (trx) => {
+            await trx(ITEM_TABLE)
+                .where({list_id: listId, checked: true})
+                .delete();
+            return await getList(listId, trx);
+        })
+    } catch (error) {
+        return {success: false, error};
+    }
 }
 
 module.exports = {
     addItem,
     updateItem,
-    removeItem
+    removeItem,
+    removeChecked
 };

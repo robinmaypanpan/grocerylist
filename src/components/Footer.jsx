@@ -3,6 +3,8 @@ import version from '../version';
 
 const Container = styled.footer`
     font-size: 0.3em;
+    text-align: center;
+    color: ${props => props.theme.footerColor};
 `;
 
 const VersionText = styled.span`

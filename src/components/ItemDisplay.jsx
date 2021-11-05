@@ -1,18 +1,23 @@
 import { useState } from "react";
 import styled from "styled-components"
+import dateFormat from "dateformat";
+
 
 const ItemDiv = styled.div`
     display: flex;
     align-items: center;
     flex-direction: row;
-    justify-content: flex-start;
-    flex-basis: auto;
-    flex-wrap: no-wrap;
-    width: 100%;
+    width: 100%-16px;
     color: ${props => props.theme.dataText};
-    border-style: solid;
-    border-width: 1px 0px 0px 0px;
+    border: ${props => props.theme.dataBorder};
+    border-radius: ${props => props.theme.dataBorderRadius};
+    margin: 8px;
+    margin-top: 0px;
+    max-width: 800px;
     text-align: middle;
+    background-color: ${props => props.theme.dataBackground};
+    background-image: linear-gradient(rgba(255,0,0,0), ${props => props.theme.dataGradient});
+    background: ${props => props.checked ? props.theme.dataCheckedBackground : null};
 `;
 
 const ItemSpan = styled.span`
@@ -25,19 +30,44 @@ const ItemSpan = styled.span`
 `;
 
 const CheckBox = styled.input`
-    margin-right: 1.5em;
-    transform: scale(2);
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    margin-right: 2em;
+    transform: scale(3);
+    border: ${props => props.theme.dataCheckboxBorder};
+    background-color: ${props => props.theme.dataCheckboxBackground};
+    cursor: pointer;
+    
+    &:checked {
+        background: ${props => props.theme.dataCheckboxCheckedBackground};
+    
+        &:after {
+            content: '\\2714';
+            font-size: 14px;
+            position: absolute;
+            top: -3px;
+            left: 1px;
+            color: ${props => props.theme.dataCheckboxCheckColor};
+        }
+    }
+
+    &:active {
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1), inset 0px 1px 3px rgba(0,0,0,0.2);
+    }
+
 `;
 
 const Icon = styled.i`
-    margin-left: 0.7em;
-    font-size: 1.5em;
-    color: red;
-    margin-right: 0.5em;
+    margin-left: 0.5em;
+    font-size: 1.8em;
+    color: ${props => props.theme.deleteButtonColor};
 `;
 const DateSpan = styled.p`
     font-size: 0.6em;
     margin: auto;
+    color: #2e2e2e;
 `;
 const EmptyElement = styled.span`
     flex-grow: 3;
@@ -45,24 +75,35 @@ const EmptyElement = styled.span`
 
 function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
     function handleToggleChecked() {
-        if(!editMode) onSetItemChecked(item, !item.checked);
+        if (!editMode) onSetItemChecked(item, !item.checked);
     }
 
     function handleOnClick() {
         onRemoveItem(item.id);
     }
+    function formatDateAdded(timestamp) {
+
+        const dateAdded = new Date(timestamp);
+        const formattedDate = dateFormat(dateAdded, "mm/dd");
+        return formattedDate;
+    }
+
     return (
-        <ItemDiv onClick={handleToggleChecked}>
+        <ItemDiv onClick={handleToggleChecked} checked={item.checked}>
             {editMode ? <Icon onClick={handleOnClick} className='fas fa-times-circle' /> : null}
             <ItemSpan strikeText={item.checked}>
                 {item.name}
                 <br />
                 <DateSpan>
-                    Added on xx/xx
+                    Added on {formatDateAdded(item.timestamp)}
                 </DateSpan>
             </ItemSpan>
-            <EmptyElement/>
-            <CheckBox type='checkbox' checked={item.checked} onChange={handleToggleChecked} />
+            <EmptyElement />
+            {!editMode ?
+                <div>
+                    <CheckBox type='checkbox' checked={item.checked} onChange={handleToggleChecked} />
+                </div>
+                : null}
         </ItemDiv>
     )
 }

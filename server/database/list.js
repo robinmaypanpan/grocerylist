@@ -1,40 +1,30 @@
 const { LIST_TABLE, CATEGORY_NONE, CATEGORY_TABLE, ITEM_TABLE } = require('./constants');
-const { connectAndQuery, executeQueries } = require('./query');
-const getClient = require('./getClient');
+const knex = require('./getKnex')();
 
 /**
  * Creates a new list and returns its id
  */
 async function createList(name) {
-    const client = await getClient();
-    const [result] = await executeQueries(client, [
-        {
-            query: `INSERT INTO ${LIST_TABLE} VALUES(uuid_generate_v4(), $1) RETURNING *;`,
-            values: [name]
-        }
-    ]);
-    const listId = result.rows[0].id;
+    return await knex.transaction(async (trx) => {
+        const [{id: listId}] = await trx(LIST_TABLE)
+            .insert({id: knex.raw('uuid_generate_v4()'), name})
+            .returning('*');
 
-    await executeQueries(client, {
-        query: `INSERT INTO ${CATEGORY_TABLE} (name, list_id) VALUES ($1, $2);`,
-        values: [CATEGORY_NONE, listId]
+        await trx(CATEGORY_TABLE)
+            .insert({list_id: listId, name: CATEGORY_NONE});
+
+        return listId;
     });
-
-    client.release();
-
-    return listId;
 }
 
 /**
  * Changes the name of the list with the given id
  */
 async function updateList(listId, name) {
-    await connectAndQuery([
-        {
-            query: `UPDATE ${LIST_TABLE} SET name=$1 WHERE id=$2;`,
-            values: [name, listId]
-        }
-    ]);
+    await knex(LIST_TABLE)
+        .where({id: listId})
+        .update({name});
+
     return await getList(listId);
 }
 
@@ -42,34 +32,33 @@ async function updateList(listId, name) {
  * Removes the list with the given id
  */
 async function removeList(listId) {
-    const [result] = await connectAndQuery(
-        { 
-            query: `DELETE FROM ${LIST_TABLE} WHERE id = $1;`,
-            values: [listId]
-        }
-    );
-    return result;
+    try {
+        await knex(LIST_TABLE)
+            .where({id: listId})
+            .delete();
+        return {success: true}
+    } catch (error) {
+        return {success: false, error};
+    }
 }
 
 /**
  * Returns a description of the list with the given id
  */
-async function getList(listId) {
-    const [items, name] = await connectAndQuery([
-        {
-            query: `SELECT id, name, timestamp, category_id, checked FROM ${ITEM_TABLE} WHERE list_id=$1 ORDER BY timestamp DESC, category_id, id;`,
-            values: [listId]
-        },
-        {
-            query: `SELECT name FROM ${LIST_TABLE} WHERE id=$1;`,
-            values: [listId]
-        },
-    ]);
+async function getList(listId, trx = knex) {
+    try {
+        const [{name}] = await trx(LIST_TABLE)
+            .where({id: listId})
+            .select('name');
 
-    return {
-        name: name.rows[0].name,
-        items: items.rows
-    };
+        const items = await trx(ITEM_TABLE)
+            .where({list_id: listId})
+            .select('id', 'name', 'timestamp', 'category_id', 'checked')
+            .orderBy([{column: 'timestamp', order: 'desc'}, 'category_id', 'id']);
+        return {success: true, name, items};
+    } catch(error) {
+        return {success: false, error};
+    }
 }
 
 module.exports = {

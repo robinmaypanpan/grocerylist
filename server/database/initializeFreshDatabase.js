@@ -1,41 +1,48 @@
 const { META_TABLE, LIST_TABLE, CATEGORY_TABLE, ITEM_TABLE, CURRENT_VERSION } = require('./constants');
-const { executeQueries } = require('./query');
 
-async function initializeFreshDatabase(client) {
+async function initializeFreshDatabase(knex) {
     console.log('Fully initializing fresh database');
-        
-    const queries = [
-        `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`,
-        `CREATE TABLE IF NOT EXISTS ${META_TABLE} ( \
-            key text unique, \
-            value text \
-        );`,
-        `CREATE TABLE IF NOT EXISTS ${LIST_TABLE} (` +
-            `id uuid unique PRIMARY KEY,` +
-            `name text,` +
-            `timestamp timestamp DEFAULT CURRENT_TIMESTAMP` +
-        `);`,
-        `CREATE TABLE IF NOT EXISTS ${CATEGORY_TABLE} (` +
-            `id serial unique PRIMARY KEY, ` +
-            `name text, ` +
-            `list_id uuid, ` +
-            `CONSTRAINT fk_list FOREIGN KEY(list_id) REFERENCES ${LIST_TABLE}(id) ON DELETE CASCADE` +
-        `);`,
-        `CREATE TABLE IF NOT EXISTS ${ITEM_TABLE} (` +
-            `id serial unique PRIMARY KEY \
-            name text, \
-            timestamp timestamp DEFAULT CURRENT_TIMESTAMP, \
-            category_id integer, \
-            list_id uuid, \
-            checked boolean DEFAULT false, \
-            CONSTRAINT fk_category FOREIGN KEY(category_id) REFERENCES ${CATEGORY_TABLE}(id), \
-            CONSTRAINT fk_list FOREIGN KEY(list_id) REFERENCES ${LIST_TABLE}(id) ON DELETE CASCADE \
-        );`,
-        `INSERT INTO ${META_TABLE} (key, value) \
-            VALUES ('version', ${CURRENT_VERSION}) \
-        ;`
-    ];
-    await executeQueries(client, queries);
+
+    // Get our extension setup first.
+    await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
+
+    await Promise.all([   
+        knex.schema.createTable(META_TABLE, (table) => {
+            table.text('key').unique();
+            table.text('value');
+        }),
+        knex.schema.createTable(LIST_TABLE, (table) => {
+            table.uuid('id').unique().primary();
+            table.text('name');
+            table.timestamp('timestamp');
+            // TODO: Migrate to table.timestamps
+            // table.timestamps();
+        }),
+        knex.schema.createTable(CATEGORY_TABLE, (table) => {
+            table.increments();
+            table.text('name');
+            table.uuid('list_id');
+            table.foreign('list_id').references(`${LIST_TABLE}.id`)
+                .onDelete('cascade');
+        }),
+        knex.schema.createTable(ITEM_TABLE, (table) => {
+            table.increments();
+            table.text('name');
+            table.timestamp('timestamp');
+            // TODO: Migrate to table.timestamps
+            // table.timestamps();
+            table.integer('category_id');
+            table.uuid('list_id');
+            table.boolean('checked').defaultTo(false);
+
+            table.foreign('list_id').references(`${LIST_TABLE}.id`)
+                .onDelete('cascade');
+            table.foreign('category_id').references(`${CATEGORY_TABLE}.id`)
+                .onDelete('cascade');
+        })
+    ]);
+
+    await knex(META_TABLE).insert({key: 'version', value: CURRENT_VERSION});
 }
 
 module.exports = initializeFreshDatabase;
