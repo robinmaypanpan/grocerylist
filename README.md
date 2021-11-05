@@ -68,7 +68,10 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 - Major UI refresh
 - Fixed bug in establishing a fresh database
 - Added button to easily create new lists
-- 
+- Added button to clear checked off items
+- Switched backend access over to knex
+- Added dates to items in the lists
+- Fixed bug with adding the app to a home screen
 
 *0.5.0*
 - UX Cleanup on ViewList page. Smaller buttons
