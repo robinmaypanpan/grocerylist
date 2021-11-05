@@ -14,7 +14,8 @@ async function addItem(name, listId, categoryName) {
                 .insert({
                     name,
                     list_id: listId,
-                    category_id: categoryId
+                    category_id: categoryId,
+                    timestamp: knex.raw('current_timestamp')
                 });
             return await getList(listId, trx);
         });
