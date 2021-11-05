@@ -7,8 +7,6 @@ import styled from 'styled-components';
 import StyledButton, {Icon as ButtonIcon, Label as ButtonLabel} from '../components/StyledButton';
 import ItemInput from '../components/ItemInput';
 import Label from '../components/Label';
-import IconButton from '../components/IconButton';
-import MenuBar from '../components/MenuBar';
 
 import { addItem } from '../services/api';
 
@@ -20,6 +18,7 @@ const Container = styled.div`
 
 function AddNewItem(props) {
     const [itemName, setItemName] = useState('');
+    const [categoryName, setCategoryName] = useState('Uncategorized');
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -27,27 +26,36 @@ function AddNewItem(props) {
 
     async function handleAddButton() {
         if (!itemName) return;
-        const newList = await addItem(itemName, listId);
+        const newList = await addItem(itemName, listId, categoryName);
         dispatch(updateList(newList));
 
         history.push(`/list/${listId}`);
     }
 
     const handleKeyPress = ({key}) => key === 'Enter' && handleAddButton();
-    const handleTextChange = ({target}) => setItemName(target.value);
+    const handleNameChange = ({target}) => setItemName(target.value);
+    const handleCategoryChange = ({target}) => setCategoryName(target.value);
     const handleBackButton = () => history.goBack();
 
     return (
         <Container>
-            <Label htmlFor='itemInput'>Enter the item description</Label>
+            <Label htmlFor='itemInput'>Item name:</Label>
             <ItemInput 
                 autoFocus
                 type='text' 
                 value={itemName} 
-                onChange={handleTextChange}
+                onChange={handleNameChange}
                 onKeyPress={handleKeyPress}
                 id='itemInput'
-            />    
+            />
+            <Label htmlFor='itemInput'>Item category:</Label>
+            <ItemInput 
+                type='text' 
+                value={categoryName} 
+                onChange={handleCategoryChange}
+                onKeyPress={handleKeyPress}
+                id='itemInput'
+            />
             <StyledButton onClick={handleAddButton}>
                 <ButtonIcon className="fas fa-plus-circle"/>
                 <ButtonLabel>Add Item</ButtonLabel>

@@ -55,6 +55,7 @@ export async function removeList(listId) {
 export async function addItem(name, listId, categoryName) {
     validate(listId);
     validate(name);
+    validate(categoryName);
     return await callFetch('addItem', 'POST', {name, categoryName, listId});
 }
 
