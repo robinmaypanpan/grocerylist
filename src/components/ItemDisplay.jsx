@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components"
+import dateFormat from "dateformat";
+
 
 const ItemDiv = styled.div`
     display: flex;
@@ -45,7 +47,7 @@ const CheckBox = styled.input`
             content: '\\2714';
             font-size: 14px;
             position: absolute;
-            top: 0px;
+            top: -3px;
             left: 1px;
             color: ${props => props.theme.dataCheckboxCheckColor};
         }
@@ -65,6 +67,7 @@ const Icon = styled.i`
 const DateSpan = styled.p`
     font-size: 0.6em;
     margin: auto;
+    color: #2e2e2e;
 `;
 const EmptyElement = styled.span`
     flex-grow: 3;
@@ -72,12 +75,19 @@ const EmptyElement = styled.span`
 
 function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
     function handleToggleChecked() {
-        if(!editMode) onSetItemChecked(item, !item.checked);
+        if (!editMode) onSetItemChecked(item, !item.checked);
     }
 
     function handleOnClick() {
         onRemoveItem(item.id);
     }
+    function formatDateAdded(timestamp) {
+
+        const dateAdded = new Date(timestamp);
+        const formattedDate = dateFormat(dateAdded, "mm/dd");
+        return formattedDate;
+    }
+
     return (
         <ItemDiv onClick={handleToggleChecked} checked={item.checked}>
             {editMode ? <Icon onClick={handleOnClick} className='fas fa-times-circle' /> : null}
@@ -85,15 +95,15 @@ function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
                 {item.name}
                 <br />
                 <DateSpan>
-                    Added on xx/xx
+                    Added on {formatDateAdded(item.timestamp)}
                 </DateSpan>
             </ItemSpan>
-            <EmptyElement/>
-            {!editMode ? 
+            <EmptyElement />
+            {!editMode ?
                 <div>
                     <CheckBox type='checkbox' checked={item.checked} onChange={handleToggleChecked} />
                 </div>
-            : null}
+                : null}
         </ItemDiv>
     )
 }
