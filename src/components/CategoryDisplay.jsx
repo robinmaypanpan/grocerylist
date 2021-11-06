@@ -11,7 +11,7 @@ const Header = styled.div`
 
     padding: 4px 5px;
 
-    color: ${props => props.theme.dataText};
+    color: ${props => props.theme.categoryText};
     border: ${props => props.theme.dataBorder};
     border-radius: ${props => props.theme.dataBorderRadius};
 
@@ -34,7 +34,6 @@ const Spacer = styled.span`
 const Icon = styled.i`
     margin-right: 0.4em;
     font-size: 1.4em;
-    color: ${props => props.theme.iconColor};
 `;
 
 function CategoryDisplay({category, children, onAddToCategory}) {
