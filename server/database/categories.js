@@ -64,7 +64,7 @@ async function removeCategory(categoryId, listId) {
 /**
  * Returns either an existing category or a new category id for a given category names
  */
-async function getOrCreateCategoryId(trx, listId, categoryName) {
+async function getOrCreateCategoryId(trx, listId, categoryName, sortOrder) {
     console.log(`Obtaining category for ${categoryName}`);
     const categoryResults = await trx(CATEGORY_TABLE)
         .where({name: categoryName, list_id: listId})
@@ -78,7 +78,7 @@ async function getOrCreateCategoryId(trx, listId, categoryName) {
         console.log(`Creating category for ${categoryName}`);
 
         const [categoryId] = await trx(CATEGORY_TABLE)
-            .insert({name: categoryName, list_id: listId})
+            .insert({name: categoryName, list_id: listId, sort_order: sortOrder})
             .returning('id');
 
         console.log(`The new category id is ${categoryId}`);

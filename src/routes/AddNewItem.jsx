@@ -36,6 +36,7 @@ const Contents = styled.section`
 function AddNewItem(props) {
     const [itemName, setItemName] = useState('');
     const [categoryName, setCategoryName] = useState(CATEGORY_NONE);
+    const [categoryOrder, setCategoryOrder] = useState(0);
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -43,7 +44,7 @@ function AddNewItem(props) {
 
     async function handleAddButton() {
         if (!itemName) return;
-        const newList = await addItem(itemName, listId, categoryName);
+        const newList = await addItem(itemName, listId, categoryName, categoryOrder);
         dispatch(updateList(newList));
 
         history.push(`/list/${listId}`);
@@ -52,6 +53,7 @@ function AddNewItem(props) {
     const handleKeyPress = ({key}) => key === 'Enter' && handleAddButton();
     const handleNameChange = ({target}) => setItemName(target.value);
     const handleCategoryChange = ({target}) => setCategoryName(target.value);
+    const handleSortOrderChange = ({target}) => setCategoryOrder(target.value);
     const handleBackButton = () => history.goBack();
     const handleCategoryClick = () => {
         if(categoryName === CATEGORY_NONE) {
@@ -85,6 +87,14 @@ function AddNewItem(props) {
                     onChange={handleCategoryChange}
                     onKeyPress={handleKeyPress}
                     onClick={handleCategoryClick}
+                    id='itemInput'
+                />
+                <Label htmlFor='itemInput'>Item Aisle:</Label>
+                <ItemInput 
+                    type='text' 
+                    value={categoryOrder} 
+                    onChange={handleSortOrderChange}
+                    onKeyPress={handleKeyPress}
                     id='itemInput'
                 />
             </Contents>

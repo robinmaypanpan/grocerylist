@@ -40,14 +40,14 @@ router.get('/getList', async (request, response) => {
 })
 
 router.post('/addItem', async (request, response) => {
-    const { name, listId, categoryName } = request.body;
+    const { name, listId, categoryName, sortOrder } = request.body;
     if (!name || !listId) {
         console.error('Received invalid request to add item');
         response.json({error: 'Insufficient data to create item'});
         return;
     }
 
-    const result = await addItem(name, listId, categoryName);
+    const result = await addItem(name, listId, categoryName, sortOrder);
     response.json(result);
 }).put('/updateItem', async (request, response) => {
     const { id, itemId, name, listId, checked} = request.body;

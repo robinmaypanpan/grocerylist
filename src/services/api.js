@@ -52,11 +52,11 @@ export async function removeList(listId) {
     return await callFetch('removeList', 'DELETE', {listId});
 }
 
-export async function addItem(name, listId, categoryName) {
+export async function addItem(name, listId, categoryName, categoryOrder) {
     validate(listId);
     validate(name);
     validate(categoryName);
-    return await callFetch('addItem', 'POST', {name, categoryName, listId});
+    return await callFetch('addItem', 'POST', {name, categoryName, listId, sortOrder: categoryOrder});
 }
 
 export async function updateItem(original, updates) {
