@@ -109,7 +109,7 @@ async function removeChecked(listId){
                 .delete();
 
             // Now delete all of these categories
-            categoryIds.forEach(async (categoryId) => {
+            await Promise.all(categoryIds.map(async (categoryId) => {
                 if (categoryId !== uncategorizedId) {
                     // Now check to see if there's anything left with that category
                     const items = await trx(ITEM_TABLE)
@@ -125,7 +125,7 @@ async function removeChecked(listId){
                             .delete();
                     }
                 }
-            });
+            }));
             
             return await getList(listId, trx);
         })
