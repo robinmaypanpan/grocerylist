@@ -68,15 +68,14 @@ async function getList(listId, trx = knex) {
             return {
                 id: category.id,
                 name: category.name,
+                sortOrder: category.sort_order,
                 items
             }
         });
         const categoriesWithItems = await Promise.all(categoriesWithItemsPromises);
 
-        const filteredCategories = categoriesWithItems.filter(({items}) => items.length > 0);
-
-        console.log(`Categories are ${JSON.stringify(filteredCategories)}`);
-        return {success: true, name, categories: filteredCategories};
+        console.log(`Categories are ${JSON.stringify(categoriesWithItems)}`);
+        return {success: true, name, categories: categoriesWithItems};
     } catch(error) {
         return {success: false, error};
     }
