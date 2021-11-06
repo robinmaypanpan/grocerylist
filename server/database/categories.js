@@ -49,7 +49,7 @@ async function removeCategory(categoryId, listId) {
                 .where({category_id: categoryId})
                 .update({category_id: uncategorizedId});
 
-            // Actually remove the table
+            // Actually remove the category
             await trx(CATEGORY_TABLE)
                 .where({category_id: categoryId})
                 .delete();
@@ -64,7 +64,8 @@ async function removeCategory(categoryId, listId) {
 /**
  * Returns either an existing category or a new category id for a given category names
  */
-async function getOrCreateCategoryId(trx, listId, categoryName = CATEGORY_NONE) {
+async function getOrCreateCategoryId(trx, listId, categoryName) {
+    console.log(`Obtaining category for ${categoryName}`);
     const categoryResults = await trx(CATEGORY_TABLE)
         .where({name: categoryName, list_id: listId})
         .select('id');
