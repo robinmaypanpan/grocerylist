@@ -6,10 +6,10 @@ const knex = require('./getKnex')();
 /**
  * Adds the provided item, with list id and category name, to the database
  */
-async function addItem(name, listId, categoryName) {
+async function addItem(name, listId, categoryName, sortOrder) {
     try {
         return await knex.transaction(async (trx) => {
-            const categoryId = await getOrCreateCategoryId(trx, listId, categoryName);
+            const categoryId = await getOrCreateCategoryId(trx, listId, categoryName, sortOrder);
             await trx(ITEM_TABLE)
                 .insert({
                     name,
