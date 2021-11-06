@@ -49,7 +49,7 @@ async function getList(listId, trx = knex) {
     try {
         const categories = await knex(CATEGORY_TABLE)
             .where({list_id: listId})
-            .orderBy('sort_order');
+            .orderBy([{column: 'sort_order', order: 'desc'}, {column: 'name', order: 'asc'}]);
 
         const [{name}] = await trx(LIST_TABLE)
             .where({id: listId})
