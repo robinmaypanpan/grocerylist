@@ -12,7 +12,7 @@ function ItemList({categories, editMode, onRemoveItem, onSetItemChecked, onAddTo
 {
   return (
     <ListContainer>
-      {categories.map((category) => (
+      {categories.filter((category) => category.items.length > 0).map((category) => (
         <CategoryDisplay key={category.id} category={category} editMode={editMode} onAddToCategory={onAddToCategory}>
           {category.items.map((item) => (
             <ItemDisplay 
