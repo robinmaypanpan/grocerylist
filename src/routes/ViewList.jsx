@@ -115,9 +115,9 @@ function ViewList(props) {
         </MenuBar>
       </Header>
       <Contents>
-        {list?.items?.length > 0 && (
+        {list?.categories?.length > 0 && (
           <ItemList 
-            list={list.items}
+            categories={list.categories}
             editMode={editMode}
             onRemoveItem={handleRemoveItem}
             onSetItemChecked={handleSetItemChecked}
