@@ -20,7 +20,7 @@ const ItemDiv = styled.div`
 `;
 
 const ItemSpan = styled.span`
-    font-size: 1.5em;
+    font-size: 1.3em;
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
@@ -63,12 +63,14 @@ const Icon = styled.i`
     font-size: 1.8em;
     color: ${props => props.theme.deleteButtonColor};
 `;
+
 const DateSpan = styled.p`
     font-size: 0.6em;
     margin: auto;
     color: #2e2e2e;
 `;
-const EmptyElement = styled.span`
+
+const Spacer = styled.span`
     flex-grow: 3;
 `;
 
@@ -80,8 +82,8 @@ function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
     function handleOnClick() {
         onRemoveItem(item.id);
     }
-    function formatDateAdded(timestamp) {
 
+    function formatDateAdded(timestamp) {
         const dateAdded = new Date(timestamp);
         const formattedDate = dateFormat(dateAdded, "mm/dd");
         return formattedDate;
@@ -97,7 +99,7 @@ function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
                     Added on {formatDateAdded(item.timestamp)}
                 </DateSpan>
             </ItemSpan>
-            <EmptyElement />
+            <Spacer />
             {!editMode ?
                 <div>
                     <CheckBox type='checkbox' checked={item.checked} onChange={handleToggleChecked} />
