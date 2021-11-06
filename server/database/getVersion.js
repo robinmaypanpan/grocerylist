@@ -13,7 +13,7 @@ async function getVersion(trx) {
         const [{value: version}] = await trx(META_TABLE)
             .where({key: 'version'})
             .select('value');
-        return version;
+        return parseInt(version, 10);
     } else if (listTableExists) {
         return 1;
     } else {

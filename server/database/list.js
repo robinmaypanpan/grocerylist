@@ -47,15 +47,36 @@ async function removeList(listId) {
  */
 async function getList(listId, trx = knex) {
     try {
+        const categories = await knex(CATEGORY_TABLE)
+            .where({list_id: listId})
+            .orderBy('sort_order');
+
         const [{name}] = await trx(LIST_TABLE)
             .where({id: listId})
             .select('name');
 
-        const items = await trx(ITEM_TABLE)
-            .where({list_id: listId})
-            .select('id', 'name', 'timestamp', 'category_id', 'checked')
-            .orderBy([{column: 'timestamp', order: 'desc'}, 'category_id', 'id']);
-        return {success: true, name, items};
+        const categoriesWithItemsPromises = categories.map(async (category) => {
+            console.log(`Mapping ${JSON.stringify(category)} to items`);
+
+            const items = await trx(ITEM_TABLE)
+                .where({list_id: listId, category_id: category.id})
+                .select('id', 'name', 'timestamp', 'checked')
+                .orderBy([{column: 'timestamp', order: 'desc'}, 'id']);
+
+            console.log(`Items are ${JSON.stringify(items)}`);
+            
+            return {
+                id: category.id,
+                name: category.name,
+                items
+            }
+        });
+        const categoriesWithItems = await Promise.all(categoriesWithItemsPromises);
+
+        const filteredCategories = categoriesWithItems.filter(({items}) => items.length > 0);
+
+        console.log(`Categories are ${JSON.stringify(filteredCategories)}`);
+        return {success: true, name, categories: filteredCategories};
     } catch(error) {
         return {success: false, error};
     }

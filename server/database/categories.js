@@ -49,7 +49,7 @@ async function removeCategory(categoryId, listId) {
                 .where({category_id: categoryId})
                 .update({category_id: uncategorizedId});
 
-            // Actually remove the table
+            // Actually remove the category
             await trx(CATEGORY_TABLE)
                 .where({category_id: categoryId})
                 .delete();
@@ -64,20 +64,25 @@ async function removeCategory(categoryId, listId) {
 /**
  * Returns either an existing category or a new category id for a given category names
  */
-async function getOrCreateCategoryId(trx, listId, categoryName = CATEGORY_NONE) {
+async function getOrCreateCategoryId(trx, listId, categoryName, sortOrder) {
+    console.log(`Obtaining category for ${categoryName}`);
     const categoryResults = await trx(CATEGORY_TABLE)
         .where({name: categoryName, list_id: listId})
         .select('id');
+
     if (categoryResults.length > 0 ){
-        console.log(`Category ${categoryName} exists!  yay!`);
-        // The category exists!  Use it!
-        return categoryResults[0].id;
+        const [{id: categoryId}] = categoryResults;
+        console.log(`Category ${categoryName} exists with id ${categoryId}!  yay!`);
+        return categoryId;
     } else {
         console.log(`Creating category for ${categoryName}`);
 
-        const [{id: categoryId}] = await trx(CATEGORY_TABLE)
-            .insert({name: categoryName, list_id: listId})
+        const [categoryId] = await trx(CATEGORY_TABLE)
+            .insert({name: categoryName, list_id: listId, sort_order: sortOrder})
             .returning('id');
+
+        console.log(`The new category id is ${categoryId}`);
+
         return categoryId;
     }
 }
