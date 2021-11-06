@@ -8,12 +8,12 @@ const ListContainer = styled.div`
   padding-top: 8px;
 `;
 
-function ItemList({categories, editMode, onRemoveItem, onSetItemChecked})
+function ItemList({categories, editMode, onRemoveItem, onSetItemChecked, onAddToCategory})
 {
   return (
     <ListContainer>
       {categories.map((category) => (
-        <CategoryDisplay key={category.id} category={category} editMode={editMode}>
+        <CategoryDisplay key={category.id} category={category} editMode={editMode} onAddToCategory={onAddToCategory}>
           {category.items.map((item) => (
             <ItemDisplay 
               key={item.id}

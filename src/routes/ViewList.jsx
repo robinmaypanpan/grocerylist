@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from "react-router-dom";
 import { updateList } from '../slices/listSlice';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -60,6 +61,7 @@ function ViewList(props) {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const history = useHistory();
 
   const listId = props.match.params.listId;
 
@@ -80,6 +82,15 @@ function ViewList(props) {
     fetchList();
   }, [listId, dispatch]);
 
+  const addNewItemDestination = `/addNewItem/${listId}`;
+
+  function handleAddToCategory (category) {
+    history.push({
+      pathname: addNewItemDestination,
+      search: `?categoryName=${category.name}`
+    });
+  }
+
   async function handleRemoveItem (itemId) {
     const newList = await removeItem(itemId, listId);
     dispatch(updateList(newList));
@@ -96,8 +107,6 @@ function ViewList(props) {
   }
 
   const toggleEditMode = () => setEditMode(!editMode);
-
-  const addNewItemDestination = `/addNewItem/${listId}`;
 
   return (
     <Container>
@@ -121,6 +130,7 @@ function ViewList(props) {
             editMode={editMode}
             onRemoveItem={handleRemoveItem}
             onSetItemChecked={handleSetItemChecked}
+            onAddToCategory={handleAddToCategory}
           />
         )}
         {error && (

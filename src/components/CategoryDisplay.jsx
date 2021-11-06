@@ -4,12 +4,13 @@ const Container = styled.div`
     margin:5px; 
 `;
 
-const Label = styled.div`
+const Header = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
     padding: 4px 5px;
 
-    font-size: 1.2em;
-    font-weight: bold;
-    
     color: ${props => props.theme.dataText};
     border: ${props => props.theme.dataBorder};
     border-radius: ${props => props.theme.dataBorderRadius};
@@ -17,14 +18,35 @@ const Label = styled.div`
     background-color: ${props => props.theme.categoryBackground};
 `;
 
+const Label = styled.span`
+    font-size: 1.2em;
+    font-weight: bold;
+`;
+
 const Contents = styled.div`
     margin 2px;
 `;
 
-function CategoryDisplay({category, children}) {
+const Spacer = styled.span`
+    flex-grow: 3;
+`;
+
+const Icon = styled.i`
+    margin-right: 0.4em;
+    font-size: 1.4em;
+    color: ${props => props.theme.iconColor};
+`;
+
+function CategoryDisplay({category, children, onAddToCategory}) {
+    const handleAddToCategory = () => onAddToCategory(category);
+
     return (
         <Container>
-            <Label>{category.name}</Label>
+            <Header>
+                <Label>{category.name}</Label>
+                <Spacer/>
+                <Icon className='fas fa-plus-circle' onClick={handleAddToCategory}></Icon>
+            </Header>
             <Contents>
                 {children}
             </Contents>
