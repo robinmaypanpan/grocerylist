@@ -1,4 +1,4 @@
-const { LIST_TABLE, ITEM_TABLE, META_TABLE, CURRENT_VERSION } = require('./constants');
+const { LIST_TABLE, ITEM_TABLE, META_TABLE, CATEGORY_TABLE, CURRENT_VERSION } = require('./constants');
 
 async function migrateDatabase(knex, version) {
     // Apply migrations
@@ -27,6 +27,16 @@ async function migrateDatabase(knex, version) {
                 table.timestamp('timestamp');
             }),
         ]);
+
+        version++;
+    }
+
+    if (version === 3) {
+        console.log('Migrating database to version 4');
+
+        await knex.schema.alterTable(CATEGORY_TABLE, (table) => {
+            table.integer('sort_order').defaultTo(0);
+        });
 
         version++;
     }

@@ -22,6 +22,7 @@ async function initializeFreshDatabase(knex) {
             table.increments();
             table.text('name');
             table.uuid('list_id');
+            table.integer('sort_order').defaultTo(0);
             table.foreign('list_id').references(`${LIST_TABLE}.id`)
                 .onDelete('cascade');
         }),
