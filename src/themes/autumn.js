@@ -25,6 +25,8 @@ const autumnColors = {
     dataCheckboxCheckedBackground: '#985C34',
     dataCheckedBackground: '#a85C24',
     dataCheckboxCheckColor: '#151500',
+
+    categoryText: '#e89d72',
     categoryBackground: '#9C2706',
 
     // Not currently used
