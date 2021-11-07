@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={themeSelector(new Date())}>
+      <ThemeProvider theme={themeSelector()}>
         <GlobalStyle/>
         <Router/>
       </ThemeProvider>
