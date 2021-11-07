@@ -21,6 +21,10 @@ describe('theme selector', () => {
             const testTheme = getCurrentTheme(new Date('11-1-1986'));
             expect(testTheme).toEqual(autumnTheme);
         });
+        test('It returns the autumn theme on december 1', () => {
+            const testTheme = getCurrentTheme(new Date('12-1-2021'));
+            expect(testTheme).toEqual(autumnTheme);
+        });
     });
     describe('CalendarDate', () => {
         test('Accepts month and date', () => {
@@ -61,8 +65,8 @@ describe('theme selector', () => {
             expect(period.contains(new CalendarDate(12,15))).toBe(true);
             expect(period.contains(new CalendarDate(12,30))).toBe(false);
         });
-        test('Works when in an in-between month', () => {
-            const period = new CalendarPeriod(new CalendarDate(10,5), new CalendarDate(12,20));
+        test('Works when given a long period', () => {
+            const period = new CalendarPeriod(new CalendarDate(10,5), new CalendarDate(12,21));
             expect(period.contains(new CalendarDate(10,1))).toBe(false);
             expect(period.contains(new CalendarDate(11,5))).toBe(true);
             expect(period.contains(new CalendarDate(11,20))).toBe(true);

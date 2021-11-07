@@ -21,8 +21,8 @@ export class CalendarPeriod {
     }
 
     contains(currentDate) {
-        if (this.startDate.month === currentDate.month) {
-            // The period starts and ends in the same month, so fully check the day
+        if ( currentDate.month === this.startDate.month && this.startDate.month === this.endDate.month) {
+            // The period starts and ends in the same month, and we're in that month, so fully check the day
             return currentDate.day >= this.startDate.day && currentDate.day <= this.endDate.day;
         } else if (currentDate.month === this.startDate.month) {
             // We are in the same month as when this starts. Check the day!
@@ -43,11 +43,11 @@ export class CalendarPeriod {
     }
 }
 
-const MARCH_EQUINOX = new CalendarDate(2, 20);
-const JUNE_SOLSTICE = new CalendarDate(5, 21);
-const SEPTEMBER_EQUINOX = new CalendarDate(8, 23);
-const DECEMBER_SOLSTICE = new CalendarDate(11, 21);
-const NEW_YEAR = new CalendarDate(0, 1);
+const MARCH_EQUINOX = new CalendarDate(3, 20);
+const JUNE_SOLSTICE = new CalendarDate(6, 21);
+const SEPTEMBER_EQUINOX = new CalendarDate(9, 23);
+const DECEMBER_SOLSTICE = new CalendarDate(12, 21);
+const NEW_YEAR = new CalendarDate(1, 1);
 const NEW_YEARS_EVE = new CalendarDate(12, 31);
 
 // We pick the first theme that matches the conditions.
