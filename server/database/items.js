@@ -54,7 +54,7 @@ async function removeItem(itemId, listId) {
                 .where({name: CATEGORY_NONE})
                 .select('id');
 
-            console.log(`Got uncategorized id ${uncategorizedId}`);
+            // console.log(`Got uncategorized id ${uncategorizedId}`);
 
             // Get the items category before removing it.
             const [{category_id: categoryId}] = await trx(ITEM_TABLE)
@@ -72,7 +72,7 @@ async function removeItem(itemId, listId) {
                     .select('id');
 
                 if (items.length === 0) {
-                    console.log(`Removing category ${categoryId}`);
+                    // console.log(`Removing category ${categoryId}`);
 
                     // Actually remove the category
                     await trx(CATEGORY_TABLE)
@@ -102,7 +102,7 @@ async function removeChecked(listId){
                 .distinct()
                 .pluck('category_id');
 
-            console.log(`Category ids is ${JSON.stringify(categoryIds)}`);
+            // console.log(`Category ids is ${JSON.stringify(categoryIds)}`);
 
             await trx(ITEM_TABLE)
                 .where({list_id: listId, checked: true})
@@ -116,8 +116,6 @@ async function removeChecked(listId){
                         .where({category_id: categoryId})
                         .select('id');
 
-                    console.log(`Found these items with this category ${JSON.stringify(items)}`);
-    
                     if (items.length === 0) {
                         // Actually remove the category
                         await trx(CATEGORY_TABLE)

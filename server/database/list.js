@@ -56,14 +56,14 @@ async function getList(listId, trx = knex) {
             .select('name');
 
         const categoriesWithItemsPromises = categories.map(async (category) => {
-            console.log(`Mapping ${JSON.stringify(category)} to items`);
+            // console.log(`Mapping ${JSON.stringify(category)} to items`);
 
             const items = await trx(ITEM_TABLE)
                 .where({list_id: listId, category_id: category.id})
                 .select('id', 'name', 'timestamp', 'checked')
                 .orderBy([{column: 'timestamp', order: 'desc'}, 'id']);
 
-            console.log(`Items are ${JSON.stringify(items)}`);
+            // console.log(`Items are ${JSON.stringify(items)}`);
             
             return {
                 id: category.id,
@@ -74,7 +74,7 @@ async function getList(listId, trx = knex) {
         });
         const categoriesWithItems = await Promise.all(categoriesWithItemsPromises);
 
-        console.log(`Categories are ${JSON.stringify(categoriesWithItems)}`);
+        // console.log(`Categories are ${JSON.stringify(categoriesWithItems)}`);
         return {success: true, name, categories: categoriesWithItems};
     } catch(error) {
         return {success: false, error};
