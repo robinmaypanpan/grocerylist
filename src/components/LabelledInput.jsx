@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import ItemInput from '../components/ItemInput';
 import Label from '../components/Label';
 
 const Container = styled.div`
@@ -10,7 +9,19 @@ const Container = styled.div`
 
     border: ${props => props.theme.dataBorder};
     border-radius: ${props => props.theme.dataBorderRadius};
-    background-color: ${props => props.theme.categoryBackground}
+    background-color: ${props => props.theme.promptBackground}
+`;
+
+const ItemInput = styled.input`
+    display: block;
+    width: 80%;
+
+    font-size: 1.2em;
+    padding: 0.5em;
+    margin: 0.2em auto;
+
+    border: ${props => props.theme.promptBorder};
+    border-radius: 10px;
 `;
 
 function LabelledInput({prompt, value, onChange, onSubmit, onClick, autoFocus}) {
