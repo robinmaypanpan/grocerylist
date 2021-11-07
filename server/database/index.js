@@ -27,7 +27,6 @@ async function initializeAndMigrateDatabase() {
     const knex = getKnex();
     try {
         return await knex.transaction(async function (trx) {
-            console.log('Calling transaction');
             const version = await getVersion(trx);
 
             console.log(`Database version is ${version}`);
