@@ -1,4 +1,5 @@
 const autumnColors = {
+    backgroundImage: 'leaves2.png',
     background: '#603C14',
     headerBorder: '2px solid #401C00',
     label: '#F3BC2E',
@@ -20,6 +21,8 @@ const autumnColors = {
     dataGradient: '#a86C44',
     dataBorder: '2px solid #502C04',
     dataBorderRadius: '12px',
+    dateColor: '#2e2e2e',
+
     dataCheckboxBorder: '1px solid #502C04',
     dataCheckboxBackground: '#c88C44',
     dataCheckboxCheckedBackground: '#985C34',
@@ -28,10 +31,6 @@ const autumnColors = {
 
     categoryText: '#e89d72',
     categoryBackground: '#9C2706',
-
-    // Not currently used
-    tetiary: '#5F5426',
-    unused: '#9C2706',
 };
 
 export default autumnColors;
