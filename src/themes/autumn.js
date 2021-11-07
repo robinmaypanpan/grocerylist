@@ -1,4 +1,5 @@
 const autumnColors = {
+    backgroundImage: 'leaves2.png',
     background: '#603C14',
     headerBorder: '2px solid #401C00',
     label: '#F3BC2E',

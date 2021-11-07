@@ -15,7 +15,7 @@ import MenuBar from '../components/MenuBar';
 import { getList, removeItem, updateItem, removeChecked } from '../services/api';
 
 const Container = styled.div`
-  background-image: url(/leaves_small.png);
+  background-image: url(/${props => props.theme.backgroundImage});
   min-height: 100vh;
 `;
 
