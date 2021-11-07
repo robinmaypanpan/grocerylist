@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import { updateList } from '../slices/listSlice';
-import { useDispatch } from 'react-redux'
-import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import { useHistory, useParams } from "react-router-dom";
+import { useQueryParam, StringParam } from 'use-query-params';
 
 import styled from 'styled-components';
 import ItemInput from '../components/ItemInput';
@@ -34,13 +35,18 @@ const Contents = styled.section`
 `;
 
 function AddNewItem(props) {
+    const [initialCategoryName] = useQueryParam('categoryName', StringParam);
     const [itemName, setItemName] = useState('');
-    const [categoryName, setCategoryName] = useState(CATEGORY_NONE);
-    const [categoryOrder, setCategoryOrder] = useState(0);
+    const [categoryName, setCategoryName] = useState(initialCategoryName || CATEGORY_NONE);
+
+    const list = useSelector((state) => state.list.value)
+    const matchingCategory = list.categories.find((category) => category.name === categoryName);
+    const initialCategoryOrder = matchingCategory?.sortOrder || 0;
+    const [categoryOrder, setCategoryOrder] = useState(initialCategoryOrder);
+
     const dispatch = useDispatch();
     const history = useHistory();
-
-    const listId = props.match.params.listId;
+    const {listId} = useParams();
 
     async function handleAddButton() {
         if (!itemName) return;
@@ -89,14 +95,18 @@ function AddNewItem(props) {
                     onClick={handleCategoryClick}
                     id='itemInput'
                 />
-                <Label htmlFor='itemInput'>Item Aisle:</Label>
-                <ItemInput 
-                    type='text' 
-                    value={categoryOrder} 
-                    onChange={handleSortOrderChange}
-                    onKeyPress={handleKeyPress}
-                    id='itemInput'
-                />
+                {matchingCategory ? null : (
+                <>
+                    <Label htmlFor='itemInput'>Aisle for new category:</Label>
+                    <ItemInput 
+                        type='text' 
+                        value={categoryOrder} 
+                        onChange={handleSortOrderChange}
+                        onKeyPress={handleKeyPress}
+                        id='itemInput'
+                    />
+                </>
+                )}
             </Contents>
         </Container>
     );

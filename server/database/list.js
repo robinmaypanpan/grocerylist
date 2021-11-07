@@ -49,7 +49,7 @@ async function getList(listId, trx = knex) {
     try {
         const categories = await knex(CATEGORY_TABLE)
             .where({list_id: listId})
-            .orderBy('sort_order');
+            .orderBy([{column: 'sort_order', order: 'desc'}, {column: 'name', order: 'asc'}]);
 
         const [{name}] = await trx(LIST_TABLE)
             .where({id: listId})
@@ -68,15 +68,14 @@ async function getList(listId, trx = knex) {
             return {
                 id: category.id,
                 name: category.name,
+                sortOrder: category.sort_order,
                 items
             }
         });
         const categoriesWithItems = await Promise.all(categoriesWithItemsPromises);
 
-        const filteredCategories = categoriesWithItems.filter(({items}) => items.length > 0);
-
-        console.log(`Categories are ${JSON.stringify(filteredCategories)}`);
-        return {success: true, name, categories: filteredCategories};
+        console.log(`Categories are ${JSON.stringify(categoriesWithItems)}`);
+        return {success: true, name, categories: categoriesWithItems};
     } catch(error) {
         return {success: false, error};
     }
