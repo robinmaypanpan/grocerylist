@@ -67,7 +67,7 @@ const Icon = styled.i`
 const DateSpan = styled.p`
     font-size: 0.6em;
     margin: auto;
-    color: #2e2e2e;
+    color: ${props => props.theme.dateColor};
 `;
 
 const Spacer = styled.span`

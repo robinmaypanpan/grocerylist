@@ -21,6 +21,7 @@ const colors = {
     dataGradient: '#adbcbd',
     dataBorder: '2px solid #111177',
     dataBorderRadius: '12px',
+    dateColor: '#2e2e2e',
 
     dataCheckboxBorder: '1px solid #111177',
     dataCheckboxBackground: '#adbccd',
