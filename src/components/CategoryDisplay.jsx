@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from 'react';
 
 const Container = styled.div`
-    margin:5px; 
+    margin:4px 5px; 
 `;
 
 const Header = styled.div`
@@ -11,6 +11,7 @@ const Header = styled.div`
     flex-direction: row;
 
     padding: 4px 5px;
+    margin-bottom: 4px;
 
     color: ${props => props.theme.categoryText};
     border: ${props => props.theme.dataBorder};
