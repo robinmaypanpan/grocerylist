@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { updateList } from '../slices/listSlice';
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from "react-router-dom";
-import { useQueryParam, StringParam } from 'use-query-params';
+import { useQueryParam, NumberParam } from 'use-query-params';
 
 import styled from 'styled-components';
 import ItemInput from '../components/ItemInput';
@@ -35,15 +35,18 @@ const Contents = styled.section`
 `;
 
 function AddNewItem(props) {
-    const [initialCategoryName] = useQueryParam('categoryName', StringParam);
-    const [itemName, setItemName] = useState('');
-    const [categoryName, setCategoryName] = useState(initialCategoryName || CATEGORY_NONE);
-
     const list = useSelector((state) => state.list.value)
+    const [initialCategoryId] = useQueryParam('categoryId', NumberParam);
+    const initialCategory = list.categories.find((category) => category.id  === initialCategoryId);
+
+    const [categoryName, setCategoryName] = useState(initialCategory.name || CATEGORY_NONE);
+
     const matchingCategory = list.categories.find((category) => category.name === categoryName);
     const initialCategoryOrder = matchingCategory?.sortOrder || 0;
     const [categoryOrder, setCategoryOrder] = useState(initialCategoryOrder);
 
+    const [itemName, setItemName] = useState('');
+    
     const dispatch = useDispatch();
     const history = useHistory();
     const {listId} = useParams();
