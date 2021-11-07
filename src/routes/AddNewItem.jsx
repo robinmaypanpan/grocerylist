@@ -37,11 +37,11 @@ const Contents = styled.section`
 function AddNewItem(props) {
     const list = useSelector((state) => state.list.value)
     const [initialCategoryId] = useQueryParam('categoryId', NumberParam);
-    const initialCategory = list.categories.find((category) => category.id  === initialCategoryId);
+    const initialCategory = list.categories.find((category) => category?.id  === initialCategoryId);
 
-    const [categoryName, setCategoryName] = useState(initialCategory.name || CATEGORY_NONE);
+    const [categoryName, setCategoryName] = useState(initialCategory?.name || CATEGORY_NONE);
 
-    const matchingCategory = list.categories.find((category) => category.name === categoryName);
+    const matchingCategory = list.categories.find((category) => category?.name === categoryName);
     const initialCategoryOrder = matchingCategory?.sortOrder || 0;
     const [categoryOrder, setCategoryOrder] = useState(initialCategoryOrder);
 
