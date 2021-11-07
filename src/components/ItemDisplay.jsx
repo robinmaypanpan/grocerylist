@@ -10,7 +10,7 @@ const ItemDiv = styled.div`
     color: ${props => props.theme.dataText};
     border: ${props => props.theme.dataBorder};
     border-radius: ${props => props.theme.dataBorderRadius};
-    margin: 8px;
+    margin: 4px 8px;
     margin-top: 0px;
     max-width: 800px;
     text-align: middle;
