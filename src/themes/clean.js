@@ -7,6 +7,9 @@ const cleanColors = {
     highlight: '#F3BC2E',
     footerColor: '#fff',
 
+    promptBorder: '2px solid #401C00',
+    promptBackground:'#444',
+
     // Styles for the top buttons
     button: '#6ae',
     buttonText: '#151500',

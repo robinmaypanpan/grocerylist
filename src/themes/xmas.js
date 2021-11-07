@@ -7,6 +7,9 @@ const colors = {
     highlight: '#F3BC2E',
     footerColor: 'white',
 
+    promptBorder: '2px solid #111177',
+    promptBackground:'rgb(75, 0, 15)',
+
     // Styles for the top buttons
     button: 'rgb(0,75,9)',
     buttonGradient: 'rgb(200,0,9)',
