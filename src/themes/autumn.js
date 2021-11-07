@@ -7,6 +7,9 @@ const autumnColors = {
     highlight: '#F3BC2E',
     footerColor: '#fff',
 
+    promptBorder: '2px solid #d45b12',
+    promptBackground:'#a85C24',
+
     // Styles for the top buttons
     button: '#D45B12',
     buttonText: '#151500',
