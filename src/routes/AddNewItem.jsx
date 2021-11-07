@@ -30,18 +30,29 @@ const Header = styled.header`
   padding-top: 8px;
 `
 
+const Prompt = styled.div`
+    width: 85%;
+    margin: 0.6em auto 0em auto;
+    padding: 8px;
+    margin-bottom: 4px;
+
+    border: ${props => props.theme.dataBorder};
+    border-radius: ${props => props.theme.dataBorderRadius};
+    background-color: ${props => props.theme.categoryBackground}
+`;
+
 const Contents = styled.section`
   width: 100vw;
 `;
 
 function AddNewItem(props) {
-    const list = useSelector((state) => state.list.value)
+    const list = useSelector((state) => state?.list?.value)
     const [initialCategoryId] = useQueryParam('categoryId', NumberParam);
-    const initialCategory = list.categories.find((category) => category?.id  === initialCategoryId);
+    const initialCategory = list?.categories?.find((category) => category?.id  === initialCategoryId);
 
     const [categoryName, setCategoryName] = useState(initialCategory?.name || CATEGORY_NONE);
 
-    const matchingCategory = list.categories.find((category) => category?.name === categoryName);
+    const matchingCategory = list?.categories?.find((category) => category?.name === categoryName);
     const initialCategoryOrder = matchingCategory?.sortOrder || 0;
     const [categoryOrder, setCategoryOrder] = useState(initialCategoryOrder);
 
@@ -80,35 +91,39 @@ function AddNewItem(props) {
                 </MenuBar>
             </Header>
             <Contents>
-                <Label htmlFor='itemInput'>Item name:</Label>
-                <ItemInput 
-                    autoFocus
-                    type='text' 
-                    value={itemName} 
-                    onChange={handleNameChange}
-                    onKeyPress={handleKeyPress}
-                    id='itemInput'
-                />
-                <Label htmlFor='itemInput'>Item category:</Label>
-                <ItemInput 
-                    type='text' 
-                    value={categoryName} 
-                    onChange={handleCategoryChange}
-                    onKeyPress={handleKeyPress}
-                    onClick={handleCategoryClick}
-                    id='itemInput'
-                />
-                {matchingCategory ? null : (
-                <>
-                    <Label htmlFor='itemInput'>Aisle for new category:</Label>
+                <Prompt>
+                    <Label htmlFor='itemInput'>Item name:</Label>
                     <ItemInput 
+                        autoFocus
                         type='text' 
-                        value={categoryOrder} 
-                        onChange={handleSortOrderChange}
+                        value={itemName} 
+                        onChange={handleNameChange}
                         onKeyPress={handleKeyPress}
                         id='itemInput'
                     />
-                </>
+                </Prompt>
+                <Prompt>
+                    <Label htmlFor='itemInput'>Item category:</Label>
+                    <ItemInput 
+                        type='text' 
+                        value={categoryName} 
+                        onChange={handleCategoryChange}
+                        onKeyPress={handleKeyPress}
+                        onClick={handleCategoryClick}
+                        id='itemInput'
+                    />
+                </Prompt>
+                {matchingCategory ? null : (
+                    <Prompt>
+                        <Label htmlFor='itemInput'>Aisle for new category:</Label>
+                        <ItemInput 
+                            type='text' 
+                            value={categoryOrder} 
+                            onChange={handleSortOrderChange}
+                            onKeyPress={handleKeyPress}
+                            id='itemInput'
+                        />
+                    </Prompt>
                 )}
             </Contents>
         </Container>
