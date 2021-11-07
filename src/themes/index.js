@@ -43,6 +43,10 @@ export class CalendarPeriod {
     }
 }
 
+// Convenience functions
+const cd = (m,d) => new CalendarDate(m, d);
+const cp = (s,e) => new CalendarPeriod(s, e);
+
 const MARCH_EQUINOX = new CalendarDate(3, 20);
 const JUNE_SOLSTICE = new CalendarDate(6, 21);
 const SEPTEMBER_EQUINOX = new CalendarDate(9, 23);
@@ -52,9 +56,10 @@ const NEW_YEARS_EVE = new CalendarDate(12, 31);
 
 // We pick the first theme that matches the conditions.
 const themes = [
-    [new CalendarPeriod(DECEMBER_SOLSTICE, MARCH_EQUINOX), require('./winter').default],
-    [new CalendarPeriod(SEPTEMBER_EQUINOX, DECEMBER_SOLSTICE), require('./autumn').default],
-    [new CalendarPeriod(NEW_YEAR, NEW_YEARS_EVE), require('./clean').default], // Default theme
+    [cp(cd(12,24), cd(12,26)), require('./xmas').default],
+    [cp(DECEMBER_SOLSTICE, MARCH_EQUINOX), require('./winter').default],
+    [cp(SEPTEMBER_EQUINOX, DECEMBER_SOLSTICE), require('./autumn').default],
+    [cp(NEW_YEAR, NEW_YEARS_EVE), require('./clean').default], // Default theme
 ];
 
 export default function getCurrentTheme(testDate) {

@@ -2,8 +2,18 @@ import getCurrentTheme, {CalendarDate, CalendarPeriod} from './index';
 import cleanTheme from './clean';
 import autumnTheme from './autumn';
 import winterTheme from './winter';
+import xmasTheme from './xmas';
 
 describe('theme selector', () => {
+    describe('Verify theme completion', () => {
+        const themes = [cleanTheme, autumnTheme, winterTheme, xmasTheme];
+        Object.keys(autumnTheme).forEach((key) => {
+            themes.forEach((theme) => {
+                expect(theme[key]).toBeDefined();
+            });
+        });
+    });
+
     describe('getCurrentTheme', () => {
         test('It returns the clean theme in times that are not specified', () => {
             const testTheme = getCurrentTheme(new Date('6-3-1986'));
@@ -24,6 +34,10 @@ describe('theme selector', () => {
         test('It returns the autumn theme on december 1', () => {
             const testTheme = getCurrentTheme(new Date('12-1-2021'));
             expect(testTheme).toEqual(autumnTheme);
+        });
+        test('It returns the xmas theme on december 25', () => {
+            const testTheme = getCurrentTheme(new Date('12-25-2021'));
+            expect(testTheme).toEqual(xmasTheme);
         });
     });
     describe('CalendarDate', () => {

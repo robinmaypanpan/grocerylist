@@ -21,7 +21,8 @@ const cleanColors = {
     dataGradient: '#777',
     dataBorder: '2px solid #505050',
     dataBorderRadius: '12px',
-    
+    dateColor: '#2e2e2e',
+
     dataCheckboxBorder: '1px solid #333',
     dataCheckboxBackground: '#999',
     dataCheckboxCheckedBackground: '#48c',
