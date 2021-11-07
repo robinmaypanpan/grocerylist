@@ -5,7 +5,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { useQueryParam, NumberParam } from 'use-query-params';
 
 import styled from 'styled-components';
-import ItemInput from '../components/ItemInput';
+
+import LabelledInput from '../components/LabelledInput';
 import Label from '../components/Label';
 import IconButton from '../components/IconButton';
 import MenuBar from '../components/MenuBar';
@@ -29,17 +30,6 @@ const Header = styled.header`
   padding-bottom: 8px;
   padding-top: 8px;
 `
-
-const Prompt = styled.div`
-    width: 85%;
-    margin: 0.6em auto 0em auto;
-    padding: 8px;
-    margin-bottom: 4px;
-
-    border: ${props => props.theme.dataBorder};
-    border-radius: ${props => props.theme.dataBorderRadius};
-    background-color: ${props => props.theme.categoryBackground}
-`;
 
 const Contents = styled.section`
   width: 100vw;
@@ -70,7 +60,6 @@ function AddNewItem(props) {
         history.push(`/list/${listId}`);
     }
 
-    const handleKeyPress = ({key}) => key === 'Enter' && handleAddButton();
     const handleNameChange = ({target}) => setItemName(target.value);
     const handleCategoryChange = ({target}) => setCategoryName(target.value);
     const handleSortOrderChange = ({target}) => setCategoryOrder(target.value);
@@ -91,39 +80,26 @@ function AddNewItem(props) {
                 </MenuBar>
             </Header>
             <Contents>
-                <Prompt>
-                    <Label htmlFor='itemInput'>Item name:</Label>
-                    <ItemInput 
-                        autoFocus
-                        type='text' 
-                        value={itemName} 
-                        onChange={handleNameChange}
-                        onKeyPress={handleKeyPress}
-                        id='itemInput'
-                    />
-                </Prompt>
-                <Prompt>
-                    <Label htmlFor='itemInput'>Item category:</Label>
-                    <ItemInput 
-                        type='text' 
-                        value={categoryName} 
-                        onChange={handleCategoryChange}
-                        onKeyPress={handleKeyPress}
-                        onClick={handleCategoryClick}
-                        id='itemInput'
-                    />
-                </Prompt>
+                <LabelledInput 
+                    prompt='Item name:'
+                    value={itemName}
+                    onChange={handleNameChange}
+                    onSubmit={handleAddButton}
+                />
+                <LabelledInput 
+                    prompt='Item category:'
+                    value={categoryName}
+                    onChange={handleCategoryChange}
+                    onSubmit={handleAddButton}
+                    onClick={handleCategoryClick}
+                />
                 {matchingCategory ? null : (
-                    <Prompt>
-                        <Label htmlFor='itemInput'>Aisle for new category:</Label>
-                        <ItemInput 
-                            type='text' 
-                            value={categoryOrder} 
-                            onChange={handleSortOrderChange}
-                            onKeyPress={handleKeyPress}
-                            id='itemInput'
-                        />
-                    </Prompt>
+                    <LabelledInput 
+                        prompt='Aisle for new category:'
+                        value={categoryOrder}
+                        onChange={handleSortOrderChange}
+                        onSubmit={handleAddButton}
+                    />
                 )}
             </Contents>
         </Container>

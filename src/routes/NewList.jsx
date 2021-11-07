@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
-import ItemInput from '../components/ItemInput';
+import LabelledInput from '../components/LabelledInput';
 import Label from '../components/Label';
 import IconButton from '../components/IconButton';
 import MenuBar from '../components/MenuBar';
@@ -69,7 +69,6 @@ function NewList() {
     setListId(newListId);
   }
 
-  const handleKeyPress = ({key}) => key === 'Enter' && handleNewListButton();
   const handleTextChange = ({target}) => setListName(target.value);
 
   const partialUrl = `list/${listId}`;
@@ -107,16 +106,13 @@ function NewList() {
             </MenuBar>
         </Header>
         <Contents>
-          <Prompt>
-            <Label>Enter a name for your list</Label>
-            <ItemInput 
-                autoFocus
-                type='text' 
-                value={listName}
-                onChange={handleTextChange}
-                onKeyPress={handleKeyPress}
-            />
-          </Prompt>
+
+         <LabelledInput 
+            prompt='Enter a name for your list'
+            value={listName}
+            onChange={handleTextChange}
+            onSubmit={handleNewListButton}
+          />
         </Contents>
         </>
       )}
