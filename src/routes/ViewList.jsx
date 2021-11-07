@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from "react-router-dom";
 import { updateList } from '../slices/listSlice';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useIdleTimer } from 'react-idle-timer'
 import styled from 'styled-components';
 
 import Label from '../components/Label';
@@ -62,10 +63,19 @@ function ViewList(props) {
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const history = useHistory();
+  const {listId} = useParams();
 
-  const listId = props.match.params.listId;
+  const [isIdle, setIdle] = useState(false);
+
+  useIdleTimer({
+    timeout: 1000 * 60 * 5,
+    debounce: 500,
+    onIdle: () => setIdle(true),
+    onActive: () => setIdle(false),
+  })
 
   useEffect(() => {
+    let timeoutId;
     async function fetchList() {
       setLoading(true);
       try {
@@ -76,11 +86,18 @@ function ViewList(props) {
         setError(error);
       } finally {
         setLoading(false);
+        if (!isIdle) {
+          timeoutId = setTimeout(fetchList, 1000 * 10);
+        }
       }
     }
 
     fetchList();
-  }, [listId, dispatch]);
+
+    return () => {
+      if (timeoutId) { clearTimeout(timeoutId); }
+    };
+  }, [listId, dispatch, isIdle]);
 
   const addNewItemDestination = `/addNewItem/${listId}`;
 
