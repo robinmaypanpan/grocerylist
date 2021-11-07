@@ -87,7 +87,7 @@ function ViewList(props) {
   function handleAddToCategory (category) {
     history.push({
       pathname: addNewItemDestination,
-      search: `?categoryName=${category.name}`
+      search: `?categoryId=${category.id}`
     });
   }
 
