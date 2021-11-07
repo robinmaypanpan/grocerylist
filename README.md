@@ -68,6 +68,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 - Added category headings
 - Added + button to categories
 - UI fixes and adjustments
+- Moved buttons up to menu bar on Add Items page
 
 *0.6.1*
 - Fixed bug with dates not correctly being added to new items
