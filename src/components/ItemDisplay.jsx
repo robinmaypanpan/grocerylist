@@ -102,7 +102,7 @@ function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
             <Spacer />
             {!editMode ?
                 <div>
-                    <CheckBox type='checkbox' checked={item.checked} onChange={handleToggleChecked} />
+                    <CheckBox type='checkbox' checked={item.checked} />
                 </div>
                 : null}
         </ItemDiv>
