@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from 'react';
 
 const Container = styled.div`
     margin:5px; 
@@ -36,18 +37,29 @@ const Icon = styled.i`
     font-size: 1.4em;
 `;
 
+const SmallIcon = styled.i`
+    text-align: center;
+    width: 0.6em;
+    margin-right: 0.2em;
+    font-size: 1.3em;
+`;
+
 function CategoryDisplay({category, children, onAddToCategory}) {
     const handleAddToCategory = () => onAddToCategory(category);
+    const [collapsed, setCollapsed] = useState(false);
+    const handleClickCollapse = () => setCollapsed(!collapsed);
+
+    const collapseIcon = collapsed ? 'fas fa-caret-right' : 'fas fa-caret-down';
 
     return (
         <Container>
             <Header>
-                <Label>{category.name}</Label>
+                <Label onClick={handleClickCollapse}><SmallIcon className={collapseIcon}/>{category.name}</Label>
                 <Spacer/>
-                <Icon className='fas fa-plus-circle' onClick={handleAddToCategory}></Icon>
+                <Icon className='fas fa-plus-circle' onClick={handleAddToCategory}/>
             </Header>
             <Contents>
-                {children}
+                {collapsed ? null : children}
             </Contents>
         </Container>
     );
