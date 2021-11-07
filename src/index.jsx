@@ -10,17 +10,18 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 import styled, {ThemeProvider} from 'styled-components';
-import autumnTheme from './themes/autumn';
-import cleanTheme from './themes/clean';
+import themeSelector from './themes';
 
 const Background = styled.div`
   background-color: ${props => props.theme.background}
 `;
 
+
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={autumnTheme}>
+      <ThemeProvider theme={themeSelector()}>
         <Background>
           <Router/>
         </Background>

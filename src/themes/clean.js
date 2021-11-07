@@ -22,9 +22,10 @@ const cleanColors = {
     dataCheckedBackground: '#444',
     dataCheckboxCheckColor: '#151500',
 
-    // Not currently used
-    tetiary: '#5F5426',
-    unused: '#9C2706',
+    deleteButtonColor: '#751010',
+
+    categoryText: '#eadbd4',
+    categoryBackground: '#1f4b8e',
 };
 
 export default cleanColors;

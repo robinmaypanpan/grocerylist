@@ -15,7 +15,7 @@ import { addItem } from '../services/api';
 const CATEGORY_NONE = 'Uncategorized';
 
 const Container = styled.div`
-    background-image: url(/leaves_small.png);
+    background-image: url(/${props => props.theme.backgroundImage});
     min-height: 100vh;
 `;
 
