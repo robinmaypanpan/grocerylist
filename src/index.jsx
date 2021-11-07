@@ -1,30 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './index.css';
-
 import reportWebVitals from './reportWebVitals';
 import Router from './Router';
 
 import { Provider } from 'react-redux';
 import store from './store';
 
-import styled, {ThemeProvider} from 'styled-components';
+import {ThemeProvider, createGlobalStyle} from 'styled-components';
 import themeSelector from './themes';
 
-const Background = styled.div`
-  background-color: ${props => props.theme.background}
+const GlobalStyle = createGlobalStyle`
+  body {
+    height:100vh;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: ${props => props.theme.background};
+  }
+  a {
+    text-decoration: none;
+  }
 `;
-
-
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={themeSelector()}>
-        <Background>
-          <Router/>
-        </Background>
+      <ThemeProvider theme={themeSelector(new Date())}>
+        <GlobalStyle/>
+        <Router/>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,
