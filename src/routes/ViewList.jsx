@@ -6,11 +6,10 @@ import { Link, useParams } from 'react-router-dom';
 import { useIdleTimer } from 'react-idle-timer'
 import styled from 'styled-components';
 
-import Label from '../components/Label';
 import ItemList from '../components/ItemList';
 import Footer from '../components/Footer';
 import IconButton from '../components/IconButton';
-import MenuBar from '../components/MenuBar';
+import ButtonHeader from '../components/ButtonHeader';
 
 import { getList, removeItem, updateItem, removeChecked } from '../services/api';
 
@@ -18,17 +17,6 @@ const Container = styled.div`
   background-image: url(/${props => props.theme.backgroundImage});
   min-height: 100vh;
 `;
-
-const Header = styled.header`
-  position: sticky;
-  top: 0;
-  width:100vw;
-  z-index: 10;
-  background-color: ${props => props.theme.background};
-  border-bottom: ${props => props.theme.headerBorder};
-  padding-bottom: 8px;
-  padding-top: 8px;
-`
 
 const Contents = styled.section`
   width: 100vw;
@@ -127,9 +115,7 @@ function ViewList(props) {
 
   return (
     <Container>
-      <Header>
-        <Label>{list.name}</Label>
-        <MenuBar>
+      <ButtonHeader label={list.name}>
           <Link to='/' target="_blank">
             <IconButton icon='fas fa-external-link-square-alt' text='New'/>
           </Link>
@@ -138,8 +124,7 @@ function ViewList(props) {
           </Link>
           <IconButton icon='fas fa-edit' text='Edit' onClick={toggleEditMode} highlight={editMode}/>
           <IconButton icon='fas fa-trash' text='Clear' onClick={handleRemoveChecked}/>
-        </MenuBar>
-      </Header>
+      </ButtonHeader>
       <Contents>
         {list?.categories?.length > 0 && (
           <ItemList 

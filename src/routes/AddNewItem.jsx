@@ -7,9 +7,8 @@ import { useQueryParam, NumberParam } from 'use-query-params';
 import styled from 'styled-components';
 
 import LabelledInput from '../components/LabelledInput';
-import Label from '../components/Label';
 import IconButton from '../components/IconButton';
-import MenuBar from '../components/MenuBar';
+import ButtonHeader from '../components/ButtonHeader';
 
 import { addItem } from '../services/api';
 
@@ -19,17 +18,6 @@ const Container = styled.div`
     background-image: url(/${props => props.theme.backgroundImage});
     min-height: 100vh;
 `;
-
-const Header = styled.header`
-  position: sticky;
-  top: 0;
-  width:100vw;
-  z-index: 10;
-  background-color: ${props => props.theme.background};
-  border-bottom: ${props => props.theme.headerBorder};
-  padding-bottom: 8px;
-  padding-top: 8px;
-`
 
 const Contents = styled.section`
   width: 100vw;
@@ -72,13 +60,10 @@ function AddNewItem(props) {
 
     return (
         <Container>
-            <Header>
-                <Label>Add a new item</Label>
-                <MenuBar>
-                    <IconButton icon='fas fa-times-circle' text='Cancel' onClick={handleBackButton}/>
-                    <IconButton icon='fas fa-plus-circle' text='Add' onClick={handleAddButton}/>
-                </MenuBar>
-            </Header>
+            <ButtonHeader label='Add a new item'>
+                <IconButton icon='fas fa-times-circle' text='Cancel' onClick={handleBackButton}/>
+                <IconButton icon='fas fa-plus-circle' text='Add' onClick={handleAddButton}/>
+            </ButtonHeader>
             <Contents>
                 <LabelledInput 
                     prompt='Item name:'

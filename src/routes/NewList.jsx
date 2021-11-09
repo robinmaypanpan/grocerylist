@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import LabelledInput from '../components/LabelledInput';
 import Label from '../components/Label';
 import IconButton from '../components/IconButton';
-import MenuBar from '../components/MenuBar';
+import ButtonHeader from '../components/ButtonHeader';
 
 import { createList } from '../services/api';
 
@@ -30,17 +30,6 @@ const Container = styled.div`
     background-image: url(/${props => props.theme.backgroundImage});
     min-height: 100vh;
 `;
-
-const Header = styled.header`
-  position: sticky;
-  top: 0;
-  width:100vw;
-  z-index: 10;
-  background-color: ${props => props.theme.background};
-  border-bottom: ${props => props.theme.headerBorder};
-  padding-bottom: 8px;
-  padding-top: 8px;
-`
 
 const Prompt = styled.div`
     width: 85%;
@@ -80,15 +69,12 @@ function NewList() {
     <Container>
       {listId ?(
         <>
-        <Header>
-            <Label>List Created!</Label>
-            <MenuBar>
-                <IconButton icon='fas fa-paste' text='Copy' onClick={handleCopy}/>
-                <Link to={partialUrl}>
-                  <IconButton icon='far fa-paper-plane' text='Go' onClick={handleNewListButton}/>
-                </Link>
-            </MenuBar>
-        </Header>
+        <ButtonHeader label='List Created!'>
+          <IconButton icon='fas fa-paste' text='Copy' onClick={handleCopy}/>
+          <Link to={partialUrl}>
+            <IconButton icon='far fa-paper-plane' text='Go' onClick={handleNewListButton}/>
+          </Link>
+        </ButtonHeader>
         <Contents>
           <Prompt>
             <Label>This is your personal and private URL. Keep it somewhere safe!</Label>
@@ -99,14 +85,10 @@ function NewList() {
         </>
       ) : (
         <>
-        <Header>
-            <Label>Homemaker List Creator</Label>
-            <MenuBar>
-                <IconButton icon='fas fa-hammer' text='Create' onClick={handleNewListButton}/>
-            </MenuBar>
-        </Header>
+        <ButtonHeader label='Household List Creator'>
+          <IconButton icon='fas fa-hammer' text='Create' onClick={handleNewListButton}/>
+        </ButtonHeader>
         <Contents>
-
          <LabelledInput 
             prompt='Enter a name for your list'
             value={listName}
