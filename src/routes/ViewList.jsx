@@ -96,6 +96,12 @@ function ViewList(props) {
     });
   }
 
+  function handleEditCategory (category) {
+    history.push({
+      pathname: `/editCategory/${listId}/${category.id}`,
+    });
+  }
+
   async function handleRemoveItem (itemId) {
     const newList = await removeItem(itemId, listId);
     dispatch(updateList(newList));
@@ -115,7 +121,7 @@ function ViewList(props) {
 
   return (
     <Container>
-      <ButtonHeader label={list.name}>
+      <ButtonHeader label={list?.name}>
           <Link to='/' target="_blank">
             <IconButton icon='fas fa-external-link-square-alt' text='New'/>
           </Link>
@@ -128,8 +134,9 @@ function ViewList(props) {
       <Contents>
         {list?.categories?.length > 0 && (
           <ItemList 
-            categories={list.categories}
+            categories={list?.categories}
             editMode={editMode}
+            onEditCategory={handleEditCategory}
             onRemoveItem={handleRemoveItem}
             onSetItemChecked={handleSetItemChecked}
             onAddToCategory={handleAddToCategory}

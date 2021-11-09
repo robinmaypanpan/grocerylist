@@ -87,10 +87,10 @@ export async function getCategories(listId) {
     return await callFetch('getCategories', 'GET', {listId});
 }
 
-export async function updateCategory(name, categoryId, listId) {
+export async function updateCategory(name, categoryId, sortOrder, listId) {
     validate(listId);
     validate(categoryId);
-    return await callFetch('updateCategory', 'PUT', {name, categoryId, listId});
+    return await callFetch('updateCategory', 'PUT', {name, categoryId, sortOrder, listId});
 }
 
 export async function removeCategory(categoryId, listId) {
