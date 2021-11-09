@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import { updateList } from '../slices/listSlice';
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from "react-router-dom";
 import { useQueryParam, NumberParam } from 'use-query-params';
@@ -10,6 +9,7 @@ import LabelledInput from '../components/LabelledInput';
 import IconButton from '../components/IconButton';
 import ButtonHeader from '../components/ButtonHeader';
 
+import { updateList } from '../slices/listSlice';
 import { addItem } from '../services/api';
 
 const CATEGORY_NONE = 'Uncategorized';

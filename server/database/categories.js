@@ -17,13 +17,13 @@ async function getCategories(listId) {
 /**
  * Updates the category's name
  */
-async function updateCategory(name, categoryId, listId) {
+async function updateCategory(name, categoryId, sortOrder, listId) {
     try {
         await knex(CATEGORY_TABLE)
             .where({id: categoryId, list_id: listId})
-            .update({name});
+            .update({name, sort_order: sortOrder});
 
-        return {success: true};
+        return await getList(listId);
     } catch (error) {
         return {success: false, error};
     }

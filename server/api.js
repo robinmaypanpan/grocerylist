@@ -70,8 +70,8 @@ router.get('/getCategories', async (request, response) => {
     const result = await getCategories(listId);
     response.json(result);
 }).put('/updateCategory', async (request, response) => {
-    const { name, categoryId, listId } = request.body;
-    const result = await updateCategory(name, categoryId, listId);
+    const { name, categoryId, sortOrder, listId } = request.body;
+    const result = await updateCategory(name, categoryId, sortOrder, listId);
     response.json(result);
 }).delete('removeCategory', async (request, response) => {
     const { categoryId, listId } = request.body;

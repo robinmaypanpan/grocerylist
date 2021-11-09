@@ -45,17 +45,30 @@ const SmallIcon = styled.i`
     font-size: 1.3em;
 `;
 
-function CategoryDisplay({category, children, onAddToCategory}) {
-    const handleAddToCategory = () => onAddToCategory(category);
+function CategoryDisplay({category, children, onAddToCategory, editMode, onEditCategory}) {
+    const handleAddToCategory = () => { 
+        if (!editMode) {
+            onAddToCategory(category);
+        }
+    }
     const [collapsed, setCollapsed] = useState(false);
-    const handleClickCollapse = () => setCollapsed(!collapsed);
+    const handleClickName = () => {
+        if (!editMode) {
+            setCollapsed(!collapsed);
+        }
+    }
+    const handleClickCategory = () => {
+        if (editMode) {
+            onEditCategory(category);
+        }
+    }
 
     const collapseIcon = collapsed ? 'fas fa-caret-right' : 'fas fa-caret-down';
 
     return (
-        <Container>
+        <Container onClick={handleClickCategory}>
             <Header>
-                <Label onClick={handleClickCollapse}><SmallIcon className={collapseIcon}/>{category.name}</Label>
+                <Label onClick={handleClickName}><SmallIcon className={collapseIcon}/>{category.name}</Label>
                 <Spacer/>
                 <Icon className='fas fa-plus-circle' onClick={handleAddToCategory}/>
             </Header>

@@ -8,12 +8,18 @@ const ListContainer = styled.div`
   padding-top: 8px;
 `;
 
-function ItemList({categories, editMode, onRemoveItem, onSetItemChecked, onAddToCategory})
+function ItemList({categories, editMode, onRemoveItem, onSetItemChecked, onAddToCategory, onEditCategory})
 {
   return (
     <ListContainer>
       {categories.filter((category) => category.items.length > 0).map((category) => (
-        <CategoryDisplay key={category.id} category={category} editMode={editMode} onAddToCategory={onAddToCategory}>
+        <CategoryDisplay 
+          key={category.id}
+          category={category}
+          editMode={editMode}
+          onAddToCategory={onAddToCategory}
+          onEditCategory={onEditCategory}
+        >
           {category.items.map((item) => (
             <ItemDisplay 
               key={item.id}
