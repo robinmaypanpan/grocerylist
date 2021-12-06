@@ -66,8 +66,8 @@ function CategoryDisplay({category, children, onAddToCategory, editMode, onEditC
     const collapseIcon = collapsed ? 'fas fa-caret-right' : 'fas fa-caret-down';
 
     return (
-        <Container onClick={handleClickCategory}>
-            <Header>
+        <Container>
+            <Header onClick={handleClickCategory}>
                 <Label onClick={handleClickName}><SmallIcon className={collapseIcon}/>{category.name}</Label>
                 <Spacer/>
                 <Icon className='fas fa-plus-circle' onClick={handleAddToCategory}/>

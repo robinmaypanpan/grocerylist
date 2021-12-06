@@ -8,7 +8,7 @@ const ListContainer = styled.div`
   padding-top: 8px;
 `;
 
-function ItemList({categories, editMode, onRemoveItem, onSetItemChecked, onAddToCategory, onEditCategory})
+function ItemList({categories, editMode, onRemoveItem, onSetItemChecked, onAddToCategory, onEditCategory, onEditItem})
 {
   return (
     <ListContainer>
@@ -25,6 +25,7 @@ function ItemList({categories, editMode, onRemoveItem, onSetItemChecked, onAddTo
               key={item.id}
               item={item}
               editMode={editMode}
+              onEditItem={onEditItem}
               onRemoveItem={onRemoveItem}
               onSetItemChecked={onSetItemChecked}
             />

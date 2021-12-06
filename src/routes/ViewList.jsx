@@ -102,6 +102,12 @@ function ViewList(props) {
     });
   }
 
+  function handleEditItem (item) {
+    history.push({
+      pathname: `/editItem/${listId}/${item.id}`,
+    });
+  }
+
   async function handleRemoveItem (itemId) {
     const newList = await removeItem(itemId, listId);
     dispatch(updateList(newList));
@@ -113,7 +119,7 @@ function ViewList(props) {
   }
 
   async function handleSetItemChecked (item, checked) {
-    const newList = await updateItem(item, {checked, listId});
+    const newList = await updateItem(item.id, listId, {checked});
     dispatch(updateList(newList));
   }
 
@@ -137,6 +143,7 @@ function ViewList(props) {
             categories={list?.categories}
             editMode={editMode}
             onEditCategory={handleEditCategory}
+            onEditItem={handleEditItem}
             onRemoveItem={handleRemoveItem}
             onSetItemChecked={handleSetItemChecked}
             onAddToCategory={handleAddToCategory}

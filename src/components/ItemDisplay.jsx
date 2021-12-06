@@ -74,12 +74,16 @@ const Spacer = styled.span`
     flex-grow: 3;
 `;
 
-function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
+function ItemDisplay({ item, editMode, onRemoveItem, onEditItem, onSetItemChecked }) {
+    function handleClickItem() {
+        if (editMode) onEditItem(item);
+    }
+    
     function handleToggleChecked() {
         if (!editMode) onSetItemChecked(item, !item.checked);
     }
 
-    function handleOnClick() {
+    function handleClickRemove() {
         onRemoveItem(item.id);
     }
 
@@ -90,8 +94,8 @@ function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
     }
 
     return (
-        <ItemDiv onClick={handleToggleChecked} checked={item.checked}>
-            {editMode ? <Icon onClick={handleOnClick} className='fas fa-times-circle' /> : null}
+        <ItemDiv onClick={handleClickItem} checked={item.checked}>
+            {editMode ? <Icon onClick={handleClickRemove} className='fas fa-times-circle' /> : null}
             <ItemSpan strikeText={item.checked}>
                 {item.name}
                 <br />
@@ -102,7 +106,7 @@ function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
             <Spacer />
             {!editMode ?
                 <div>
-                    <CheckBox type='checkbox' checked={item.checked} readOnly/>
+                    <CheckBox type='checkbox' onClick={handleToggleChecked} checked={item.checked} readOnly/>
                 </div>
                 : null}
         </ItemDiv>
