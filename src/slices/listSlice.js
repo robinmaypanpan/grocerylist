@@ -9,7 +9,20 @@ export const listSlice = createSlice({
     updateList: (state, action) => {
         const newList = action.payload;
         if (!newList.error) {
-          state.value = action.payload;
+          // Process the returned list of categories to also have a list of items
+          const categoryItemArrays = newList.categories.map((category) => {
+            return category.items.map((item) => {
+              // Add the category id to the items.
+              return {
+                ...item,
+                categoryId: category.id
+              };
+            });
+          });
+          const items = Array.prototype.concat(...categoryItemArrays);
+
+          newList.items = items;
+          state.value = newList;
         }
     },
   },

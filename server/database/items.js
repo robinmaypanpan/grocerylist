@@ -27,15 +27,29 @@ async function addItem(name, listId, categoryName, sortOrder) {
 /**
  * Changes the name and category for a given item.
  */
-async function updateItem(itemId, name, listId, checked) {
+async function updateItem(itemId, listId, updates) {
     try {
         return await knex.transaction(async (trx) => {
+            const updatesToSend = {};
+            if (updates.categoryName !== undefined) {
+                const {categoryName, sortOrder} = updates;
+                console.log(`Updating category name to ${categoryName}`);
+                const categoryId = await getOrCreateCategoryId(trx, listId, categoryName, sortOrder);
+                updatesToSend.category_id = categoryId;
+            }
+            if (updates.name !== undefined) {
+                updatesToSend.name = updates.name;
+            }
+            if (updates.checked !== undefined) {
+                updatesToSend.checked = updates.checked;
+            }
+
+            console.log(`Sending updates ${JSON.stringify(updatesToSend)}`);
+
             await trx(ITEM_TABLE)
                 .where({id: itemId, list_id: listId})
-                .update({
-                    name,
-                    checked
-                });
+                .update(updatesToSend);
+
             return await getList(listId, trx);
         });
     } catch (error) {

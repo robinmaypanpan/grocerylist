@@ -50,8 +50,9 @@ router.post('/addItem', async (request, response) => {
     const result = await addItem(name, listId, categoryName, sortOrder);
     response.json(result);
 }).put('/updateItem', async (request, response) => {
-    const { id, itemId, name, listId, checked} = request.body;
-    const result = await updateItem(id || itemId, name, listId, checked);
+    const { id, itemId, listId, ...updates} = request.body;
+    console.log(`Updating Item ${id || itemId} to have updates ${JSON.stringify(updates)}`);
+    const result = await updateItem(id || itemId, listId, updates);
     response.json(result);
 }).delete('/removeItem', async (request, response) => {
     const { id, itemId, listId } = request.body;

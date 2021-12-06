@@ -59,16 +59,12 @@ export async function addItem(name, listId, categoryName, categoryOrder) {
     return await callFetch('addItem', 'POST', {name, categoryName, listId, sortOrder: categoryOrder});
 }
 
-export async function updateItem(original, updates) {
-    const newItem = {
-        ...original,
-        ...updates
-    };
+export async function updateItem(itemId, listId, updates) {
+    validate(itemId);
+    validate(listId);
+    validate(updates);
 
-    validate(newItem.listId, 'updateItem provided with bad listId');
-    validate(newItem.id || newItem.itemId, 'updateItem provided with bad item id');
-
-    return await callFetch('updateItem', 'PUT', newItem);
+    return await callFetch('updateItem', 'PUT', {id: itemId, listId, ...updates});
 }
 
 export async function removeItem(itemId, listId) {
