@@ -1,32 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from "react-router-dom";
 import { updateList } from '../slices/listSlice';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useIdleTimer } from 'react-idle-timer'
 import styled from 'styled-components';
 
-import Label from '../components/Label';
 import ItemList from '../components/ItemList';
 import Footer from '../components/Footer';
 import IconButton from '../components/IconButton';
-import MenuBar from '../components/MenuBar';
+import ButtonHeader from '../components/ButtonHeader';
 
 import { getList, removeItem, updateItem, removeChecked } from '../services/api';
 
 const Container = styled.div`
-  background-image: url(/leaves_small.png);
+  background-image: url(/${props => props.theme.backgroundImage});
   min-height: 100vh;
 `;
-
-const Header = styled.header`
-  position: sticky;
-  top: 0;
-  width:100vw;
-  z-index: 10;
-  background-color: ${props => props.theme.background};
-  border-bottom: ${props => props.theme.headerBorder};
-  padding-bottom: 8px;
-  padding-top: 8px;
-`
 
 const Contents = styled.section`
   width: 100vw;
@@ -60,10 +50,20 @@ function ViewList(props) {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const history = useHistory();
+  const {listId} = useParams();
 
-  const listId = props.match.params.listId;
+  const [isIdle, setIdle] = useState(false);
+
+  useIdleTimer({
+    timeout: 1000 * 60 * 5,
+    debounce: 500,
+    onIdle: () => setIdle(true),
+    onActive: () => setIdle(false),
+  })
 
   useEffect(() => {
+    let timeoutId;
     async function fetchList() {
       setLoading(true);
       try {
@@ -74,11 +74,39 @@ function ViewList(props) {
         setError(error);
       } finally {
         setLoading(false);
+        if (!isIdle) {
+          timeoutId = setTimeout(fetchList, 1000 * 10);
+        }
       }
     }
 
     fetchList();
-  }, [listId, dispatch]);
+
+    return () => {
+      if (timeoutId) { clearTimeout(timeoutId); }
+    };
+  }, [listId, dispatch, isIdle]);
+
+  const addNewItemDestination = `/addNewItem/${listId}`;
+
+  function handleAddToCategory (category) {
+    history.push({
+      pathname: addNewItemDestination,
+      search: `?categoryId=${category.id}`
+    });
+  }
+
+  function handleEditCategory (category) {
+    history.push({
+      pathname: `/editCategory/${listId}/${category.id}`,
+    });
+  }
+
+  function handleEditItem (item) {
+    history.push({
+      pathname: `/editItem/${listId}/${item.id}`,
+    });
+  }
 
   async function handleRemoveItem (itemId) {
     const newList = await removeItem(itemId, listId);
@@ -91,19 +119,15 @@ function ViewList(props) {
   }
 
   async function handleSetItemChecked (item, checked) {
-    const newList = await updateItem(item, {checked, listId});
+    const newList = await updateItem(item.id, listId, {checked});
     dispatch(updateList(newList));
   }
 
   const toggleEditMode = () => setEditMode(!editMode);
 
-  const addNewItemDestination = `/addNewItem/${listId}`;
-
   return (
     <Container>
-      <Header>
-        <Label>{list.name}</Label>
-        <MenuBar>
+      <ButtonHeader label={list?.name}>
           <Link to='/' target="_blank">
             <IconButton icon='fas fa-external-link-square-alt' text='New'/>
           </Link>
@@ -112,15 +136,17 @@ function ViewList(props) {
           </Link>
           <IconButton icon='fas fa-edit' text='Edit' onClick={toggleEditMode} highlight={editMode}/>
           <IconButton icon='fas fa-trash' text='Clear' onClick={handleRemoveChecked}/>
-        </MenuBar>
-      </Header>
+      </ButtonHeader>
       <Contents>
-        {list?.items?.length > 0 && (
+        {list?.categories?.length > 0 && (
           <ItemList 
-            list={list.items}
+            categories={list?.categories}
             editMode={editMode}
+            onEditCategory={handleEditCategory}
+            onEditItem={handleEditItem}
             onRemoveItem={handleRemoveItem}
             onSetItemChecked={handleSetItemChecked}
+            onAddToCategory={handleAddToCategory}
           />
         )}
         {error && (

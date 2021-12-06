@@ -4,7 +4,7 @@ const { META_TABLE, LIST_TABLE } = require('./constants');
  * Queries the database to determine its version
  */
 async function getVersion(trx) {
-    console.log('Retrieving Database version');
+    // console.log('Retrieving Database version');
     
     const metaTableExists = await trx.schema.hasTable(META_TABLE);
     const listTableExists = await trx.schema.hasTable(LIST_TABLE);
@@ -13,7 +13,7 @@ async function getVersion(trx) {
         const [{value: version}] = await trx(META_TABLE)
             .where({key: 'version'})
             .select('value');
-        return version;
+        return parseInt(version, 10);
     } else if (listTableExists) {
         return 1;
     } else {

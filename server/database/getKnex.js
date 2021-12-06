@@ -12,7 +12,7 @@ function getKnex() {
                 connectionString: process.env.DATABASE_URL,
                 ssl: process.env.NODE_ENV !== 'production' ? false : { rejectUnauthorized: false },
             },
-            debug: true,
+            debug: process.env.NODE_ENV !== 'production' 
         });
     }
     return knex;

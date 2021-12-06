@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
-import StyledButton, {Icon as ButtonIcon, Label as ButtonLabel} from '../components/StyledButton';
-import ItemInput from '../components/ItemInput';
+import LabelledInput from '../components/LabelledInput';
 import Label from '../components/Label';
+import IconButton from '../components/IconButton';
+import ButtonHeader from '../components/ButtonHeader';
 
 import { createList } from '../services/api';
 
@@ -25,6 +26,26 @@ const URLDisplay = styled.div`
   word-wrap: break-word;
 `;
 
+const Container = styled.div`
+    background-image: url(/${props => props.theme.backgroundImage});
+    min-height: 100vh;
+`;
+
+const Prompt = styled.div`
+    width: 85%;
+    margin: 0.6em auto 0em auto;
+    padding: 8px;
+    margin-bottom: 4px;
+
+    border: ${props => props.theme.dataBorder};
+    border-radius: ${props => props.theme.dataBorderRadius};
+    background-color: ${props => props.theme.categoryBackground}
+`;
+
+const Contents = styled.section`
+  width: 100vw;
+`;
+
 function NewList() {
   const [listId, setListId] = useState();
   const [listName, setListName] = useState('Grocery List');
@@ -37,7 +58,6 @@ function NewList() {
     setListId(newListId);
   }
 
-  const handleKeyPress = ({key}) => key === 'Enter' && handleNewListButton();
   const handleTextChange = ({target}) => setListName(target.value);
 
   const partialUrl = `list/${listId}`;
@@ -46,42 +66,39 @@ function NewList() {
   const handleCopy = () => navigator.clipboard.writeText(fullUrl);
 
   return (
-    <>
+    <Container>
       {listId ?(
         <>
-          <Label>This is your personal and private URL. Keep it somewhere safe!</Label>
-          <URLDisplay>{fullUrl}</URLDisplay>
-          <Label>If you lose this URL, you lose access to your list!</Label>
-
-          <StyledButton onClick={handleCopy}>
-              <ButtonIcon className="fas fa-paste"/>
-              <ButtonLabel>Copy to clipboard</ButtonLabel>
-          </StyledButton>
+        <ButtonHeader label='List Created!'>
+          <IconButton icon='fas fa-paste' text='Copy' onClick={handleCopy}/>
           <Link to={partialUrl}>
-
-            <StyledButton>
-                <ButtonIcon className="far fa-paper-plane"/>
-                <ButtonLabel>Go to your new list</ButtonLabel>
-            </StyledButton>  
+            <IconButton icon='far fa-paper-plane' text='Go' onClick={handleNewListButton}/>
           </Link>
+        </ButtonHeader>
+        <Contents>
+          <Prompt>
+            <Label>This is your personal and private URL. Keep it somewhere safe!</Label>
+            <URLDisplay>{fullUrl}</URLDisplay>
+            <Label>If you lose this URL, you lose access to your list!</Label>
+          </Prompt>
+        </Contents>
         </>
       ) : (
         <>
-          <Label>Enter a title for your list</Label>
-          <ItemInput 
-              autoFocus
-              type='text' 
-              value={listName}
-              onChange={handleTextChange}
-              onKeyPress={handleKeyPress}
+        <ButtonHeader label='Household List Creator'>
+          <IconButton icon='fas fa-hammer' text='Create' onClick={handleNewListButton}/>
+        </ButtonHeader>
+        <Contents>
+         <LabelledInput 
+            prompt='Enter a name for your list'
+            value={listName}
+            onChange={handleTextChange}
+            onSubmit={handleNewListButton}
           />
-          <StyledButton onClick={handleNewListButton}>
-              <ButtonIcon className="fas fa-hammer"/>
-              <ButtonLabel>Create New List</ButtonLabel>
-          </StyledButton>  
+        </Contents>
         </>
       )}
-    </>
+    </Container>
   );
 }
 

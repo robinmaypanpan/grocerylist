@@ -64,9 +64,20 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 # Version History
+*0.7.0*
+- Added category headings
+- Added + button to categories
+- UI fixes and adjustments
+- Moved buttons up to menu bar on Add Items page
+- Added 5 minutes of polling every 10 seconds while using the app
+- Added ability to edit items and categories
+
 *0.6.1*
 - Fixed bug with dates not correctly being added to new items
 
+*0.6.1*
+- Fixed bug with dates not correctly being added to new items
+  
 *0.6.0*
 - Major UI refresh
 - Fixed bug in establishing a fresh database

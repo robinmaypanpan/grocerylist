@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components"
 import dateFormat from "dateformat";
 
@@ -11,7 +10,7 @@ const ItemDiv = styled.div`
     color: ${props => props.theme.dataText};
     border: ${props => props.theme.dataBorder};
     border-radius: ${props => props.theme.dataBorderRadius};
-    margin: 8px;
+    margin: 4px 8px;
     margin-top: 0px;
     max-width: 800px;
     text-align: middle;
@@ -21,7 +20,7 @@ const ItemDiv = styled.div`
 `;
 
 const ItemSpan = styled.span`
-    font-size: 1.5em;
+    font-size: 1.3em;
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
@@ -64,33 +63,39 @@ const Icon = styled.i`
     font-size: 1.8em;
     color: ${props => props.theme.deleteButtonColor};
 `;
+
 const DateSpan = styled.p`
     font-size: 0.6em;
     margin: auto;
-    color: #2e2e2e;
+    color: ${props => props.theme.dateColor};
 `;
-const EmptyElement = styled.span`
+
+const Spacer = styled.span`
     flex-grow: 3;
 `;
 
-function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
+function ItemDisplay({ item, editMode, onRemoveItem, onEditItem, onSetItemChecked }) {
+    function handleClickItem() {
+        if (editMode) onEditItem(item);
+    }
+    
     function handleToggleChecked() {
         if (!editMode) onSetItemChecked(item, !item.checked);
     }
 
-    function handleOnClick() {
+    function handleClickRemove() {
         onRemoveItem(item.id);
     }
-    function formatDateAdded(timestamp) {
 
+    function formatDateAdded(timestamp) {
         const dateAdded = new Date(timestamp);
         const formattedDate = dateFormat(dateAdded, "mm/dd");
         return formattedDate;
     }
 
     return (
-        <ItemDiv onClick={handleToggleChecked} checked={item.checked}>
-            {editMode ? <Icon onClick={handleOnClick} className='fas fa-times-circle' /> : null}
+        <ItemDiv onClick={handleClickItem} checked={item.checked}>
+            {editMode ? <Icon onClick={handleClickRemove} className='fas fa-times-circle' /> : null}
             <ItemSpan strikeText={item.checked}>
                 {item.name}
                 <br />
@@ -98,10 +103,10 @@ function ItemDisplay({ item, editMode, onRemoveItem, onSetItemChecked }) {
                     Added on {formatDateAdded(item.timestamp)}
                 </DateSpan>
             </ItemSpan>
-            <EmptyElement />
+            <Spacer />
             {!editMode ?
                 <div>
-                    <CheckBox type='checkbox' checked={item.checked} onChange={handleToggleChecked} />
+                    <CheckBox type='checkbox' onClick={handleToggleChecked} checked={item.checked} readOnly/>
                 </div>
                 : null}
         </ItemDiv>

@@ -1,5 +1,6 @@
 import ItemDisplay from './ItemDisplay';
 import styled from "styled-components"
+import CategoryDisplay from './CategoryDisplay';
 
 const ListContainer = styled.div`
   max-width: 800px;
@@ -7,19 +8,30 @@ const ListContainer = styled.div`
   padding-top: 8px;
 `;
 
-function ItemList({list, editMode, onRemoveItem, onSetItemChecked})
+function ItemList({categories, editMode, onRemoveItem, onSetItemChecked, onAddToCategory, onEditCategory, onEditItem})
 {
   return (
     <ListContainer>
-      {list.map((item) => (
-        <ItemDisplay 
-          key={item.id}
-          item={item}
+      {categories.filter((category) => category.items.length > 0).map((category) => (
+        <CategoryDisplay 
+          key={category.id}
+          category={category}
           editMode={editMode}
-          onRemoveItem={onRemoveItem}
-          onSetItemChecked={onSetItemChecked}
-        />)
-      )}
+          onAddToCategory={onAddToCategory}
+          onEditCategory={onEditCategory}
+        >
+          {category.items.map((item) => (
+            <ItemDisplay 
+              key={item.id}
+              item={item}
+              editMode={editMode}
+              onEditItem={onEditItem}
+              onRemoveItem={onRemoveItem}
+              onSetItemChecked={onSetItemChecked}
+            />
+          ))}
+        </CategoryDisplay>
+      ))}
     </ListContainer>
   ); 
 }

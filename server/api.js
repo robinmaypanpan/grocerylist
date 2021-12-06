@@ -40,18 +40,19 @@ router.get('/getList', async (request, response) => {
 })
 
 router.post('/addItem', async (request, response) => {
-    const { name, listId, categoryName } = request.body;
+    const { name, listId, categoryName, sortOrder } = request.body;
     if (!name || !listId) {
         console.error('Received invalid request to add item');
         response.json({error: 'Insufficient data to create item'});
         return;
     }
 
-    const result = await addItem(name, listId, categoryName);
+    const result = await addItem(name, listId, categoryName, sortOrder);
     response.json(result);
 }).put('/updateItem', async (request, response) => {
-    const { id, itemId, name, listId, categoryName, checked} = request.body;
-    const result = await updateItem(id || itemId, name, listId, categoryName, checked);
+    const { id, itemId, listId, ...updates} = request.body;
+    console.log(`Updating Item ${id || itemId} to have updates ${JSON.stringify(updates)}`);
+    const result = await updateItem(id || itemId, listId, updates);
     response.json(result);
 }).delete('/removeItem', async (request, response) => {
     const { id, itemId, listId } = request.body;
@@ -70,8 +71,8 @@ router.get('/getCategories', async (request, response) => {
     const result = await getCategories(listId);
     response.json(result);
 }).put('/updateCategory', async (request, response) => {
-    const { name, categoryId, listId } = request.body;
-    const result = await updateCategory(name, categoryId, listId);
+    const { name, categoryId, sortOrder, listId } = request.body;
+    const result = await updateCategory(name, categoryId, sortOrder, listId);
     response.json(result);
 }).delete('removeCategory', async (request, response) => {
     const { categoryId, listId } = request.body;

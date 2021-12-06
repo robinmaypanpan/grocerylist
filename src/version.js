@@ -1,5 +1,7 @@
-export default {
+const version =  {
     "major": 0,
-    "minor": 6,
-    "revision": 1
+    "minor": 7,
+    "revision": 0
 };
+
+export default version;
