@@ -80,6 +80,7 @@ function EditCategory () {
                 value={name}
                 onChange={handleNameChange}
                 onSubmit={handleSaveButton}
+                autoFocus
             />
             <LabelledInput 
                 prompt='Aisle for category:'

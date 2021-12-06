@@ -93,6 +93,7 @@ function EditItem () {
                   value={itemName}
                   onChange={handleNameChange}
                   onSubmit={handleSaveButton}
+                  autoFocus
               />
               <LabelledInput 
                   prompt='Category name:'

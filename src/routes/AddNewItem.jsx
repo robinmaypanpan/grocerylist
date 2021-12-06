@@ -70,6 +70,7 @@ function AddNewItem(props) {
                     value={itemName}
                     onChange={handleNameChange}
                     onSubmit={handleAddButton}
+                    autoFocus
                 />
                 <LabelledInput 
                     prompt='Item category:'
