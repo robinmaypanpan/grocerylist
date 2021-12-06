@@ -57,8 +57,8 @@ const NEW_YEARS_EVE = new CalendarDate(12, 31);
 // We pick the first theme that matches the conditions.
 const themes = [
     [cp(cd(12,24), cd(12,26)), require('./xmas').default],
-    [cp(DECEMBER_SOLSTICE, MARCH_EQUINOX), require('./winter').default],
-    [cp(SEPTEMBER_EQUINOX, DECEMBER_SOLSTICE), require('./autumn').default],
+    [cp(cd(12,1), MARCH_EQUINOX), require('./winter').default],
+    [cp(SEPTEMBER_EQUINOX, cd(12,1)), require('./autumn').default],
     [cp(NEW_YEAR, NEW_YEARS_EVE), require('./clean').default], // Default theme
 ];
 
